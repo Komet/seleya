@@ -1,18 +1,40 @@
 {% extends 'SeleyaBundle::base.html.twig' %}
 
 {% block content_content %}
+	<div class="row-fluid main-border">
+		<div class="page-header">
+			<h4>{% trans %}Beliebte Aufzeichnungen{% endtrans %}</h4>
+		</div>
+		<ul class="record-list-horizontal unstyled">
+			{% for record in records %}
+				{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
+				<li>
+					<a href="#">
+						<img src="{{ preview | imagine_filter('record_preview') }}" /><br />
+						<span class="title">{{ record.title }}</span><br />
+					</a>
+					<span class="date">{{ record.recordDate|localizeddate('long', 'none') }}</span>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
 
-	<ul class="record-list-horizontal unstyled">
-		{% for record in records %}
-			{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
-			<li>
-				<a href="#">
-					<img src="{{ preview | imagine_filter('record_preview') }}" /><br />
-					<span class="title">{{ record.title }}</span><br />
-				</a>
-				<span class="date">{{ record.recordDate|localizeddate('long', 'none') }}</span>
-			</li>
-		{% endfor %}
-	</ul>
+	<div class="row-fluid main-border">
+		<div class="page-header">
+			<h4>{% trans %}Neue Aufzeichnungen{% endtrans %}</h4>
+		</div>
+		<ul class="record-list-horizontal unstyled">
+			{% for record in records %}
+				{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
+				<li>
+					<a href="#">
+						<img src="{{ preview | imagine_filter('record_preview') }}" /><br />
+						<span class="title">{{ record.title }}</span><br />
+					</a>
+					<span class="date">{{ record.recordDate|localizeddate('long', 'none') }}</span>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
 
 {% endblock %}

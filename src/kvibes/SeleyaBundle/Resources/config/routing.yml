@@ -54,3 +54,11 @@ admin_record_import:
 index:
     pattern: /
     defaults: { _controller: SeleyaBundle:Index:index }
+
+series:
+    pattern: /series
+    defaults: { _controller: SeleyaBundle:Index:index }
+
+course:
+    pattern: /course
+    defaults: { _controller: SeleyaBundle:Index:index }

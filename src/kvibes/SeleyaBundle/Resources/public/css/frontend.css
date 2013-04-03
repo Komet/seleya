@@ -1,3 +1,4 @@
+/*
 .navbar-inner {
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.4);
     border-bottom: none;
@@ -15,6 +16,23 @@
 .navbar .brand, .navbar .nav > li > a {
     color: #f0f0f0;
 }
+*/
+
+@media (min-width: 981px) {
+    body {
+        padding-top: 40px;
+    }
+}
+
+@media (max-width: 980px) {
+    .navbar-fixed-top {
+        margin-bottom: 0;
+    }
+}
+
+body {
+    background-color: #f0f0f0;
+}
 
 ul.record-list-horizontal {
     
@@ -25,18 +43,47 @@ ul.record-list-horizontal li {
     margin: 10px;
     vertical-align: top;
     width: 180px;
+    line-height: 14px;
 }
 
 ul.record-list-horizontal li span.title {
-    font-size: 1.1em;
+    font-size: 14px;
     font-weight: bold;
-    line-height: 1.4em;
     display: inline-block;
     margin-top: 4px;
+    line-height: 16px;
 }
 
 ul.record-list-horizontal li span.date {
-    font-size: 0.9em;
+    font-size: 11px;
     color: #999999;
     display: inline-block;
+}
+
+div.main-border {
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
+    background-color: #ffffff;
+    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+}
+
+div.main-border:first-child {
+    padding-top: 20px;
+}
+
+div.main-border > div.page-header {
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.4);
+    margin: 0px -20px;
+    margin-bottom: 20px;
+    padding: 1px 20px;
+    border-bottom: none;
+    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.2);
+    background-color: #0072a9;
+    color: #F0F0F0;
+}
+
+div.sidebar {
+    padding-left: 20px;
 }

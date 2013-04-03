@@ -81,8 +81,8 @@ services:
         class: %mopa_bootstrap.navbar.generic%
         arguments:
             - { leftmenu: @seleya.menu= }
-            - {  }
-            - { title: "Seleya", titleRoute: "index", fixedTop: true, isFluid: false, template:MopaBootstrapBundle:Navbar:navbar.html.twig }
+            - { searchform: kvibes\SeleyaBundle\Form\Type\NavbarSearchType }
+            - { title: "Seleya", titleRoute: "index", fixedTop: true, isFluid: true, template:SeleyaBundle:Menu:navbar.html.twig }
         tags:
             - { name: mopa_bootstrap.navbar, alias: navbar }
             
