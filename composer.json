@@ -20,13 +20,13 @@
         "jms/security-extra-bundle": "1.4.*",
         "jms/di-extra-bundle": "1.3.*",
         "mopa/bootstrap-bundle": "dev-master",
-        "twitter/bootstrap": "master",
+        "twitter/bootstrap": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "dev-master",
         "bmatzner/jquery-ui-bundle": "*",
         "bmatzner/jquery-bundle": "*",
         "friendsofsymfony/jsrouting-bundle": "1.1.*",
         "imag/ldap-bundle": "dev-master",
-        "knplabs/knp-menu-bundle": "master",
+        "knplabs/knp-menu-bundle": "dev-master",
         "liip/imagine-bundle": "dev-master"   
     },
     "scripts": {
@@ -65,7 +65,11 @@
                 "source": {
                     "url": "https://github.com/twitter/bootstrap.git",
                     "type": "git",
-                    "reference": "v2.3.1"
+                    "reference": "master"
+                },
+                "dist": {
+                    "url": "https://github.com/twitter/bootstrap/zipball/master",
+                    "type": "zip"
                 }
             }
         }

@@ -18,10 +18,14 @@ body {
 .content > div.page-header {
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.4);
     margin: 24px -31px;
-    padding: 10px 30px;
+    padding: 6px 30px;
     border-bottom: none;
     text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.2);
     background-color: #0072a9;
     color: #F0F0F0;
 }
 
+.content > div.page-header h2 {
+    font-size: 20px;
+    line-height: 1em;
+}

@@ -4,15 +4,11 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-    {% stylesheets
-        '@MopaBootstrapBundle/Resources/public/less/mopabootstrapbundle.less'
-        '@MopaBootstrapBundle/Resources/public/less/eyecon-bootstrap-datepicker.less'
-    %}
-    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-    {% endstylesheets %}
 	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery-ui.css') }}" />
 	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery.ui.theme.css') }}" />
-    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/fonts/stylesheet.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/bootstrap.min.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/bootstrap-responsive.min.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/fonts/stylesheet.css') }}" />
 	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/layout.css') }}" media="screen" />
 	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/admin.css') }}" media="screen" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -63,28 +59,21 @@
     </div> <!-- /container -->
     {% javascripts
         '@BmatznerJQueryBundle/Resources/public/js/jquery.min.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-transition.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-alert.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-modal.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-dropdown.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-scrollspy.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-tab.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-tooltip.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-popover.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-button.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-collapse.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-carousel.js'
-        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-typeahead.js'
-        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
-        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
-        '@MopaBootstrapBundle/Resources/public/js/eyecon-bootstrap-datepicker.js'
         '@FOSJsRoutingBundle/Resources/public/js/router.js'
+        '@SeleyaBundle/Resources/public/js/bootstrap.min.js'
         '@SeleyaBundle/Resources/public/js/spin.min.js'
         '@SeleyaBundle/Resources/public/js/ui.js'
         '@BmatznerJQueryUIBundle/Resources/public/js/minified/jquery-ui.min.js'
         %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
 	{% endjavascripts %}
+
+	{#
+        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
+        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
+        '@MopaBootstrapBundle/Resources/public/js/eyecon-bootstrap-datepicker.js'
+	#}
+
 
 	<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
