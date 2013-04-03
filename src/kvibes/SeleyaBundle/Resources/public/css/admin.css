@@ -1,0 +1,27 @@
+body {
+    background-image: url('../images/low_contrast_linen.png');
+}
+
+.container-content {
+    border-radius: 0 0 14px 14px;
+    border: 1px solid #c0c0c0;
+    background-color: #ffffff;
+    box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.5);
+    margin-top: -22px;
+}
+
+.content {
+    padding: 30px;
+    padding-top: 16px;
+}
+
+.content > div.page-header {
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.4);
+    margin: 24px -31px;
+    padding: 10px 30px;
+    border-bottom: none;
+    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.2);
+    background-color: #0072a9;
+    color: #F0F0F0;
+}
+

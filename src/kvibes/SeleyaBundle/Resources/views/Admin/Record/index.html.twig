@@ -1,0 +1,17 @@
+{% extends 'SeleyaBundle:Admin:Record/base.html.twig' %}
+
+{% block content_content %}
+
+<ul class="table">
+{% for record in records %}
+	<li>
+		<span>{{ record.title }}</span>
+		<span class="buttons">
+				<a href="{{ path('admin_record_update', { 'id': record.id }) }}" class="btn btn-primary btn-small"><i class="icon-pencil icon-white"></i> {% trans %}Bearbeiten{% endtrans %}</a>
+				<a href="{{ path('admin_record_delete', { 'id': record.id }) }}" class="btn btn-danger btn-small"><i class="icon-trash icon-white"></i> {% trans %}Löschen{% endtrans %}</a>
+		</span>
+	</li>
+{% endfor %}
+</ul>
+
+{% endblock %}

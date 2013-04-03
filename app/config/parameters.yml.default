@@ -1,0 +1,29 @@
+parameters:
+    database_driver:   pdo_mysql
+    database_host:     127.0.0.1
+    database_port:     ~
+    database_name:     symfony
+    database_user:     root
+    database_password: ~
+
+    mailer_transport:  smtp
+    mailer_host:       127.0.0.1
+    mailer_user:       ~
+    mailer_password:   ~
+
+    locale:            en
+    secret:            ThisTokenIsNotSoSecretChangeIt
+
+    mopa_remote_update_url: http://yourhost
+    mopa_remote_update_user: changethis
+    mopa_remote_update_password: changethat
+
+    ldap_host: 127.0.0.1
+    ldap_port: 389
+    ldap_version: 3
+    ldap_user_basedn: ou=people,dc=example,dc=com
+    
+    matterhorn_url: http://example.com:8080
+    matterhorn_user: admin
+    matterhorn_password: opencast
+    

@@ -1,0 +1,20 @@
+seleya:
+    resource: "@SeleyaBundle/Resources/config/routing.yml"
+    prefix:   /
+
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+_imagine:
+    resource: .
+    type:     imagine
+    
+admin_login:
+    pattern:  /admin/login
+    defaults: { _controller: SeleyaBundle:Security:login }
+
+admin_login_check:
+    pattern:  /admin/login_check
+
+admin_logout:
+    path:     /admin/logout

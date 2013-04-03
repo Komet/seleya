@@ -1,0 +1,15 @@
+{% extends 'SeleyaBundle:Admin:Record/base.html.twig' %}
+{% block headline %}{% trans %}Aufzeichnung bearbeiten{% endtrans %}{% endblock %}
+
+{% block content_content %}
+
+<form action="{{ path('admin_record_update', { 'id': id }) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	{{ form_errors(form) }}
+	{{ form_widget(form) }}
+	<div class="form-actions">
+    	<input class="btn btn-primary" type="submit" value="{% trans %}Aufzeichnung aktualisieren{% endtrans %}" />
+		<a href="{{ path('admin_record') }}" class="btn">{% trans %}Abbrechen{% endtrans %}</a>
+	</div>
+</form>
+
+{% endblock %}

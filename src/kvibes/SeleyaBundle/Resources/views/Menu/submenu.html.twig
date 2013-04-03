@@ -1,0 +1,3 @@
+{% block navbar %}
+{{ navbar.hasMenu('menu') ? knp_menu_render(navbar.getMenu('menu'), {'currentClass': 'active', 'ancestorClass': 'active', 'allow_safe_labels': 'true'}) : '' }}
+{% endblock %}

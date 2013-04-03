@@ -1,0 +1,7 @@
+{% extends 'SeleyaBundle::base_admin.html.twig' %}
+
+{% block headline %}{% trans %}Metadaten{% endtrans %}{% endblock %}
+
+{% block content_sidebar %}
+	<a href="{{ path('admin_metadataConfig_new') }}" class="btn">{% trans %}Metadatum hinzufügen{% endtrans %}</a>
+{% endblock %}

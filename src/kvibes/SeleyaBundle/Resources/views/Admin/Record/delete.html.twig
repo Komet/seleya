@@ -1,0 +1,16 @@
+{% extends 'SeleyaBundle:Admin:Record/base.html.twig' %}
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash %}
+{% block headline %}{% trans %}Aufzeichnung löschen{% endtrans %}{% endblock %}
+
+{% block content_content %}
+
+	{{ flash('error', '<b>ACHTUNG</b> Möchten Sie die Aufzeichnung "%title%" unwiderruflich löschen?'|trans({ '%title%': record.title }), false, true) }}
+
+	<form class="inline" action="{{ path('admin_record_delete', { 'id': record.id }) }}" method="post">
+		<input type="hidden" name="confirmed" value="1" />
+		<div class="form-actions">
+			<button class="btn btn-danger"><i class="icon-trash icon-white"></i> Aufzeichnung Löschen</button>
+			<a href="{{ path('admin_record') }}" class="btn">Abbrechen</a>
+		</div>
+	</form>
+{% endblock %}

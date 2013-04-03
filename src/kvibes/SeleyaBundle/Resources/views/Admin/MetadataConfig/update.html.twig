@@ -1,0 +1,41 @@
+{% extends 'SeleyaBundle:Admin:MetadataConfig/base.html.twig' %}
+{% block headline %}{% trans %}Metadatum bearbeiten{% endtrans %}{% endblock %}
+
+{% block content_content %}
+
+<form action="{{ path('admin_metadataConfig_update', { 'id': id }) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	{{ form_errors(form) }}
+
+	{{ form_row(form.name) }}
+
+	<div class="options hide">
+	    <h3>Optionen</h3>
+	    <ul class="options unstyled" data-prototype="{{ form_widget(form.options.vars.prototype)|e }}">
+	    	{% for option in form.options %}
+	    		<li>{{ form_row(option.name) }}</li>
+	    	{% endfor %}
+	    </ul>
+    </div>
+
+    {{ form_widget(form.definition, {'attr': {'class': 'hide'}}) }}
+
+	{{ form_widget(form._token) }}
+
+	<div class="form-actions">
+    	<input class="btn btn-primary" type="submit" value="{% trans %}Metadatum aktualisieren{% endtrans %}" />
+		<a href="{{ path('admin_metadataConfig') }}" class="btn">{% trans %}Abbrechen{% endtrans %}</a>
+    	<a href="{{ path('admin_metadataConfig_delete', { 'id': id }) }}" class="btn btn-danger left-space-medium"><i class="icon-trash icon-white"></i> {% trans %}Metadatum löschen{% endtrans %}</a>
+	</div>
+</form>
+
+{% endblock %}
+
+{% block bottom_script %}
+	<script type="text/javascript">
+		var collectionHolder = $('ul.options');
+		var collectionDiv = $('div.options');
+		var $addTagLink = $('<div class="controls"><a href="#" class="add_tag_link btn btn-small"><i class="icon-plus-sign"></i> {% trans %}Weitere Option hinzufügen{% endtrans %}</a></div>');
+		var $newLinkLi = $('<li></li>').append($addTagLink);
+	</script>
+	<script type="text/javascript" src="{{ asset('bundles/seleya/js/admin/MetadataConfig_new.js') }}"></script>
+{% endblock %}

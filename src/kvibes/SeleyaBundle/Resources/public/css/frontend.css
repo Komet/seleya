@@ -1,0 +1,17 @@
+.navbar-inner {
+    box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.4);
+    border-bottom: none;
+    text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.2);
+    color: #F0F0F0;
+
+    background-color: #0072a9;
+    background-image: -moz-linear-gradient(center top, #0072a9, #006a9d);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#0072a9), to(#006a9d));
+    background-image: -webkit-linear-gradient(top, #0072a9, #006a9d);
+    background-image: -o-linear-gradient(top, #0072a9, #006a9d);
+    background-image: linear-gradient(to bottom, #0072a9, #006a9d);
+}
+
+.navbar .brand, .navbar .nav > li > a {
+    color: #f0f0f0;
+}

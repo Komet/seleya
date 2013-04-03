@@ -1,0 +1,30 @@
+{% extends 'SeleyaBundle:Admin:MetadataConfig/base.html.twig' %}
+
+{% block content_content %}
+
+<ul id="metadata-sortable" class="sortable table">
+	{% for meta in metadataConfigs %}
+		<li data-id="meta_{{ meta.id }}">
+			<span class="iconsweets sort-handle">}</span>
+			<span class="desc">{{ meta.name }}</span>
+			<span class="buttons">
+				<a href="{{ path('admin_metadataConfig_update', { 'id': meta.id }) }}" class="btn btn-primary btn-small"><i class="icon-pencil icon-white"></i> {% trans %}Bearbeiten{% endtrans %}</a>
+				<a href="{{ path('admin_metadataConfig_delete', { 'id': meta.id }) }}" class="btn btn-danger btn-small"><i class="icon-trash icon-white"></i> {% trans %}Löschen{% endtrans %}</a>
+			</span>
+		</li>
+	{% endfor %}
+</ul>
+
+<p id="metadata-sortable-loading" class="hide">
+	<span id="metadata-sortable-loading-spin" class="spinner"></span>
+	<span class="label">{% trans %}Reihenfolge wird aktualisiert...{% endtrans %}</span>
+</p>
+
+<span id="metadata-sortable-success" class="label label-success hide">{% trans %}Reihenfolge wurde aktualisiert{% endtrans %}</span>
+<span id="metadata-sortable-error" class="label label-important hide">{% trans %}Reihenfolge konnte nicht aktualisiert werden{% endtrans %}</span>
+
+{% endblock %}
+
+{% block bottom_script %}
+<script type="text/javascript" src="{{ asset('bundles/seleya/js/admin/MetadataConfig_index.js') }}"></script>
+{% endblock %}

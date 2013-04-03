@@ -1,0 +1,56 @@
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash, advanced_flash %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    {% stylesheets
+        '@MopaBootstrapBundle/Resources/public/less/mopabootstrapbundle.less'
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+    <link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/fonts/stylesheet.css') }}" />
+	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/layout.css') }}" media="screen" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Seleya</title>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+</head>
+
+<body>
+    <div class="container">
+		<form class="form-signin" action="{{ path('admin_login_check') }}" method="post">
+			<h2 class="form-signin-heading">{% trans %}Login{% endtrans %}</h2>
+			{% if error %}
+    			{{ flash('error', error.message, false, 'false') }}
+			{% endif %}
+        	<input type="text" name="_username" class="input-block-level" placeholder="{% trans %}Benutzername{% endtrans %}" value="{{ last_username }}" />
+        	<input type="password" name="_password" class="input-block-level" placeholder="{% trans %}Passwort{% endtrans %}" />
+        	<label class="checkbox">
+          		<input type="checkbox" name="_remember_me" /> {% trans %}Eingeloggt bleiben{% endtrans %}
+        	</label>
+        	<button class="btn btn-large btn-primary" type="submit">{% trans %}Anmelden{% endtrans %}</button>
+      	</form>
+    </div>
+    {% javascripts
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-transition.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-alert.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-modal.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-dropdown.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-scrollspy.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-tab.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-tooltip.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-popover.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-button.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-collapse.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-carousel.js'
+        '@MopaBootstrapBundle/Resources/bootstrap/js/bootstrap-typeahead.js'
+        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-collection.js'
+        '@MopaBootstrapBundle/Resources/public/js/mopabootstrap-subnav.js'
+        '@MopaBootstrapBundle/Resources/public/js/eyecon-bootstrap-datepicker.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+services:
+    # LDAP Admin Login Listener
+    ldap.listener:
+        class: kvibes\SeleyaBundle\EventListener\LdapSecurityListener
+        tags:
+            - { name: kernel.event_subscriber }
+
+    ldap.login_successful_listener:
+        class: kvibes\SeleyaBundle\EventListener\LoginListener
+        arguments: [@doctrine]
+        tags:
+            - { name: kernel.event_listener, event: security.interactive_login, method: onLogin }
+
+
+    # Menu builder
+    seleya.menu_builder:
+        class: kvibes\SeleyaBundle\Navbar\MenuBuilder
+        arguments: ["@knp_menu.factory", "@security.context"]
+
+
+    # Admin Navbar
+    seleya.admin_menu:
+        class: Knp\Menu\MenuItem
+        factory_service: seleya.menu_builder
+        factory_method: createAdminMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: adminMenu }
+
+    seleya.admin_right_menu:
+        class: Knp\Menu\MenuItem
+        factory_service: seleya.menu_builder
+        factory_method: createAdminRightMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: adminRightMenu }
+
+    seleya.admin.navbar:
+        class: %mopa_bootstrap.navbar.generic%
+        arguments:
+            - { leftmenu: @seleya.admin_menu=, rightmenu: @seleya.admin_right_menu= }
+            - {  }
+            - { title: "Seleya", titleRoute: "admin", fixedTop: true, isFluid: false, template:MopaBootstrapBundle:Navbar:navbar.html.twig }
+        tags:
+            - { name: mopa_bootstrap.navbar, alias: adminNavbar }
+
+
+    # Admin right menu, Records
+    seleya.admin_record_menu:
+        class: Knp\Menu\MenuItem
+        factory_service: seleya.menu_builder
+        factory_method: createAdminRecordMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: adminRecordMenu }
+
+    seleya.admin.admin_record_side:
+        class: %mopa_bootstrap.navbar.generic%
+        arguments:
+            - { menu: @seleya.admin_record_menu= }
+            - {  }
+            - { template:SeleyaBundle:Menu:submenu.html.twig }
+        tags:
+            - { name: mopa_bootstrap.navbar, alias: adminRecordNavbar }
+
+
+    # Frontend Navbar
+    seleya.menu:
+        class: Knp\Menu\MenuItem
+        factory_service: seleya.menu_builder
+        factory_method: createMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: menu }
+            
+    seleya.navbar:
+        class: %mopa_bootstrap.navbar.generic%
+        arguments:
+            - { leftmenu: @seleya.menu= }
+            - {  }
+            - { title: "Seleya", titleRoute: "index", fixedTop: true, isFluid: false, template:MopaBootstrapBundle:Navbar:navbar.html.twig }
+        tags:
+            - { name: mopa_bootstrap.navbar, alias: navbar }
+            
+
+    # Matterhorn Service            
+    seleya.matterhorn:
+        class: kvibes\SeleyaBundle\Model\Matterhorn
+        arguments:
+            - %matterhorn_url%
+            - %matterhorn_user%
+            - %matterhorn_password%

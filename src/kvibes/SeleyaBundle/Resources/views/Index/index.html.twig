@@ -1,0 +1,15 @@
+{% extends 'SeleyaBundle::base.html.twig' %}
+
+{% block content_content %}
+
+	<ul>
+		{% for record in records %}
+			{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
+			<li>
+				<img src="{{ preview | imagine_filter('record_preview') }}" />
+				{{ record.title }}
+			</li>
+		{% endfor %}
+	</ul>
+
+{% endblock %}

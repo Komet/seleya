@@ -1,0 +1,16 @@
+{% extends 'SeleyaBundle:Admin:MetadataConfig/base.html.twig' %}
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash %}
+{% block headline %}{% trans %}Metadatum löschen{% endtrans %}{% endblock %}
+
+{% block content_content %}
+
+	{{ flash('error', '<b>ACHTUNG</b> Wenn Sie das Metadatum "%title%" löschen, werden die entsprechenden Einträge in allen Aufzeichnungen ebenfalls gelöscht.'|trans({ '%title%': metadata.name }), false, true) }}
+
+	<form class="inline" action="{{ path('admin_metadataConfig_delete', { 'id': metadata.id }) }}" method="post">
+		<input type="hidden" name="confirmed" value="1" />
+		<div class="form-actions">
+			<button class="btn btn-danger"><i class="icon-trash icon-white"></i> Metadatum Löschen</button>
+			<a href="{{ path('admin_metadataConfig') }}" class="btn">Abbrechen</a>
+		</div>
+	</form>
+{% endblock %}
