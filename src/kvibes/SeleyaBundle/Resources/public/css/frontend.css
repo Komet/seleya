@@ -15,3 +15,28 @@
 .navbar .brand, .navbar .nav > li > a {
     color: #f0f0f0;
 }
+
+ul.record-list-horizontal {
+    
+}
+
+ul.record-list-horizontal li {
+    display: inline-block;
+    margin: 10px;
+    vertical-align: top;
+    width: 180px;
+}
+
+ul.record-list-horizontal li span.title {
+    font-size: 1.1em;
+    font-weight: bold;
+    line-height: 1.4em;
+    display: inline-block;
+    margin-top: 4px;
+}
+
+ul.record-list-horizontal li span.date {
+    font-size: 0.9em;
+    color: #999999;
+    display: inline-block;
+}

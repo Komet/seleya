@@ -26,6 +26,12 @@ twig:
         resources:
             - 'MopaBootstrapBundle:Form:fields.html.twig'
 
+services:
+    twig.extension.intl:
+       class: Twig_Extensions_Extension_Intl
+       tags:
+           - { name: twig.extension }
+
 # Assetic Configuration
 assetic:
     debug:          %kernel.debug%
@@ -83,4 +89,4 @@ liip_imagine:
         record_preview:
             quality: 75
             filters:
-                thumbnail: { size: [120, 90], mode: outbound }
+                thumbnail: { size: [180, 100], mode: outbound }

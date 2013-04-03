@@ -2,12 +2,15 @@
 
 {% block content_content %}
 
-	<ul>
+	<ul class="record-list-horizontal unstyled">
 		{% for record in records %}
 			{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
 			<li>
-				<img src="{{ preview | imagine_filter('record_preview') }}" />
-				{{ record.title }}
+				<a href="#">
+					<img src="{{ preview | imagine_filter('record_preview') }}" /><br />
+					<span class="title">{{ record.title }}</span><br />
+				</a>
+				<span class="date">{{ record.recordDate|localizeddate('long', 'none') }}</span>
 			</li>
 		{% endfor %}
 	</ul>
