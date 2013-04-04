@@ -55,6 +55,10 @@ index:
     pattern: /
     defaults: { _controller: SeleyaBundle:Index:index }
 
+record:
+    pattern: /record/{id}
+    defaults: { _controller: SeleyaBundle:Record:index }
+
 series:
     pattern: /series
     defaults: { _controller: SeleyaBundle:Index:index }

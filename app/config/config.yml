@@ -25,6 +25,8 @@ twig:
     form:
         resources:
             - 'MopaBootstrapBundle:Form:fields.html.twig'
+    globals:
+        matterhorn_url: %matterhorn_url%
 
 services:
     twig.extension.intl:

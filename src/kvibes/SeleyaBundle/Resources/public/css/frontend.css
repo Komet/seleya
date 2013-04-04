@@ -87,3 +87,9 @@ div.main-border > div.page-header {
 div.sidebar {
     padding-left: 20px;
 }
+
+iframe.matterhorn {
+    width: 540px;
+    height: 404px;
+    border: 0;
+}

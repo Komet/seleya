@@ -9,7 +9,7 @@
 			{% for record in records %}
 				{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
 				<li>
-					<a href="#">
+					<a href="{{ path('record', { 'id': record.id }) }}">
 						<img src="{{ preview | imagine_filter('record_preview') }}" /><br />
 						<span class="title">{{ record.title }}</span><br />
 					</a>
@@ -27,7 +27,7 @@
 			{% for record in records %}
 				{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
 				<li>
-					<a href="#">
+					<a href="{{ path('record', { 'id': record.id }) }}">
 						<img src="{{ preview | imagine_filter('record_preview') }}" /><br />
 						<span class="title">{{ record.title }}</span><br />
 					</a>

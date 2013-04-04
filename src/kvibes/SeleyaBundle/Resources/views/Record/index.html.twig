@@ -1,0 +1,13 @@
+{% extends 'SeleyaBundle::base.html.twig' %}
+
+{% block content_content %}
+	<div class="row-fluid main-border">
+		<div class="page-header">
+			<h4>{{ record.title }}</h4>
+		</div>
+
+		<iframe class="matterhorn" scrolling="no" src="{{ matterhorn_url }}/engage/ui/embed.html?id={{ record.externalId }}"></iframe>
+
+
+	</div>
+{% endblock %}
