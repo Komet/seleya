@@ -8,7 +8,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 /**
  * @ORM\Entity(repositoryClass="kvibes\SeleyaBundle\Repository\UserRepository")
  */
-class User implements UserInterface, \Serializable
+class User
 {
     /**
      * @ORM\Id
@@ -23,16 +23,19 @@ class User implements UserInterface, \Serializable
     private $username;
     
     /**
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="string", length=255)
      */
     private $commonName;
     
-    private $salt;
-    private $password;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    private $lastLogin;
     
     public function __construct($username)
     {
         $this->username = $username;
+        $this->lastLogin = new \DateTime();
     }
     
     public function getId()
@@ -50,41 +53,23 @@ class User implements UserInterface, \Serializable
         return $this->username;
     }
     
-    public function getPassword()
+    public function getCommonName()
     {
-        return $this->password;
+        return $this->commonName;
     }
     
-    public function setPassword($password)
+    public function setCommonName($commonName)
     {
-        $this->password = $password;
+        $this->commonName = $commonName;
     }
     
-    public function getSalt()
+    public function getLastLogin()
     {
-        return $this->salt;
+        return $this->lastLogin;
     }
     
-    public function getRoles()
+    public function setLastLogin($lastLogin)
     {
-        return array('ROLE_ADMIN');
-    }
-    
-    public function eraseCredentials()
-    {
-    }
-    
-    public function serialize()
-    {
-        return serialize(array(
-            $this->id
-        ));
-    }
-    
-    public function unserialize($serialized)
-    {
-        list(
-            $this->id
-        ) = unserialize($serialized);
+        $this->lastLogin = $lastLogin;
     }
 }

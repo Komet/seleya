@@ -18,13 +18,10 @@ class LoginListener
     {
         $user = $event->getAuthenticationToken()->getUser();
         if ($user) {
-            /*
-            $user->setLastLogin(new \DateTime());
-            $user->setNumberOfLogins($user->getNumberOfLogins() + 1);
-            $em = $this->doctrine->getEntityManager();
-            $em->flush();
-             * 
-             */
+            $this->doctrine
+                 ->getEntityManager()
+                 ->getRepository('SeleyaBundle:User')
+                 ->insertOrRefreshUser($user->getUsername(), $user->getAttribute('cn'));
         }
     }
 }

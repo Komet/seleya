@@ -21,6 +21,8 @@ class LdapSecurityListener implements EventSubscriberInterface
         if (array_key_exists('employeetype', $attrs)) {
             if ($attrs['employeetype'] == 1) {
                 $user->addRole('ROLE_ADMIN');
+            } else if ($attrs['employeetype'] == 2 || $attrs['employeetype'] == 3) {
+                $user->addRole('ROLE_USER');
             }
         }
     }

@@ -10,34 +10,39 @@ use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\NoResultException;
 use kvibes\SeleyaBundle\Entity\User;
 
-class UserRepository extends EntityRepository implements UserProviderInterface
+class UserRepository extends EntityRepository
 {
-    public function loadUserByUsername($username)
+    public function getUser($username)
+    {
+        return $this->findOneByUsername($username);
+    }
+    
+    public function insertOrRefreshUser($username, $commonName)
+    {
+        $user = $this->findOneByUsername($username);
+        if ($user === null) {
+            $this->insertUser($username, $commonName);
+        } else {
+            $this->updateUser($user, $commonName);
+        }
+    }
+    
+    private function insertUser($username, $commonName)
     {
         $user = new User($username);
-        $user->setId(1);
-        $user->setPassword('123');
-        return $user;
-    }
-    
-    public function refreshUser(UserInterface $user)
-    {
-        $class = get_class($user);
-        if (!$this->supportsClass($class)) {
-            throw new UnsupportedUserException(
-                sprintf(
-                    'Instances of "%s" are not supported.',
-                    $class
-                )
-            );
-        }
+        $user->setCommonName($commonName);
+        $user->setLastLogin(new \DateTime());
 
-        return $this->loadUserByUsername($user->getUsername());
+        $em = $this->getEntityManager();
+        $em->persist($user);
+        $em->flush();
     }
     
-    public function supportsClass($class)
+    private function updateUser($user, $commonName)
     {
-        return $this->getEntityName() === $class
-            || is_subclass_of($class, $this->getEntityName());
-    }    
+        $user->setCommonName($commonName);
+        $user->setLastLogin(new \DateTime());
+        $em = $this->getEntityManager();
+        $em->flush();
+    }
 }

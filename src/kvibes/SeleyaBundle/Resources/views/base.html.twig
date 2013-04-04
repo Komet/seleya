@@ -39,8 +39,7 @@
                     {% endblock content_content %}
                 </div>
                 <div class="span3 sidebar">
-                    {% block content_sidebar %}
-                    {% endblock content_sidebar %}
+                	{% render controller('SeleyaBundle:Security:frontendLogin') %}
                 </div>
                 {% endblock content %}
             </div>

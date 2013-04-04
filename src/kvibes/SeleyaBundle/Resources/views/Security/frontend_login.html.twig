@@ -1,0 +1,17 @@
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash, advanced_flash %}
+
+<div class="row-fluid">
+	<h5><i class="icon icon-lock"></i> Login</h5>
+	{% if error %}
+    	{{ flash('error', error.message|trans, true, false) }}
+	{% endif %}
+
+	<form method="post" class="form" action="{{ path('login_check') }}">
+		<input class="input-block-level" name="_username" type="text" placeholder="{% trans %}Benutzername{% endtrans %}" value="{{ last_username }}" />
+		<input class="input-block-level" name="_password" type="password" placeholder="{% trans %}Passwort{% endtrans %}" /><br />
+		<label class="checkbox">
+      		<input type="checkbox" name="_remember_me" /> {% trans %}Eingeloggt bleiben{% endtrans %}
+		</label>
+		<input type="submit" class="btn btn-primary" value="{% trans %}Anmelden{% endtrans %}" />
+	</form>
+</div>

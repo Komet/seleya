@@ -45,14 +45,36 @@ security:
             form_login:
                 login_path: admin_login
                 check_path: admin_login_check
+                remember_me: true
             logout:
                 path:   /admin/logout
                 target: /admin
             remember_me:
                 key:      "%secret%"
                 lifetime: 31536000
+                path:     /admin
+                domain:   ~
+
+        frontend:
+            pattern:    ^/
+            anonymous: true
+            provider: ldap
+            imag_ldap:
+                login_path:   index
+            form_login:
+                login_path: index
+                check_path: login_check
+                remember_me: true
+                use_referer: true
+            logout:
+                path:   /logout
+                target: /
+            remember_me:
+                key:      "%secret%"
+                lifetime: 31536000
                 path:     /
                 domain:   ~
+
     access_control:
         - { path: ^/admin, roles: ROLE_ADMIN }
         
@@ -72,7 +94,7 @@ imag_ldap:
     user:
         base_dn: %ldap_user_basedn%
         name_attribute: uid
-        attributes: [employeetype]
+        attributes: [employeetype, cn]
 #    role:
 #        base_dn: dc=kvibes,dc=de
 #        filter: (ou=group) #Optional

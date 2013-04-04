@@ -84,9 +84,33 @@ div.main-border > div.page-header {
     color: #F0F0F0;
 }
 
+
+/*** Sidebar ***/
+
 div.sidebar {
     padding-left: 20px;
+    padding-top: 20px;
 }
+
+div.sidebar div.row-fluid {
+    border-bottom: 1px solid #e0e0e0;
+}
+
+label.checkbox {
+    margin-bottom: 12px;
+}
+
+span.login-widget-label {
+    font-size: 12px;
+    color: #808080;
+    display: block;
+}
+
+span.login-widget-username {
+    font-weight: bold;
+    display: block;
+}
+
 
 iframe.matterhorn {
     width: 540px;

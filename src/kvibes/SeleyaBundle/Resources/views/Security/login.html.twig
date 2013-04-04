@@ -20,7 +20,7 @@
 		<form class="form-signin" action="{{ path('admin_login_check') }}" method="post">
 			<h2 class="form-signin-heading">{% trans %}Login{% endtrans %}</h2>
 			{% if error %}
-    			{{ flash('error', error.message, false, 'false') }}
+    			{{ flash('error', error.message|trans, true, false) }}
 			{% endif %}
         	<input type="text" name="_username" class="input-block-level" placeholder="{% trans %}Benutzername{% endtrans %}" value="{{ last_username }}" />
         	<input type="password" name="_password" class="input-block-level" placeholder="{% trans %}Passwort{% endtrans %}" />
