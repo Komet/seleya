@@ -66,7 +66,7 @@ div.main-border {
     padding-left: 20px;
     padding-right: 20px;
     background-color: #ffffff;
-    box-shadow: 2px 0 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
 div.main-border:first-child {
@@ -111,9 +111,16 @@ span.login-widget-username {
     display: block;
 }
 
+/*** Record view ***/
 
 iframe.matterhorn {
     width: 540px;
     height: 404px;
     border: 0;
+}
+
+dl.record-metadata dt {
+    color: #999999;
+    font-weight: normal;
+    font-size: 12px;
 }

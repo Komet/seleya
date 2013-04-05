@@ -17,7 +17,7 @@ class LoginListener
     public function onLogin(InteractiveLoginEvent $event)
     {
         $user = $event->getAuthenticationToken()->getUser();
-        if ($user) {
+        if ($user && get_class($user) == 'IMAG\LdapBundle\User\LdapUser') {
             $this->doctrine
                  ->getEntityManager()
                  ->getRepository('SeleyaBundle:User')
