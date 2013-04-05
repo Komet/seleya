@@ -133,7 +133,7 @@ class RecordController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $record = $em->getRepository('SeleyaBundle:Record')
-                     ->findOneById($id);
+                     ->getRecord($id);
         if (!$record) {
             throw $this->createNotFoundException('Unable to find record.');
         }

@@ -105,26 +105,36 @@ class MetadataConfigController extends Controller
 
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
-     * @todo Remove metadata from records (metadata table)
      */ 
     public function deleteAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
-        $metadata = $em->getRepository('SeleyaBundle:MetadataConfig')
-                       ->findOneById($id);
-        if (!$metadata) {
+        $metadataConfig = $em->getRepository('SeleyaBundle:MetadataConfig')
+                             ->findOneById($id);
+        if (!$metadataConfig) {
             throw $this->createNotFoundException('Unable to find metadata.');
         }
         
         if ($request->isMethod('POST') && $request->request->get('confirmed') == 1) {
-            $em->remove($metadata);
+            $metadatas = $em->createQueryBuilder()
+                            ->select(array('m'))
+                            ->from('SeleyaBundle:Metadata', 'm')
+                            ->where('m.config=:mco')
+                            ->setParameter('mco', $metadataConfig)
+                            ->getQuery()
+                            ->getResult();
+            foreach ($metadatas as $metadata) {
+                $em->remove($metadata);
+            }                                     
+            
+            $em->remove($metadataConfig);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Metadatum wurde gelöscht'));                
             return $this->redirect($this->generateUrl('admin_metadataConfig'));
         }
         
         return $this->render('SeleyaBundle:Admin:MetadataConfig/delete.html.twig', array(
-            'metadata' => $metadata
+            'metadata' => $metadataConfig
         ));
     }
     
