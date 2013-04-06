@@ -4,6 +4,7 @@
 	<div class="row-fluid main-border">
 		<div class="page-header">
 			<h4>{{ record.title }}</h4>
+			<span class="bookmark-ribbon {% if hasBookmark %}active{% endif %}" id="bookmark" data-toggle="tooltip" data-placement="bottom" data-record-id="{{ record.id }}" title=""></span>
 		</div>
 
 		<iframe class="matterhorn" scrolling="no" src="{{ matterhorn_url }}/engage/ui/embed.html?id={{ record.externalId }}"></iframe>
@@ -43,4 +44,16 @@
 			test2
 		</div>
 	</div>
+{% endblock %}
+
+{% block bottom_script %}
+	<script type="text/javascript">
+		var textBookmarkUnset = '{{ 'Lesezeichen hinzufügen'|trans }}';
+		var textBookmarkSet = '{{ 'Lesezeichen entfernen'|trans }}';
+		var textBookmarkNotLoggedIn = '{{ 'Sie müssen angemeldet sein, um ein Lesezeichen zu setzen'|trans }}';
+		var isLoggedIn = {% if is_granted('ROLE_USER') %}true{% else %}false{% endif %};
+		var hasBookmark = {% if hasBookmark %}true{% else %}false{% endif %};
+	</script>
+
+	<script type="text/javascript" src="{{ asset('bundles/seleya/js/record/Bookmark.js') }}"></script>
 {% endblock %}

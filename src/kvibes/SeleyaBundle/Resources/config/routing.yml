@@ -59,6 +59,12 @@ record:
     pattern: /record/{id}
     defaults: { _controller: SeleyaBundle:Record:index }
 
+record_bookmark:
+    pattern: /record/toggleBookmark/{id}
+    defaults: { _controller: SeleyaBundle:Record:toggleBookmark }
+    options:
+        expose: true
+
 series:
     pattern: /series
     defaults: { _controller: SeleyaBundle:Index:index }
