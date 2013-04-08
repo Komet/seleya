@@ -61,7 +61,17 @@ record:
 
 record_bookmark:
     pattern: /record/toggleBookmark/{id}
-    defaults: { _controller: SeleyaBundle:Record:toggleBookmark }
+    defaults: { _controller: SeleyaBundle:Bookmark:toggleBookmark }
+    options:
+        expose: true
+
+bookmarks:
+    pattern: /bookmarks
+    defaults: { _controller: SeleyaBundle:Bookmark:index }
+
+bookmark_delete:
+    pattern: /bookmark/delete/{id}
+    defaults: { _controller: SeleyaBundle:Bookmark:delete }
     options:
         expose: true
 

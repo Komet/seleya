@@ -92,3 +92,7 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [180, 100], mode: outbound }
+        record_preview_small:
+            quality: 75
+            filters:
+                thumbnail: { size: [90, 50], mode: outbound }

@@ -1,0 +1,31 @@
+{% extends 'SeleyaBundle::base.html.twig' %}
+
+{% block content_content %}
+	<div class="row-fluid main-border">
+		<div class="page-header">
+			<h4>{% trans %}Lesezeichen{% endtrans %}</h4>
+		</div>
+		<div class="alert alert-info {% if bookmarks|length > 0 %}hide{% endif %}" id="alert-no-bookmarks">
+			Sie haben noch keine Lesezeichen angelegt.
+		</div>
+		<ul class="bookmark-list unstyled">
+			{% for bookmark in bookmarks %}
+				{% set preview = 'previews/' ~ bookmark.record.externalId ~ '.jpg' %}
+				<li>
+					<a href="{{ path('record', {'id': bookmark.record.id}) }}">
+						<img src="{{ preview | imagine_filter('record_preview_small') }}" />
+						<span class="record-title">{{ bookmark.record.title }}</span><br />
+						<span class="date">{{ bookmark.record.recordDate|localizeddate('long', 'none') }}</span>
+					</a>
+					<a href="#" data-bookmark-id="{{ bookmark.id }}" class="bookmark-remove" rel="tooltip" title="{% trans %}Lesezeichen entfernen{% endtrans %}">
+						<i class="icon icon-remove"></i>
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+{% endblock %}
+
+{% block bottom_script %}
+	<script type="text/javascript" src="{{ asset('bundles/seleya/js/bookmark/Bookmark.js') }}"></script>
+{% endblock %}

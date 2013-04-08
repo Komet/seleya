@@ -38,6 +38,9 @@
                 </div>
                 <div class="span3 sidebar">
                 	{% render controller('SeleyaBundle:Security:frontendLogin') %}
+                	{% if is_granted('ROLE_USER') %}
+                		{{ mopa_bootstrap_navbar('userSideNavbar') }}
+                	{% endif %}
                 </div>
                 {% endblock content %}
             </div>

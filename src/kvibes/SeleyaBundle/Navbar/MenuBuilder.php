@@ -41,9 +41,9 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
     public function createAdminRecordMenu(Request $request)
     {
         $menu = $this->createSubnavbarMenuItem();
+        $menu->setChildrenAttribute('class', 'nav nav-pills nav-stacked');
         $menu->addChild('Neue Aufzeichnungen', array('route' => 'admin_record'));
         $menu->addChild('Alle Aufzeichnungen', array('route' => 'admin_record_visible'));
-        $menu->setChildrenAttribute('class', 'nav nav-pills nav-stacked');
         if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
             $menu->addChild('Aufzeichnungen importieren', array('route' => 'admin_record_import'));
             $menu->addChild('Aufzeichnung hinzufügen', array('route' => 'admin_record_new'));
@@ -56,6 +56,15 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
         $menu = $this->createNavbarMenuItem();
         $menu->addChild('Fachbereiche', array('route' => 'course'));
         $menu->addChild('Veranstaltungen', array('route' => 'series'));
+        return $menu;
+    }
+    
+    public function createUserSideMenu(Request $request)
+    {
+        $menu = $this->createSubnavbarMenuItem();
+        $menu->setChildrenAttribute('class', 'nav nav-pills nav-stacked');
+        $menu->addChild('Lesezeichen', array('route' => 'bookmarks'));
+        $menu->addChild('Abmelden', array('route' => 'logout'));
         return $menu;
     }
 }

@@ -86,6 +86,24 @@ services:
         tags:
             - { name: mopa_bootstrap.navbar, alias: navbar }
             
+    # User Menu
+    seleya.user_side_menu:
+        class: Knp\Menu\MenuItem
+        factory_service: seleya.menu_builder
+        factory_method: createUserSideMenu
+        arguments: ["@request"]
+        scope: request
+        tags:
+            - { name: knp_menu.menu, alias: userSideMenu }
+
+    seleya.user_side_nav:
+        class: %mopa_bootstrap.navbar.generic%
+        arguments:
+            - { menu: @seleya.user_side_menu= }
+            - {  }
+            - { template:SeleyaBundle:Menu:submenu.html.twig }
+        tags:
+            - { name: mopa_bootstrap.navbar, alias: userSideNavbar }
 
     # Matterhorn Service            
     seleya.matterhorn:

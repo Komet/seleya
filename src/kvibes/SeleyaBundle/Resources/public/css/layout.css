@@ -36,6 +36,10 @@
     margin-left: 30px;
 }
 
+a.brand img {
+    margin-top: -10px;
+}
+
 /*** Login ***/
 
 .form-signin {
