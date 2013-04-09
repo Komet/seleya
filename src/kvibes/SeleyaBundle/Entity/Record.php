@@ -52,6 +52,11 @@ class Record
     protected $comments;
     
     /**
+     * @ORM\OneToMany(targetEntity="Bookmark", mappedBy="record", cascade={"all"})
+     */
+    protected $bookmarks;
+    
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updated;
@@ -65,6 +70,7 @@ class Record
     {
         $this->metadata = new \Doctrine\Common\Collections\ArrayCollection();
         $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->bookmarks = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visible = false;
         $this->recordDate = new \DateTime();
     }
@@ -132,6 +138,11 @@ class Record
     public function getComments()
     {
         return $this->comments;
+    }
+    
+    public function getBookmarks()
+    {
+        return $this->bookmarks;
     }
     
     /**

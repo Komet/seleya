@@ -210,8 +210,6 @@ class RecordController extends Controller
      * @todo check if superadmin or user owns record
      * @todo delete preview image
      * @todo delete record in matterhorn (with optional checkbox in form)
-     * @todo delete all bookmarks
-     * @todo delete all comments
      */
     public function deleteAction(Request $request, $id)
     {
