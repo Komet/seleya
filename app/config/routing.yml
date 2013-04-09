@@ -19,6 +19,10 @@ admin_login_check:
 admin_logout:
     path:     /admin/logout
 
+login:
+    pattern:  /login
+    defaults: { _controller: SeleyaBundle:Security:frontendLogin }
+
 login_check:
     pattern: /login_check
 

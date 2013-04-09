@@ -66,6 +66,7 @@ security:
                 check_path: login_check
                 remember_me: true
                 use_referer: true
+                failure_path: login
             logout:
                 path:   /logout
                 target: /

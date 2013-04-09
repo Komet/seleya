@@ -1,15 +1,22 @@
 {% extends 'SeleyaBundle::base.html.twig' %}
 
-{% block content_content %}
+{% block content %}
+<div class="span8 offset1">
 	<div class="row-fluid main-border">
 		<div class="page-header">
 			<h4>{{ record.title }}</h4>
 			<span class="bookmark-ribbon {% if hasBookmark %}active{% endif %}" id="bookmark" data-toggle="tooltip" data-placement="bottom" data-record-id="{{ record.id }}" title=""></span>
 		</div>
-
-		<iframe class="matterhorn" scrolling="no" src="{{ matterhorn_url }}/engage/ui/embed.html?id={{ record.externalId }}"></iframe>
+		<div class="center">
+			<div class="iframe-container">
+				<div class="iframe-dummy"></div>
+				<div class="iframe-container-inner">
+					<iframe class="matterhorn" scrolling="no" src="{{ matterhorn_url }}/engage/ui/embed.html?id={{ record.externalId }}"></iframe>
+				</div>
+			</div>
+		</div>
 	</div>
-	<div class="row-fluid main-border padding-top-medium">
+	<div class="row-fluid padding-top-medium main-border">
 		<div class="span6">
 			<dl class="record-metadata">
 				<dt>{% trans %}Aufzeichnung{% endtrans %}</dt>
@@ -41,14 +48,14 @@
 			</dl>
 		</div>
 		<div class="span6 comments">
-			<div class="center padding-top-medium">
-				<button class="btn btn-mini {% if hasMoreComments == false %}hide{% endif %}" id="loadOlderComments" data-record-id="{{ record.id }}">
+			<div class="center padding-top-small">
+				<button class="btn btn-block btn-mini {% if hasMoreComments == false %}hide{% endif %}" id="loadOlderComments" data-record-id="{{ record.id }}">
 					<span class="spin hide"></span>
 					{% trans %}Vorherige Kommentare...{% endtrans %}
 				</button>
 			</div>
 			{% if comments|length == 0 %}
-			<div class="alert alert-info">
+			<div class="alert alert-info" id="alert-no-comments">
 				{% trans %}Bisher hat noch niemand diese Aufzeichnung kommentiert.{% endtrans %}
 			</div>
 			{% endif %}
@@ -75,6 +82,10 @@
 			{% endif %}
 		</div>
 	</div>
+</div>
+<div class="span2">
+</div>
+
 {% endblock %}
 
 {% block bottom_script %}

@@ -27,21 +27,13 @@
 
         <div class="content">
             {% block content_row %}
+          	{% if app.session.flashbag.peekAll|length > 0 %}
+        	    <div class="row-fluid">
+					{{ session_flash() }}
+    	        </div>
+			{% endif %}
             <div class="row-fluid">
                 {% block content %}
-                <div class="span9">
-            		{% if app.session.flashbag.peekAll|length > 0 %}
-						{{ session_flash() }}
-            		{% endif %}
-                	{% block content_content %}
-                    {% endblock content_content %}
-                </div>
-                <div class="span3 sidebar">
-                	{% render controller('SeleyaBundle:Security:frontendLogin') %}
-                	{% if is_granted('ROLE_USER') %}
-                		{{ mopa_bootstrap_navbar('userSideNavbar') }}
-                	{% endif %}
-                </div>
                 {% endblock content %}
             </div>
             {% endblock content_row %}

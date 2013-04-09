@@ -1,6 +1,7 @@
 {% extends 'SeleyaBundle::base.html.twig' %}
 
-{% block content_content %}
+{% block content %}
+<div class="span10 offset1">
 	<div class="row-fluid main-border">
 		<div class="page-header">
 			<h4>{% trans %}Beliebte Aufzeichnungen{% endtrans %}</h4>
@@ -36,5 +37,5 @@
 			{% endfor %}
 		</ul>
 	</div>
-
+</div>
 {% endblock %}

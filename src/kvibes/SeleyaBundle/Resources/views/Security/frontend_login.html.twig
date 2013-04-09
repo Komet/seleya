@@ -1,17 +1,28 @@
-{% from 'MopaBootstrapBundle::flash.html.twig' import flash, advanced_flash %}
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash %}
+{% extends 'SeleyaBundle::base.html.twig' %}
 
-<div class="row-fluid">
-	<h5><i class="icon icon-lock"></i> Login</h5>
-	{% if error %}
-    	{{ flash('error', error.message|trans, true, false) }}
-	{% endif %}
-
-	<form method="post" class="form" action="{{ path('login_check') }}">
-		<input class="input-block-level" name="_username" type="text" placeholder="{% trans %}Benutzername{% endtrans %}" value="{{ last_username }}" />
-		<input class="input-block-level" name="_password" type="password" placeholder="{% trans %}Passwort{% endtrans %}" /><br />
-		<label class="checkbox">
-      		<input type="checkbox" name="_remember_me" /> {% trans %}Eingeloggt bleiben{% endtrans %}
-		</label>
-		<input type="submit" class="btn btn-primary" value="{% trans %}Anmelden{% endtrans %}" />
-	</form>
+{% block content %}
+<div class="span10 offset1">
+	<div class="row-fluid main-border">
+		<div class="page-header">
+			<h4>{% trans %}Login{% endtrans %}</h4>
+		</div>
+			<form class="form-signin" action="{{ path('login_check') }}" method="post">
+				{% if error %}
+	    			{{ flash('error', error.message|trans, false, false) }}
+	    			{{ flash('info', 'Wenn Sie ihr Passwort vergessen haben, hilft Ihnen das <a href="http://serviceportal.itz.uni-halle.de/" target="_blank"><b>Serviceportal des ITZ</b></a>, es schnell und einfach zurückzusetzen.', false, true) }}
+				{% endif %}
+	        	<input type="text" name="_username" class="input-block-level" placeholder="{% trans %}Benutzername{% endtrans %}" value="{{ last_username }}" />
+	        	<input type="password" name="_password" class="input-block-level" placeholder="{% trans %}Passwort{% endtrans %}" />
+	        	<label class="checkbox">
+	          		<input type="checkbox" name="_remember_me" /> {% trans %}Eingeloggt bleiben{% endtrans %}
+	        	</label>
+	        	<input type="hidden" name="_target_path" value="index" />
+	        	<div class="form-actions">
+	        		<button class="btn btn-primary" type="submit">{% trans %}Anmelden{% endtrans %}</button>
+	        		<a class="btn" href="http://serviceportal.itz.uni-halle.de/" target="_blank">{% trans %}Ich habe mein Passwort vergessen{% endtrans %}</a>
+				</div>
+	      	</form>
+	</div>
 </div>
+{% endblock %}

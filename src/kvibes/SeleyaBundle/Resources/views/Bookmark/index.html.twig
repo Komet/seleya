@@ -1,6 +1,7 @@
 {% extends 'SeleyaBundle::base.html.twig' %}
 
-{% block content_content %}
+{% block content %}
+<div class="span10 offset1">
 	<div class="row-fluid main-border">
 		<div class="page-header">
 			<h4>{% trans %}Lesezeichen{% endtrans %}</h4>
@@ -24,6 +25,7 @@
 			{% endfor %}
 		</ul>
 	</div>
+</div>
 {% endblock %}
 
 {% block bottom_script %}

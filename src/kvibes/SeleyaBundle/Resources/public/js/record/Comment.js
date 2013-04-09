@@ -23,6 +23,7 @@ $(function() {
 	    		comment: comment
 	    	})
 		    .done(function(data) {
+		    	$('#alert-no-comments').hide();
 		    	textarea.val('');
 		    	addedComments.push(data.commentId);
 		    	$('ul.comments').append(data.html);

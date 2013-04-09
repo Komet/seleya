@@ -15,8 +15,7 @@ services:
     # Menu builder
     seleya.menu_builder:
         class: kvibes\SeleyaBundle\Navbar\MenuBuilder
-        arguments: ["@knp_menu.factory", "@security.context"]
-
+        arguments: ["@knp_menu.factory", "@security.context", "@doctrine"]
 
     # Admin Navbar
     seleya.admin_menu:
@@ -42,7 +41,7 @@ services:
         arguments:
             - { leftmenu: @seleya.admin_menu=, rightmenu: @seleya.admin_right_menu= }
             - {  }
-            - { title: "Seleya", titleRoute: "admin", fixedTop: true, isFluid: false, template:MopaBootstrapBundle:Navbar:navbar.html.twig }
+            - { title: "Seleya", titleRoute: "admin", fixedTop: true, isFluid: false, template:SeleyaBundle:Menu:navbar.html.twig }
         tags:
             - { name: mopa_bootstrap.navbar, alias: adminNavbar }
 
@@ -77,33 +76,24 @@ services:
         tags:
             - { name: knp_menu.menu, alias: menu }
             
-    seleya.navbar:
-        class: %mopa_bootstrap.navbar.generic%
-        arguments:
-            - { leftmenu: @seleya.menu= }
-            - { searchform: kvibes\SeleyaBundle\Form\Type\NavbarSearchType }
-            - { title: "Seleya", titleRoute: "index", fixedTop: true, isFluid: true, template:SeleyaBundle:Menu:navbar.html.twig }
-        tags:
-            - { name: mopa_bootstrap.navbar, alias: navbar }
-            
-    # User Menu
-    seleya.user_side_menu:
+    seleya.user_right_menu:
         class: Knp\Menu\MenuItem
         factory_service: seleya.menu_builder
-        factory_method: createUserSideMenu
+        factory_method: createUserRightMenu
         arguments: ["@request"]
         scope: request
         tags:
-            - { name: knp_menu.menu, alias: userSideMenu }
-
-    seleya.user_side_nav:
+            - { name: knp_menu.menu, alias: userRightMenu }
+            
+    seleya.navbar:
         class: %mopa_bootstrap.navbar.generic%
         arguments:
-            - { menu: @seleya.user_side_menu= }
-            - {  }
-            - { template:SeleyaBundle:Menu:submenu.html.twig }
+            - { leftmenu: @seleya.menu=, rightmenu: @seleya.user_right_menu= }
+            - { searchform: kvibes\SeleyaBundle\Form\Type\NavbarSearchType }
+            - { title: "Seleya", titleRoute: "index", fixedTop: false, staticTop: true, isFluid: true, template:SeleyaBundle:Menu:frontend_navbar.html.twig }
         tags:
-            - { name: mopa_bootstrap.navbar, alias: userSideNavbar }
+            - { name: mopa_bootstrap.navbar, alias: navbar }
+            
 
     # Matterhorn Service            
     seleya.matterhorn:
