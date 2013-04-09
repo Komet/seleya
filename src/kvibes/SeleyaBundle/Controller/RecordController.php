@@ -3,6 +3,7 @@
 namespace kvibes\SeleyaBundle\Controller;
 
 use kvibes\SeleyaBundle\Entity\Bookmark;
+use kvibes\SeleyaBundle\Controller\CommentController;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
@@ -22,6 +23,10 @@ class RecordController extends Controller
         $bookmark = null;
         $record = $em->getRepository('SeleyaBundle:Record')
                      ->getRecord($id);
+        $comments = $em->getRepository('SeleyaBundle:Comment')
+                       ->getCommentsForRecord($id, 0, CommentController::commentsPerPage);
+        $numberOfComments = $em->getRepository('SeleyaBundle:Comment')
+                               ->getCommentsCountForRecord($id);
 
         if ($record === null) {
             throw $this->createNotFoundException('Unable to find record.');
@@ -36,8 +41,10 @@ class RecordController extends Controller
         }
 
         return $this->render('SeleyaBundle:Record:index.html.twig', array(
-            'record'      => $record,
-            'hasBookmark' => $bookmark !== null
+            'record'          => $record,
+            'comments'        => $comments,
+            'hasMoreComments' => count($comments) < $numberOfComments,
+            'hasBookmark'     => $bookmark !== null
         ));
     }
 }

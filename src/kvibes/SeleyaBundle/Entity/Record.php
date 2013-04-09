@@ -46,6 +46,12 @@ class Record
     protected $metadata;
     
     /**
+     * @ORM\OneToMany(targetEntity="Comment", mappedBy="record", cascade={"all"})
+     * @ORM\OrderBy({"created" = "ASC"})
+     */
+    protected $comments;
+    
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updated;
@@ -58,6 +64,7 @@ class Record
     public function __construct()
     {
         $this->metadata = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
         $this->visible = false;
         $this->recordDate = new \DateTime();
     }
@@ -120,6 +127,11 @@ class Record
     public function setVisible($visible)
     {
         $this->visible = $visible;
+    }
+    
+    public function getComments()
+    {
+        return $this->comments;
     }
     
     /**

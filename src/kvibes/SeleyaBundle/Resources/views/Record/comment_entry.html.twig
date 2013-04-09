@@ -1,0 +1,5 @@
+<li>
+	<span class="username">{{ comment.user.commonName }}</span>
+	<span class="date">{{ comment.created|localizeddate('medium', 'short') }}</span>
+	<span class="comment">{{ comment.text|nl2br }}</span>
+</li>

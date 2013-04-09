@@ -20,7 +20,7 @@ class Bookmark
     protected $id;
     
     /**
-     * @ORM\OneToOne(targetEntity="Record")
+     * @ORM\ManyToOne(targetEntity="Record")
      */
     protected $record;
     

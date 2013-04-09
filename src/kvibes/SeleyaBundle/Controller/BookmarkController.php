@@ -47,7 +47,7 @@ class BookmarkController extends Controller
                    ->getUser($securityContext->getToken()->getUser()->getUsername());
 
         $bookmark = $em->getRepository('SeleyaBundle:Bookmark')->findOneById($id);
-        if ($bookmark === null) {
+        if ($bookmark === null || $user === null) {
             return new Response('', 400, array('Content-Type'=>'application/json'));
         }
 

@@ -66,6 +66,14 @@ div.main-border {
     box-shadow: 2px 4px 4px rgba(0, 0, 0, 0.1);
 }
 
+div.padding-top-medium {
+    padding-top: 20px;
+}
+
+div.padding-bottom-medium {
+    padding-bottom: 20px;
+}
+
 div.main-border:first-child {
     padding-top: 20px;
 }
@@ -81,6 +89,28 @@ div.main-border > div.page-header {
     color: #F0F0F0;
 }
 
+div.row-fluid:last-child {
+    padding-bottom: 40px;
+}
+
+span.margin-right-small {
+    margin-right: 10px;
+}
+
+div.center {
+    text-align: center;
+}
+
+button.hasSpinner {
+    position: relative;
+}
+
+button.btn-mini span.spin {
+    position: relative;
+    top: -4px;
+    margin-right: 5px;
+    margin-left: 5px;
+}
 
 /*** Sidebar ***/
 
@@ -118,6 +148,9 @@ iframe.matterhorn {
     width: 540px;
     height: 404px;
     border: 0;
+    position: relative;
+    left: 50%;
+    margin-left: -270px;
 }
 
 dl.record-metadata dt {
@@ -156,6 +189,61 @@ span.bookmark-ribbon.active, span.bookmark-ribbon:hover {
     -ms-filter: saturate(100%);
 }
 
+ul.comments {
+    margin-top: 20px;
+    border-left: 2px solid #eee;
+    margin-left: 12px;
+}
+
+ul.comments li {
+    margin-bottom: 1.0em;
+    padding-left: 20px;
+    padding-right: 20px;
+    position: relative;
+    top: -4px;
+}
+
+ul.comments li:before {
+    content: "";
+    display: block;
+    position: absolute;
+    left: -13px;
+    top: 0;
+    font-size: 16px;
+    background: #eee;
+    -webkit-border-radius: 50%;
+    -moz-border-radius: 50%;
+    border-radius: 50%;
+    padding: .05em .3em .4em .35em;
+    line-height: 1em;
+}
+
+ul.comments .username {
+    font-style: italic;
+    font-weight: bold;
+    color: #999999;
+    margin-right: 10px;
+    font-size: 12px;
+}
+
+ul.comments li span.comment {
+    display: block;
+}
+
+ul.comments li span.date {
+    font-style: italic;
+}
+
+ul.comments li:before {
+    font-family: 'iconSweetsRegular';
+    margin-right: 2px;
+    content: "#"; 
+    color: #85B2D3 
+}
+
+ul.comments li.highlight {
+    background: #fffade;
+}
 
 /*** Bookmarks ***/
 
@@ -183,3 +271,41 @@ ul.bookmark-list li a.bookmark-remove {
     margin-top: -5px;
     float: right;
 }
+
+
+/*
+div.comments {
+    padding: 20px;
+    border: 1px solid #f0f0f0;
+    padding-top: 0;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+h4.test {
+    background: #f4f4f4;
+    background: -moz-linear-gradient(top, #f4f4f4 0%, #ededed 50%, #e8e8e8 53%, #eaeaea 100%);
+    background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#f4f4f4), color-stop(50%,#ededed), color-stop(53%,#e8e8e8), color-stop(100%,#eaeaea));
+    background: -webkit-linear-gradient(top, #f4f4f4 0%,#ededed 50%,#e8e8e8 53%,#eaeaea 100%);
+    background: -o-linear-gradient(top, #f4f4f4 0%,#ededed 50%,#e8e8e8 53%,#eaeaea 100%);
+    background: -ms-linear-gradient(top, #f4f4f4 0%,#ededed 50%,#e8e8e8 53%,#eaeaea 100%);
+    background: linear-gradient(top, #f4f4f4 0%,#ededed 50%,#e8e8e8 53%,#eaeaea 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f4f4f4', endColorstr='#eaeaea',GradientType=0 );
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-bottom: 2em;
+    padding: 10px 20px 10px 20px;
+    -webkit-box-shadow: 0 0 4px #ccc, inset 0 1px 0 rgba(255,255,255,.8);
+    -moz-box-shadow: 0 0 4px #ccc, inset 0 1px 0 rgba(255,255,255,.8);
+    box-shadow: 0 0 4px #ccc, inset 0 1px 0 rgba(255,255,255,.8);
+    -webkit-border-top-left-radius: 7px;
+    -webkit-border-top-right-radius: 7px;
+    -moz-border-radius-topleft: 7px;
+    -moz-border-radius-topright: 7px;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+    border-bottom: 1px solid #ccc;
+    color: #A1A3A3;
+    margin-top: 0;
+}
+*/
