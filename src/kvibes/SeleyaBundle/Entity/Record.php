@@ -57,6 +57,16 @@ class Record
     protected $bookmarks;
     
     /**
+     * @ORM\ManyToOne(targetEntity="Faculty", inversedBy="records")
+     */
+    protected $faculty;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Course", inversedBy="records")
+     */
+    protected $course;
+    
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updated;
@@ -68,9 +78,9 @@ class Record
 
     public function __construct()
     {
-        $this->metadata = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->comments = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->bookmarks = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->metadata = new ArrayCollection();
+        $this->comments = new ArrayCollection();
+        $this->bookmarks = new ArrayCollection();
         $this->visible = false;
         $this->recordDate = new \DateTime();
     }
@@ -143,6 +153,26 @@ class Record
     public function getBookmarks()
     {
         return $this->bookmarks;
+    }
+    
+    public function getCourse()
+    {
+        return $this->course;
+    }
+    
+    public function setCourse($course)
+    {
+        $this->course = $course;
+    }
+    
+    public function getFaculty()
+    {
+        return $this->faculty;
+    }
+    
+    public function setFaculty($faculty)
+    {
+        $this->faculty = $faculty;
     }
     
     /**

@@ -1,55 +1,7 @@
 admin:
-    pattern:  /admin/
-    defaults: { _controller: SeleyaBundle:Admin\Dashboard:index }
-
-
-admin_metadataConfig:
-    pattern:  /admin/metadataConfig
-    defaults: { _controller: SeleyaBundle:Admin\MetadataConfig:index }
-
-admin_metadataConfig_new:
-    pattern:  /admin/metadataConfig/new
-    defaults: { _controller: SeleyaBundle:Admin\MetadataConfig:new }
-
-admin_metadataConfig_update:
-    pattern:  /admin/metadataConfig/update/{id}
-    defaults: { _controller: SeleyaBundle:Admin\MetadataConfig:update }
-
-admin_metadataConfig_delete:
-    pattern:  /admin/metadataConfig/delete/{id}
-    defaults: { _controller: SeleyaBundle:Admin\MetadataConfig:delete }
-
-admin_metadataConfig_order:
-    pattern:  /admin/metadataConfig/order
-    defaults: { _controller: SeleyaBundle:Admin\MetadataConfig:order }
-    methods:  [POST]
-    options:
-        expose: true
-
-
-admin_record:
-    pattern:  /admin/record
-    defaults: { _controller: SeleyaBundle:Admin\Record:index }
-
-admin_record_visible:
-    pattern:  /admin/record/visible
-    defaults: { _controller: SeleyaBundle:Admin\Record:listVisible }
-
-admin_record_new:
-    pattern:  /admin/record/new
-    defaults: { _controller: SeleyaBundle:Admin\Record:new }
-
-admin_record_update:
-    pattern:  /admin/record/update/{id}
-    defaults: { _controller: SeleyaBundle:Admin\Record:update }
-
-admin_record_delete:
-    pattern:  /admin/record/delete/{id}
-    defaults: { _controller: SeleyaBundle:Admin\Record:delete }
-
-admin_record_import:
-    pattern: /admin/record/import
-    defaults: { _controller: SeleyaBundle:Admin\Record:import }
+    resource: "@SeleyaBundle/Controller/Admin"
+    type:     annotation
+    prefix: /admin
 
 index:
     pattern: /

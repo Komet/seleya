@@ -9,8 +9,8 @@
 	<form class="inline" action="{{ path('admin_metadataConfig_delete', { 'id': metadata.id }) }}" method="post">
 		<input type="hidden" name="confirmed" value="1" />
 		<div class="form-actions">
-			<button class="btn btn-danger"><i class="icon-trash icon-white"></i> Metadatum Löschen</button>
-			<a href="{{ path('admin_metadataConfig') }}" class="btn">Abbrechen</a>
+			<button class="btn btn-danger"><i class="icon-trash icon-white"></i> {% trans %}Metadatum löschen{% endtrans %}</button>
+			<a href="{{ path('admin_metadataConfig') }}" class="btn">{% trans %}Abbrechen{% endtrans %}</a>
 		</div>
 	</form>
 {% endblock %}

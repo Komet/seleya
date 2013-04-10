@@ -1,0 +1,16 @@
+{% extends 'SeleyaBundle:Admin:Course/base.html.twig' %}
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash %}
+{% block headline %}{% trans %}Veranstaltung löschen{% endtrans %}{% endblock %}
+
+{% block content_content %}
+
+	{{ flash('error', '<b>ACHTUNG</b> Möchten Sie die Veranstaltung "%name%" und alle zugeordneten Aufzeichnungen unwiderruflich löschen?'|trans({ '%name%': course.name }), false, true) }}
+
+	<form class="inline" action="{{ path('admin_course_delete', { 'id': faculty.id }) }}" method="post">
+		<input type="hidden" name="confirmed" value="1" />
+		<div class="form-actions">
+			<button class="btn btn-danger"><i class="icon-trash icon-white"></i> {% trans %}Veranstaltung löschen{% endtrans %}</button>
+			<a href="{{ path('admin_course') }}" class="btn">{% trans %}Abbrechen{% endtrans %}</a>
+		</div>
+	</form>
+{% endblock %}

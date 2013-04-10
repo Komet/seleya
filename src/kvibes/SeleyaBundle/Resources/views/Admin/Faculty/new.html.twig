@@ -1,0 +1,15 @@
+{% extends 'SeleyaBundle:Admin:Faculty/base.html.twig' %}
+{% block headline %}{% trans %}Neuen Fachbereich hinzufügen{% endtrans %}{% endblock %}
+
+{% block content_content %}
+
+<form action="{{ path('admin_faculty_new') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	{{ form_errors(form) }}
+	{{ form_widget(form) }}
+	<div class="form-actions">
+    	<input class="btn btn-primary" type="submit" value="{% trans %}Fachbereich erstellen{% endtrans %}" />
+		<a href="{{ path('admin_faculty') }}" class="btn">{% trans %}Abbrechen{% endtrans %}</a>
+	</div>
+</form>
+
+{% endblock %}

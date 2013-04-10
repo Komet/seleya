@@ -2,18 +2,24 @@
 
 namespace kvibes\SeleyaBundle\Controller\Admin;
 
-use JMS\SecurityExtraBundle\Annotation\Secure;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
 use kvibes\SeleyaBundle\Entity\MetadataConfig;
 use kvibes\SeleyaBundle\Entity\MetadataConfigOption;
 use kvibes\SeleyaBundle\Form\Type\MetadataConfigType;
+use JMS\SecurityExtraBundle\Annotation\Secure;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Route("/metadataConfig")
+ */
 class MetadataConfigController extends Controller
 {
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
+     * @Route("/", name="admin_metadataConfig")
      */ 
     public function indexAction()
     {
@@ -27,6 +33,7 @@ class MetadataConfigController extends Controller
     
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
+     * @Route("/new", name="admin_metadataConfig_new")
      */ 
     public function newAction(Request $request)
     {
@@ -56,6 +63,7 @@ class MetadataConfigController extends Controller
 
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
+     * @Route("/update/{id}", name="admin_metadataConfig_update")
      */ 
     public function updateAction(Request $request, $id)
     {
@@ -105,6 +113,7 @@ class MetadataConfigController extends Controller
 
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
+     * @Route("/delete/{id}", name="admin_metadataConfig_delete")
      */ 
     public function deleteAction(Request $request, $id)
     {
@@ -140,6 +149,8 @@ class MetadataConfigController extends Controller
     
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
+     * @Route("/order", name="admin_metadataConfig_order", options={"expose"=true})
+     * @Method({"POST"})
      */ 
     public function orderAction(Request $request)
     {

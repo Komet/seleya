@@ -14,7 +14,7 @@ services:
 
     # Menu builder
     seleya.menu_builder:
-        class: kvibes\SeleyaBundle\Navbar\MenuBuilder
+        class: kvibes\SeleyaBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory", "@security.context", "@doctrine"]
 
     # Admin Navbar
@@ -44,26 +44,6 @@ services:
             - { title: "Seleya", titleRoute: "admin", fixedTop: true, isFluid: false, template:SeleyaBundle:Menu:navbar.html.twig }
         tags:
             - { name: mopa_bootstrap.navbar, alias: adminNavbar }
-
-
-    # Admin right menu, Records
-    seleya.admin_record_menu:
-        class: Knp\Menu\MenuItem
-        factory_service: seleya.menu_builder
-        factory_method: createAdminRecordMenu
-        arguments: ["@request"]
-        scope: request
-        tags:
-            - { name: knp_menu.menu, alias: adminRecordMenu }
-
-    seleya.admin.admin_record_side:
-        class: %mopa_bootstrap.navbar.generic%
-        arguments:
-            - { menu: @seleya.admin_record_menu= }
-            - {  }
-            - { template:SeleyaBundle:Menu:submenu.html.twig }
-        tags:
-            - { name: mopa_bootstrap.navbar, alias: adminRecordNavbar }
 
 
     # Frontend Navbar

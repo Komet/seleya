@@ -9,8 +9,8 @@
 	<form class="inline" action="{{ path('admin_record_delete', { 'id': record.id }) }}" method="post">
 		<input type="hidden" name="confirmed" value="1" />
 		<div class="form-actions">
-			<button class="btn btn-danger"><i class="icon-trash icon-white"></i> Aufzeichnung Löschen</button>
-			<a href="{{ path('admin_record') }}" class="btn">Abbrechen</a>
+			<button class="btn btn-danger"><i class="icon-trash icon-white"></i> {% trans %}Aufzeichnung löschen{% endtrans %}</button>
+			<a href="{{ path('admin_record') }}" class="btn">{% trans %}Abbrechen{% endtrans %}</a>
 		</div>
 	</form>
 {% endblock %}

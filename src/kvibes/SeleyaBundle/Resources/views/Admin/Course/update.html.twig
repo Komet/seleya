@@ -1,0 +1,16 @@
+{% extends 'SeleyaBundle:Admin:Course/base.html.twig' %}
+{% block headline %}{% trans %}Veranstaltung bearbeiten{% endtrans %}{% endblock %}
+
+{% block content_content %}
+
+<form action="{{ path('admin_course_update', { 'id': id }) }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	{{ form_errors(form) }}
+	{{ form_widget(form) }}
+	<div class="form-actions">
+    	<input class="btn btn-primary" type="submit" value="{% trans %}Veranstaltung aktualisieren{% endtrans %}" />
+		<a href="{{ path('admin_course') }}" class="btn">{% trans %}Abbrechen{% endtrans %}</a>
+    	<a href="{{ path('admin_course_delete', { 'id': id }) }}" class="btn btn-danger left-space-medium"><i class="icon-trash icon-white"></i> {% trans %}Veranstaltung löschen{% endtrans %}</a>
+	</div>
+</form>
+
+{% endblock %}

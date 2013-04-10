@@ -2,6 +2,7 @@
 
 namespace kvibes\SeleyaBundle\Form\Type;
 
+use Doctrine\ORM\EntityRepository;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -13,18 +14,44 @@ use kvibes\SeleyaBundle\Form\Parameter\MetadataParameter;
 
 class RecordType extends AbstractType
 {
+    private $translator;
     private $metadata;
     
-    public function __construct($metadata = null)
+    public function __construct($translator, $metadata = null)
     {
+        $this->translator = $translator;
         $this->metadata = $metadata;
     }
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title');
-        $builder->add('recordDate');
-        $builder->add('visible');
+        $builder->add('title', null, array(
+            'label' => $this->translator->trans('Titel')
+        ));
+        $builder->add('recordDate', null, array(
+            'label' => $this->translator->trans('Datum der Aufzeichnung')
+        ));
+        $builder->add('visible', null, array(
+            'label' => $this->translator->trans('Sichtbar')
+        ));
+        $builder->add('faculty', 'entity', array(
+            'class'    => 'kvibes\SeleyaBundle\Entity\Faculty',
+            'property' => 'name',
+            'label'    => $this->translator->trans('Fachbereich'),
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('f')->orderBy('f.name', 'ASC');
+            },
+            'required' => false
+        ));
+        $builder->add('course', 'entity', array(
+            'class'    => 'kvibes\SeleyaBundle\Entity\Course',
+            'property' => 'name',
+            'label'    => $this->translator->trans('Veranstaltung'),
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
+            },
+            'required' => false
+        ));
         
         foreach ($this->metadata as $meta) {
             $type = $meta->getConfig()->getDefinition()->getId();

@@ -9,6 +9,7 @@
 	<div class="form-actions">
     	<input class="btn btn-primary" type="submit" value="{% trans %}Aufzeichnung aktualisieren{% endtrans %}" />
 		<a href="{{ path('admin_record') }}" class="btn">{% trans %}Abbrechen{% endtrans %}</a>
+    	<a href="{{ path('admin_record_delete', { 'id': id }) }}" class="btn btn-danger left-space-medium"><i class="icon-trash icon-white"></i> {% trans %}Aufzeichnung löschen{% endtrans %}</a>
 	</div>
 </form>
 

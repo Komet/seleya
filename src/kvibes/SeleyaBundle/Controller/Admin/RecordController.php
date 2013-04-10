@@ -2,14 +2,15 @@
 
 namespace kvibes\SeleyaBundle\Controller\Admin;
 
+use kvibes\SeleyaBundle\Entity\Metadata;
+use kvibes\SeleyaBundle\Entity\Record;
+use kvibes\SeleyaBundle\Form\Type\RecordType;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use kvibes\SeleyaBundle\Entity\Metadata;
-use kvibes\SeleyaBundle\Entity\Record;
-use kvibes\SeleyaBundle\Form\Type\RecordType;
 
 /**
  * The RecordController
@@ -17,6 +18,8 @@ use kvibes\SeleyaBundle\Form\Type\RecordType;
  * @package SeleyaBundle
  * @author  Daniel Kabel <daniel.kabel@me.com>
  * @version 1.0
+ * 
+ * @Route("/record")
  */
 class RecordController extends Controller
 {
@@ -24,6 +27,8 @@ class RecordController extends Controller
      * Lists all invisible (=newly imported) records
      *
      * @todo check if superadmin, show, otherwise show records of user
+     *
+     * @Route("/", name="admin_record")
      */
     public function indexAction()
     {
@@ -32,7 +37,8 @@ class RecordController extends Controller
                         ->findNewOrderedByCreated();
 
         return $this->render('SeleyaBundle:Admin:Record/index.html.twig', array(
-            'records' => $records
+            'records' => $records,
+            'title'   => $this->get('translator')->trans('Neue Aufzeichnungen')
         ));
     }
     
@@ -40,6 +46,8 @@ class RecordController extends Controller
      * Lists all visible records
      *
      * @todo check if superadmin, show, otherwise show records of user
+     * 
+     * @Route("/visble", name="admin_record_visible")
      */
     public function listVisibleAction()
     {
@@ -48,7 +56,8 @@ class RecordController extends Controller
                         ->findVisibleOrderedByCreated();
 
         return $this->render('SeleyaBundle:Admin:Record/index.html.twig', array(
-            'records' => $records
+            'records' => $records,
+            'title'   => $this->get('translator')->trans('Sichtbare Aufzeichnungen')
         ));
     }
 
@@ -60,6 +69,7 @@ class RecordController extends Controller
      * @param Request $request
      * 
      * @Secure(roles="ROLE_SUPER_ADMIN")
+     * @Route("/new", name="admin_record_new")
      */ 
     public function newAction(Request $request)
     {
@@ -77,7 +87,7 @@ class RecordController extends Controller
             $record->getMetadata()->add($meta);
         }
         
-        $form = $this->createForm(new RecordType($metadata), $record);
+        $form = $this->createForm(new RecordType($this->get('translator'), $metadata), $record);
         
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -128,6 +138,8 @@ class RecordController extends Controller
      * @param Request $request The request object
      * @param int     $id      Id of the record to update
      * @todo check if superadmin or user owns record
+     * 
+     * @Route("/update/{id}", name="admin_record_update")
      */
     public function updateAction(Request $request, $id)
     {
@@ -159,7 +171,7 @@ class RecordController extends Controller
             $record->getMetadata()->add($metadata);
         }
         
-        $form = $this->createForm(new RecordType($record->getMetadata()), $record);
+        $form = $this->createForm(new RecordType($this->get('translator'), $record->getMetadata()), $record);
         
         if ($request->isMethod('POST')) {
             $form->bind($request);
@@ -210,6 +222,8 @@ class RecordController extends Controller
      * @todo check if superadmin or user owns record
      * @todo delete preview image
      * @todo delete record in matterhorn (with optional checkbox in form)
+     * 
+     * @Route("/delete/{id}", name="admin_record_delete")
      */
     public function deleteAction(Request $request, $id)
     {
@@ -239,6 +253,7 @@ class RecordController extends Controller
      * @param Request $request The request object
      * 
      * @Secure(roles="ROLE_SUPER_ADMIN")
+     * @Route("/import", name="admin_record_import")
      */ 
     public function importAction(Request $request)
     {

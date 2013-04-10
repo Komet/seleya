@@ -1,5 +1,5 @@
 <?php
-namespace kvibes\SeleyaBundle\Navbar;
+namespace kvibes\SeleyaBundle\Menu;
 
 use Knp\Menu\FactoryInterface;
 use Mopa\Bundle\BootstrapBundle\Navbar\AbstractNavbarMenuBuilder;
@@ -21,14 +21,28 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
     {
         $menu = $this->createNavbarMenuItem();
 
-        $menu->addChild('Aufzeichnungen', array('route' => 'admin_record'));
-
-        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
-            $dropdown = $this->createDropdownMenuItem($menu, 'Metadaten', false, array('caret' => true));
-            $dropdown->addChild('Übersicht', array('route' => 'admin_metadataConfig'));
-            $dropdown->addChild('Hinzufügen', array('route' => 'admin_metadataConfig_new'));
-        }        
+        $records = $this->createDropdownMenuItem($menu, 'Aufzeichnungen', false, array('caret' => true));
+        $records->addChild('Neue Aufzeichnungen', array('route' => 'admin_record'));
+        $records->addChild('Sichtbare Aufzeichnungen', array('route' => 'admin_record_visible'));
         
+        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
+            $this->addDivider($records);
+            $records->addChild('Aufzeichnungen importieren', array('route' => 'admin_record_import'));
+            $records->addChild('Aufzeichnung hinzufügen', array('route' => 'admin_record_new'));
+
+            $faculty = $this->createDropdownMenuItem($menu, 'Fachbereiche', false, array('caret' => true));
+            $faculty->addChild('Übersicht', array('route' => 'admin_faculty'));
+            $faculty->addChild('Hinzufügen', array('route' => 'admin_faculty_new'));
+
+            $course = $this->createDropdownMenuItem($menu, 'Veranstaltungen', false, array('caret' => true));
+            $course->addChild('Übersicht', array('route' => 'admin_course'));
+            $course->addChild('Hinzufügen', array('route' => 'admin_course_new'));
+            
+            $metadata = $this->createDropdownMenuItem($menu, 'Metadaten', false, array('caret' => true));
+            $metadata->addChild('Übersicht', array('route' => 'admin_metadataConfig'));
+            $metadata->addChild('Hinzufügen', array('route' => 'admin_metadataConfig_new'));
+        }
+
         return $menu;
     }
     
@@ -37,19 +51,6 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
         $menu = $this->createNavbarMenuItem();
         $menu->addChild('Logout', array('route' => 'admin_logout'));
         $menu->setChildrenAttribute('class', 'nav pull-right');
-        return $menu;
-    }
-
-    public function createAdminRecordMenu(Request $request)
-    {
-        $menu = $this->createSubnavbarMenuItem();
-        $menu->setChildrenAttribute('class', 'nav nav-pills nav-stacked');
-        $menu->addChild('Neue Aufzeichnungen', array('route' => 'admin_record'));
-        $menu->addChild('Alle Aufzeichnungen', array('route' => 'admin_record_visible'));
-        if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
-            $menu->addChild('Aufzeichnungen importieren', array('route' => 'admin_record_import'));
-            $menu->addChild('Aufzeichnung hinzufügen', array('route' => 'admin_record_new'));
-        }
         return $menu;
     }
 
@@ -73,6 +74,7 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
                          ->getUser($username);
             $dropdown = $this->createDropdownMenuItem($menu, $user->getCommonName(), false, array('caret' => true));
             $dropdown->addChild('Lesezeichen', array('route' => 'bookmarks'));
+            $this->addDivider($dropdown);
             $dropdown->addChild('Abmelden', array('route' => 'logout'));
         }
         return $menu;

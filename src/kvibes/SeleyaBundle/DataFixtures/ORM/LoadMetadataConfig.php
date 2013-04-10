@@ -29,13 +29,11 @@ class LoadMetadataConfig extends AbstractFixture implements OrderedFixtureInterf
         $defTypeOption2->setName('Vortrag');
         $defType->getOptions()->add($defTypeOption1);
         $defType->getOptions()->add($defTypeOption2);
-        $defType->setDisplayOrder(3);
+        $defType->setDisplayOrder(2);
         
         $manager->persist($defDescription);
         $manager->persist($defType);
         $manager->flush();
-        
-        $this->addReference('config-date', $defDate);
     }
     
     public function getOrder()

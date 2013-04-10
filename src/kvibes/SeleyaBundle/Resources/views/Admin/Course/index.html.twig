@@ -1,0 +1,20 @@
+{% extends 'SeleyaBundle:Admin:Course/base.html.twig' %}
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash %}
+
+{% block content_content %}
+
+{% if courses|length == 0 %}
+	{{ flash('info', 'Es sind keine Veranstaltungen vorhanden.', false, true) }}
+{% else %}
+	<ul class="table">
+	{% for course in courses %}
+		<li>
+			<span>{{ course.name }}</span>
+			<span class="buttons">
+					<a href="{{ path('admin_course_update', { 'id': course.id }) }}" class="btn btn-primary btn-small"><i class="icon-pencil icon-white"></i> {% trans %}Bearbeiten{% endtrans %}</a>
+			</span>
+		</li>
+	{% endfor %}
+	</ul>
+{% endif %}
+{% endblock %}

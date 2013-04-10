@@ -1,0 +1,15 @@
+{% extends 'SeleyaBundle:Admin:Course/base.html.twig' %}
+{% block headline %}{% trans %}Neue Veranstaltung hinzufügen{% endtrans %}{% endblock %}
+
+{% block content_content %}
+
+<form action="{{ path('admin_course_new') }}" method="post" {{ form_enctype(form) }} class="form-horizontal">
+	{{ form_errors(form) }}
+	{{ form_widget(form) }}
+	<div class="form-actions">
+    	<input class="btn btn-primary" type="submit" value="{% trans %}Veranstaltung erstellen{% endtrans %}" />
+		<a href="{{ path('admin_course') }}" class="btn">{% trans %}Abbrechen{% endtrans %}</a>
+	</div>
+</form>
+
+{% endblock %}

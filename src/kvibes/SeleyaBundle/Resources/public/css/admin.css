@@ -30,6 +30,12 @@ body {
     line-height: 1em;
 }
 
+.sidebar {
+    border-left: 5px solid #EEEEEE;
+    margin: 0 0 20px;
+    padding: 0 0 0 15px;    
+}
+
 /*** Navbar ***/
 
 .navbar-inner {
@@ -57,27 +63,40 @@ body {
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
 }
 
-.navbar .nav .active > a, .navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
+.navbar .nav > .active > a:hover {
     background-color: #404040;
-    background-image: none;
-} 
-.navbar .nav li.dropdown.open > .dropdown-toggle, .navbar .nav li.dropdown.active > .dropdown-toggle, .navbar .nav li.dropdown.open.active > .dropdown-toggle {
     color: #f0f0f0;
 }
 
-.navbar .nav li.dropdown .dropdown-toggle .caret, .navbar .nav li.dropdown.open .caret {
+.navbar .nav .active > a, .navbar .nav li.dropdown.open > .dropdown-toggle, 
+.navbar .nav li.dropdown.active > .dropdown-toggle, 
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+    background-color: #404040;
+    background-image: none;
+} 
+.navbar .nav li.dropdown.open > .dropdown-toggle, 
+.navbar .nav li.dropdown.active > .dropdown-toggle, 
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+    color: #f0f0f0;
+}
+
+.navbar .nav li.dropdown .dropdown-toggle .caret, 
+.navbar .nav li.dropdown.open .caret {
     border-bottom-color: #005133;
     border-top-color: #005133;
 }
 
-.navbar .nav li.dropdown .dropdown-toggle:hover .caret, .navbar .nav li.dropdown.active .dropdown-toggle .caret {
+.navbar .nav li.dropdown .dropdown-toggle:hover .caret, 
+.navbar .nav li.dropdown.active .dropdown-toggle .caret {
     border-bottom-color: #f0f0f0;
     border-top-color: #f0f0f0;
 }
 
+/*
 .dropdown-menu li > a:hover {
     background-color: #86A841;
     background-image: -moz-linear-gradient(center top, #A1CB4F, #9BC34B);
     color: #f0f0f0;
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
 }
+*/
