@@ -37,7 +37,7 @@ class CourseController extends Controller
     {
         $course = new Course();
         
-        $form = $this->createForm(new CourseType($this->get('translator')), $faculty);
+        $form = $this->createForm(new CourseType($this->get('translator')), $course);
         
         if ($request->isMethod('POST')) {
             $form->bind($request);

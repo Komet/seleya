@@ -41,7 +41,11 @@ class RecordType extends AbstractType
             'query_builder' => function(EntityRepository $er) {
                 return $er->createQueryBuilder('f')->orderBy('f.name', 'ASC');
             },
-            'required' => false
+            'required' => false,
+            'attr'  => array(
+                'class' => 'chzn-select',
+                'data-placeholder' => $this->translator->trans('Fachbereich auswählen')
+            )
         ));
         $builder->add('course', 'entity', array(
             'class'    => 'kvibes\SeleyaBundle\Entity\Course',
@@ -50,7 +54,11 @@ class RecordType extends AbstractType
             'query_builder' => function(EntityRepository $er) {
                 return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
             },
-            'required' => false
+            'required' => false,
+            'attr'  => array(
+                'class' => 'chzn-select',
+                'data-placeholder' => $this->translator->trans('Veranstaltung auswählen')
+            )
         ));
         
         $builder->add('lecturers', 'entity', array(

@@ -48,6 +48,10 @@ a.brand img {
     right: 4px;
 }
 
+.chzn-container-single .chzn-single {
+    border-radius: 4px;
+}
+
 /*** Login ***/
 
 .form-signin {
