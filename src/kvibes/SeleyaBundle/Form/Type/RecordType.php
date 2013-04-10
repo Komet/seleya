@@ -53,6 +53,28 @@ class RecordType extends AbstractType
             'required' => false
         ));
         
+        $builder->add('lecturers', 'entity', array(
+            'class'    => 'kvibes\SeleyaBundle\Entity\User',
+            'label'    => $this->translator->trans('Dozenten'),
+            'required' => false,
+            'multiple' => true,
+            'attr'  => array(
+                'class' => 'chzn-select',
+                'data-placeholder' => $this->translator->trans('Benutzer auswählen')
+            )
+        ));
+
+        $builder->add('users', 'entity', array(
+            'class'    => 'kvibes\SeleyaBundle\Entity\User',
+            'label'    => $this->translator->trans('Weitere Benutzer mit Schreibrechten'),
+            'required' => false,
+            'multiple' => true,
+            'attr'  => array(
+                'class' => 'chzn-select',
+                'data-placeholder' => $this->translator->trans('Benutzer auswählen')
+            )
+        ));
+        
         foreach ($this->metadata as $meta) {
             $type = $meta->getConfig()->getDefinition()->getId();
             if ($type == 'select') {

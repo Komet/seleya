@@ -40,6 +40,14 @@ a.brand img {
     margin-top: -3px;
 }
 
+/*** Forms ***/
+
+.chzn-container-multi .chzn-choices .search-choice .search-choice-close {
+    height: 11px;
+    top: 5px;
+    right: 4px;
+}
+
 /*** Login ***/
 
 .form-signin {

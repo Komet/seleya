@@ -20,7 +20,7 @@ class Record
     protected $id;
     
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, nullable=true)
      */
     protected $externalId;
     
@@ -67,6 +67,18 @@ class Record
     protected $course;
     
     /**
+     * @ORM\ManyToMany(targetEntity="User")
+     * @ORM\JoinTable(name="Record_Lecturers") 
+     */
+    protected $lecturers;
+    
+    /**
+     * @ORM\ManyToMany(targetEntity="User", inversedBy="records")
+     * @ORM\JoinTable(name="Record_Users") 
+     */
+    protected $users;
+    
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updated;
@@ -81,6 +93,8 @@ class Record
         $this->metadata = new ArrayCollection();
         $this->comments = new ArrayCollection();
         $this->bookmarks = new ArrayCollection();
+        $this->users = new ArrayCollection();
+        $this->lecturers = new ArrayCollection();
         $this->visible = false;
         $this->recordDate = new \DateTime();
     }
@@ -175,6 +189,26 @@ class Record
         $this->faculty = $faculty;
     }
     
+    public function getUsers()
+    {
+        return $this->users;
+    }
+
+    public function setUsers($users)
+    {
+        $this->users = $users;
+    }
+
+    public function getLecturers()
+    {
+        return $this->lecturers;
+    }
+
+    public function setLecturers($lecturers)
+    {
+        $this->lecturers = $lecturers;
+    }
+
     /**
      * @ORM\PreUpdate
      */

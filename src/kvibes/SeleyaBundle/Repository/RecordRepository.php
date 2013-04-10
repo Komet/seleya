@@ -11,8 +11,8 @@ class RecordRepository extends EntityRepository
         $query = $this->getEntityManager()
                       ->createQuery(
                            'SELECT r, m FROM SeleyaBundle:Record r
-                            JOIN r.metadata m
-                            JOIN m.config mc
+                            LEFT JOIN r.metadata m
+                            LEFT JOIN m.config mc
                             WHERE r.id = :id
                             ORDER BY mc.displayOrder'                            
                         )

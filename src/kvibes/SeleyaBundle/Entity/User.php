@@ -3,6 +3,7 @@
 namespace kvibes\SeleyaBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Common\Collections\ArrayCollection;
 
 /**
  * @ORM\Entity(repositoryClass="kvibes\SeleyaBundle\Repository\UserRepository")
@@ -27,6 +28,11 @@ class User
     private $commonName;
     
     /**
+     * @ORM\ManyToMany(targetEntity="Record", mappedBy="users")
+     */
+    private $records;
+    
+    /**
      * @ORM\Column(type="datetime")
      */
     private $lastLogin;
@@ -35,6 +41,7 @@ class User
     {
         $this->username = $username;
         $this->lastLogin = new \DateTime();
+        $this->records = new ArrayCollection();
     }
     
     public function getId()
@@ -70,5 +77,15 @@ class User
     public function setLastLogin($lastLogin)
     {
         $this->lastLogin = $lastLogin;
+    }
+    
+    public function getRecords()
+    {
+        return $this->records;
+    }
+    
+    public function __toString()
+    {
+        return $this->getCommonName() . ' (' . $this->getUsername() . ')';
     }
 }
