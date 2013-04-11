@@ -57,8 +57,8 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
     public function createMenu(Request $request)
     {
         $menu = $this->createNavbarMenuItem();
-        $menu->addChild('Fachbereiche', array('route' => 'course'));
-        $menu->addChild('Veranstaltungen', array('route' => 'series'));
+        $menu->addChild('Fachbereiche', array('route' => 'faculties'));
+        //$menu->addChild('Veranstaltungen', array('route' => 'series'));
         return $menu;
     }
     

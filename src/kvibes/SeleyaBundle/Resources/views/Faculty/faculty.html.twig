@@ -1,0 +1,62 @@
+{% extends 'SeleyaBundle::base.html.twig' %}
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash %}
+
+{% block content %}
+<div class="span10 offset1">
+	<div class="row-fluid main-border">
+		<div class="page-header">
+			<h4>{% trans %}Fachbereiche{% endtrans %}</h4>
+		</div>
+		<div class="page-sub-header">
+			<h5>{{ faculty.name }}</h5>
+		</div>
+		{% if records|length > 0 %}
+			<div class="text-right sort-order">
+				{% trans %}Sortieren:{% endtrans %}
+				<ul class="unstyled inline">
+					{% for sortOrder, title in sortOrders %}
+						{% if sortOrder == currentSortOrder and currentSortDirection == 'ASC' %}
+							{% set sortDirection = 'DESC' %}
+						{% else %}
+							{% set sortDirection = 'ASC' %}
+						{% endif %}
+						<li>
+							<a href="{{ path('faculty', {'id': faculty.id, 'sortOrder': sortOrder, 'sortDirection': sortDirection}) }}" {% if sortOrder == currentSortOrder %}class="active"{% endif %}>
+								{{ title }}
+								{% if sortOrder == currentSortOrder and currentSortDirection == 'DESC' %}
+									(absteigend)
+								{% endif %}
+							</a>
+						</li>
+					{% endfor %}
+				</ul>
+			</div>
+			<ul class="record-list-horizontal unstyled">
+				{% for record in records %}
+					{% include 'SeleyaBundle:Faculty:record_entry.html.twig' with {'record': record} %}
+				{% endfor %}
+			</ul>
+		{% else %}
+			{{ flash('error', 'Es sind keine Aufzeichnungen in diesem Fachbereich vorhanden.'|trans, false, true) }}
+		{% endif %}
+		{% if hasMoreRecords %}
+			<div class="text-center">
+				<a href="{{ path('faculty', {'id': faculty.id, 'sortOrder': currentSortOrder, 'sortDirection': currentSortDirection, 'page': currentPage+1}) }}"
+				   class="btn btn-mini"
+				   data-faculty-id="{{ faculty.id }}"
+				   data-sort-order="{{ currentSortOrder }}"
+				   data-sort-direction="{{ currentSortDirection }}"
+				   data-current-page="{{ currentPage }}"
+				   id="loadMoreRecords">
+					<span class="spin hide"></span>
+					Weitere Aufzeichnungen...
+				</a>
+			</div>
+		{% endif %}
+	</div>
+</div>
+{% endblock %}
+
+{% block bottom_script %}
+	<script type="text/javascript" src="{{ asset('bundles/seleya/js/faculty/Records.js') }}"></script>
+{% endblock %}

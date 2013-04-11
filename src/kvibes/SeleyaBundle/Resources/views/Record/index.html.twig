@@ -1,4 +1,5 @@
 {% extends 'SeleyaBundle::base.html.twig' %}
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash %}
 
 {% block content %}
 <div class="span8 offset1">
@@ -21,6 +22,22 @@
 			<dl class="record-metadata">
 				<dt>{% trans %}Aufzeichnung{% endtrans %}</dt>
 		  		<dd>{{ record.recordDate|localizeddate('long', 'none') }}</dd>
+		  		{% if record.lecturers|length > 0 %}
+					<dt>
+						{% if record.lecturers|length == 1 %}
+							{% trans %}Dozent{% endtrans %}
+						{% else %}
+							{% trans %}Dozenten{% endtrans %}
+						{% endif %}
+					</dt>
+			  		<dd>
+			  			<ul class="unstyled">
+			  			{% for lecturer in record.lecturers %}
+			  				<li>{{ lecturer.commonName }}</li>
+			  			{% endfor %}
+			  			</ul>
+			  		</dd>
+		  		{% endif %}
 		  		{% for metadata in record.metadata %}
 		  			{% if metadata.value != null %}
 			  			<dt>{{ metadata.config.name }}</dt>
@@ -76,9 +93,7 @@
 				</div>
 			</form>
 			{% else %}
-				<div class="alert alert-warning">
-					{% trans %}Sie müssen angemeldet sein, um einen Kommentar hinzuzufügen.{% endtrans %}
-				</div>
+				{{ flash('warning', 'Sie müssen angemeldet sein, um einen Kommentar hinzuzufügen.'|trans, false, true) }}
 			{% endif %}
 		</div>
 	</div>

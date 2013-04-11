@@ -5,13 +5,17 @@ namespace kvibes\SeleyaBundle\Controller;
 use kvibes\SeleyaBundle\Entity\Comment;
 use kvibes\SeleyaBundle\Entity\Record;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Route("/comment")
+ */
 class CommentController extends Controller
 {
-    const commentsPerPage = 10;
+    const COMMENTS_PER_PAGE = 10;
     
     /**
      * Adds a comment from the current user to a record
@@ -20,6 +24,7 @@ class CommentController extends Controller
      * @return JSON response
      * 
      * @Secure(roles="ROLE_USER")
+     * @Route("/add/{recordId}", name="comment_add", options={"expose"=true})
      */
     public function addAction(Request $request, $recordId)
     {
@@ -67,16 +72,18 @@ class CommentController extends Controller
      * @param int     $page     The page number
      * 
      * @return JSON Response
+     * 
+     * @Route("/get/{recordId}/{page}", name="comments", options={"expose"=true})
      */
     public function getAction(Request $request, $recordId, $page)
     {
         $commentsToExclude = $request->get('commentsToExclude');
         $em = $this->getDoctrine()->getManager();
         $comments = $em->getRepository('SeleyaBundle:Comment')
-                       ->getCommentsForRecord($recordId, $page, CommentController::commentsPerPage, $commentsToExclude);
+                       ->getCommentsForRecord($recordId, $page, CommentController::COMMENTS_PER_PAGE, $commentsToExclude);
         $numberOfComments = $em->getRepository('SeleyaBundle:Comment')
                                ->getCommentsCountForRecord($recordId);
-        $hasMoreComments = ($page*CommentController::commentsPerPage+count($comments)) < $numberOfComments;
+        $hasMoreComments = ($page*CommentController::COMMENTS_PER_PAGE+count($comments)) < $numberOfComments;
         $htmlContents = array();
         foreach ($comments as $comment) {
             $htmlContents[] = $this->renderView('SeleyaBundle:Record:comment_entry.html.twig', array(

@@ -7,7 +7,7 @@
 			<h4>{% trans %}Lesezeichen{% endtrans %}</h4>
 		</div>
 		<div class="alert alert-info {% if bookmarks|length > 0 %}hide{% endif %}" id="alert-no-bookmarks">
-			Sie haben noch keine Lesezeichen angelegt.
+			{% trans %}Sie haben noch keine Lesezeichen angelegt.{% endtrans %}
 		</div>
 		<ul class="bookmark-list unstyled">
 			{% for bookmark in bookmarks %}

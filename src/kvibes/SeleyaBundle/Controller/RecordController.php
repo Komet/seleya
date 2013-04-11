@@ -3,11 +3,14 @@
 namespace kvibes\SeleyaBundle\Controller;
 
 use kvibes\SeleyaBundle\Entity\Bookmark;
-use kvibes\SeleyaBundle\Controller\CommentController;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Route("/record")
+ */
 class RecordController extends Controller
 {
     /**
@@ -15,6 +18,8 @@ class RecordController extends Controller
      *  
      * @param int $id ID of the record
      * @return Rendered template
+     * 
+     * @Route("/{id}", name="record")
      */
     public function indexAction($id)
     {
@@ -24,12 +29,12 @@ class RecordController extends Controller
         $record = $em->getRepository('SeleyaBundle:Record')
                      ->getRecord($id);
         $comments = $em->getRepository('SeleyaBundle:Comment')
-                       ->getCommentsForRecord($id, 0, CommentController::commentsPerPage);
+                       ->getCommentsForRecord($id, 0, CommentController::COMMENTS_PER_PAGE);
         $numberOfComments = $em->getRepository('SeleyaBundle:Comment')
                                ->getCommentsCountForRecord($id);
 
         if ($record === null) {
-            throw $this->createNotFoundException('Unable to find record.');
+            throw $this->createNotFoundException('Aufzeichnung wurde nicht gefunden.');
         }
 
         if ($securityContext->isGranted('ROLE_USER')) {

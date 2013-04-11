@@ -32,7 +32,8 @@ class RecordType extends AbstractType
             'label' => $this->translator->trans('Datum der Aufzeichnung')
         ));
         $builder->add('visible', null, array(
-            'label' => $this->translator->trans('Sichtbar')
+            'label'    => $this->translator->trans('Sichtbar'),
+            'required' => false
         ));
         $builder->add('faculty', 'entity', array(
             'class'    => 'kvibes\SeleyaBundle\Entity\Faculty',

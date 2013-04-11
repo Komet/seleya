@@ -1,48 +1,10 @@
+frontend:
+    resource: "@SeleyaBundle/Controller"
+    type:     annotation
+    prefix: /
+
 admin:
     resource: "@SeleyaBundle/Controller/Admin"
     type:     annotation
     prefix: /admin
 
-index:
-    pattern: /
-    defaults: { _controller: SeleyaBundle:Index:index }
-
-record:
-    pattern: /record/{id}
-    defaults: { _controller: SeleyaBundle:Record:index }
-
-record_bookmark:
-    pattern: /record/toggleBookmark/{id}
-    defaults: { _controller: SeleyaBundle:Bookmark:toggleBookmark }
-    options:
-        expose: true
-
-bookmarks:
-    pattern: /bookmarks
-    defaults: { _controller: SeleyaBundle:Bookmark:index }
-
-bookmark_delete:
-    pattern: /bookmark/delete/{id}
-    defaults: { _controller: SeleyaBundle:Bookmark:delete }
-    options:
-        expose: true
-
-comment_add:
-    pattern: /comment/add/{recordId}
-    defaults: { _controller: SeleyaBundle:Comment:add }
-    options:
-        expose: true
-
-comments:
-    pattern: /comment/get/{recordId}/{page}
-    defaults: { _controller: SeleyaBundle:Comment:get }
-    options:
-        expose: true
-
-series:
-    pattern: /series
-    defaults: { _controller: SeleyaBundle:Index:index }
-
-course:
-    pattern: /course
-    defaults: { _controller: SeleyaBundle:Index:index }

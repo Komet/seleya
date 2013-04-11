@@ -1,0 +1,8 @@
+{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
+<li>
+	<a href="{{ path('record', { 'id': record.id }) }}">
+		<img src="{{ preview | imagine_filter('record_preview') }}" /><br />
+		<span class="title">{{ record.title }}</span><br />
+	</a>
+	<span class="date">{{ record.recordDate|localizeddate('long', 'none') }}</span>
+</li>

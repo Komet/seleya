@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="kvibes\SeleyaBundle\Repository\FacultyRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Faculty

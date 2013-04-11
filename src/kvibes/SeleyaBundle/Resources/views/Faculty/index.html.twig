@@ -1,0 +1,29 @@
+{% extends 'SeleyaBundle::base.html.twig' %}
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash %}
+
+{% block content %}
+<div class="span10 offset1">
+	<div class="row-fluid main-border">
+		<div class="page-header">
+			<h4>{% trans %}Fachbereiche{% endtrans %}</h4>
+		</div>
+		{% if faculties|length == 0 %}
+			{{ flash('info', 'Es sind keine Fachbereiche mit Aufzeichnungen vorhanden.'|trans, false, true) }}
+		{% endif %}
+		<ul class="faculty-list unstyled">
+			{% for faculty in faculties %}
+				<li>
+					<a href="{{ path('faculty', {'id': faculty.data.id}) }}">
+						<span class="title">{{ faculty.data.name }}</span>
+						<span class="record-count">
+							{% transchoice faculty.recordCount with {'%count%': faculty.recordCount} %}
+								{0}%count% Aufzeichnungen | {1}%count% Aufzeichnung | ]1,Inf]%count% Aufzeichnungen
+							{% endtranschoice %}
+						</span>
+					</a>
+				</li>
+			{% endfor %}
+		</ul>
+	</div>
+</div>
+{% endblock %}

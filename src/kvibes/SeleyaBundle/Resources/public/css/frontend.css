@@ -7,31 +7,53 @@ body {
 }
 
 .navbar-static-top .navbar-inner {
-    box-shadow: none;
-    border-bottom: 1px solid #e8e8e8;
-    background: #f1f1f1;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
+    border-bottom: none;
+    background-color: #86A841;
+    background-image: -moz-linear-gradient(center top, #A1CB4F, #9BC34B);
+    background-image: -webkit-gradient(linear, 0 0, 0 100%, from(#A1CB4F), to(#9BC34B));
+    background-image: -webkit-linear-gradient(top, #A1CB4F, #9BC34B);
+    background-image: -o-linear-gradient(top, #A1CB4F, #9BC34B);
+    background-image: linear-gradient(to bottom, #A1CB4F, #9BC34B);
 }
 
-ul.record-list-horizontal li {
-    display: inline-block;
-    margin: 10px;
-    vertical-align: top;
-    width: 180px;
-    line-height: 14px;
+.navbar .brand, .navbar .nav > li > a {
+    color: #005133;
+    text-shadow: 0 1px 0 rgba(255, 255, 255, 0.3);
 }
 
-ul.record-list-horizontal li span.title {
-    font-size: 14px;
-    font-weight: bold;
-    display: inline-block;
-    margin-top: 4px;
-    line-height: 16px;
+.navbar .nav > li > a:hover, .navbar .nav > li.active > a {
+    color: #f0f0f0;
+    text-shadow: 0 1px 0 rgba(0, 0, 0, 0.3);
 }
 
-span.date {
-    font-size: 11px;
-    color: #999999;
-    display: inline-block;
+.navbar .nav > .active > a:hover {
+    background-color: #404040;
+    color: #f0f0f0;
+}
+
+.navbar .nav .active > a, .navbar .nav li.dropdown.open > .dropdown-toggle, 
+.navbar .nav li.dropdown.active > .dropdown-toggle, 
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+    background-color: #404040;
+    background-image: none;
+} 
+.navbar .nav li.dropdown.open > .dropdown-toggle, 
+.navbar .nav li.dropdown.active > .dropdown-toggle, 
+.navbar .nav li.dropdown.open.active > .dropdown-toggle {
+    color: #f0f0f0;
+}
+
+.navbar .nav li.dropdown .dropdown-toggle .caret, 
+.navbar .nav li.dropdown.open .caret {
+    border-bottom-color: #005133;
+    border-top-color: #005133;
+}
+
+.navbar .nav li.dropdown .dropdown-toggle:hover .caret, 
+.navbar .nav li.dropdown.active .dropdown-toggle .caret {
+    border-bottom-color: #f0f0f0;
+    border-top-color: #f0f0f0;
 }
 
 div.main-border {
@@ -39,6 +61,7 @@ div.main-border {
     margin-right: -20px;
     padding-left: 20px;
     padding-right: 20px;
+    padding-bottom: 20px;
     background-color: #ffffff;
     border-left: 1px solid #f0f0f0;
     border-right: 1px solid #f0f0f0;
@@ -72,8 +95,25 @@ div.main-border > div.page-header {
     padding: 1px 20px;
     border-bottom: none;
     text-shadow: 1px 1px 4px rgba(255, 255, 255, 0.2);
-    background-color: #00783f;
+    background-color: #0072A9;
     color: #F0F0F0;
+}
+
+div.main-border > div.page-sub-header {
+    background-color: #fafafa;
+    background-image: linear-gradient(to bottom, #FFFFFF, #F2F2F2);
+    box-shadow: 0 1px 9px 0 rgba(0, 0, 0, 0.1);
+    color: #777777;
+    padding: 1px 20px;
+    margin-left: -20px;
+    margin-right: -20px;
+    margin-top: -30px;
+    margin-bottom: 20px;
+}
+
+div.main-border > div.page-sub-header > h5 {
+    margin-top: 5px;
+    margin-bottom: 5px;
 }
 
 span.margin-right-small {
@@ -88,7 +128,7 @@ button.hasSpinner {
     position: relative;
 }
 
-button.btn-mini span.spin {
+.btn-mini span.spin {
     position: relative;
     top: -3px;
     margin-right: 5px;
@@ -107,6 +147,43 @@ button.btn-mini span.spin {
 .dropdown-menu > .active > a, .dropdown-menu > .active > a:hover, .dropdown-menu > .active > a:focus {
     background-color: #404040;
     background-image: none;
+}
+
+div.sort-order {
+    font-size: 12px;
+    color: #c0c0c0;
+}
+
+div.sort-order a {
+    color: #7797A8;
+}
+
+div.sort-order a.active {
+    font-weight: bold;
+}
+
+/*** Index ***/
+
+ul.record-list-horizontal li {
+    display: inline-block;
+    margin: 10px;
+    vertical-align: top;
+    width: 180px;
+    line-height: 14px;
+}
+
+ul.record-list-horizontal li span.title {
+    font-size: 14px;
+    font-weight: bold;
+    display: inline-block;
+    margin-top: 4px;
+    line-height: 16px;
+}
+
+span.date {
+    font-size: 11px;
+    color: #999999;
+    display: inline-block;
 }
 
 /*** Login ***/
@@ -268,4 +345,31 @@ ul.bookmark-list li img {
 ul.bookmark-list li a.bookmark-remove {
     margin-top: -5px;
     float: right;
+}
+
+/*** Faculties ***/
+
+ul.faculty-list a {
+    text-decoration: none;
+}
+
+ul.faculty-list li {
+    border-bottom: 1px solid #eeeeee;
+}
+
+ul.faculty-list li:last-child {
+    border-bottom: none;
+}
+
+ul.faculty-list li span.title {
+    font-size: 14px;
+    font-weight: bold;
+    display: block;
+    margin-top: 4px;
+    line-height: 16px;
+}
+
+ul.faculty-list li span.record-count {
+    font-size: 11px;
+    color: #999999;
 }

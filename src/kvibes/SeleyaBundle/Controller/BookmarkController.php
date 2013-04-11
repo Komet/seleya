@@ -4,9 +4,13 @@ namespace kvibes\SeleyaBundle\Controller;
 
 use kvibes\SeleyaBundle\Entity\Bookmark;
 use JMS\SecurityExtraBundle\Annotation\Secure;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
+/**
+ * @Route("/bookmark")
+ */
 class BookmarkController extends Controller
 {
     /**
@@ -15,6 +19,7 @@ class BookmarkController extends Controller
      * @return Rendered template
      * 
      * @Secure(roles="ROLE_USER")
+     * @Route("/", name="bookmarks")
      */
     public function indexAction()
     {
@@ -38,6 +43,7 @@ class BookmarkController extends Controller
      * @return Rendered template
      * 
      * @Secure(roles="ROLE_USER")
+     * @Route("/delete/{id}", name="bookmark_delete", options={"expose"=true})
      */
     public function deleteAction($id)
     {
@@ -89,6 +95,7 @@ class BookmarkController extends Controller
      * @param int $id ID of the record
      *
      * @Secure(roles="ROLE_USER")
+     * @Route("/toggle/{id}", name="bookmark_toggle", options={"expose"=true})
      */
     public function toggleBookmarkAction($id)
     {
