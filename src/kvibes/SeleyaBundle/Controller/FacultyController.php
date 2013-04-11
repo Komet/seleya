@@ -2,7 +2,7 @@
 
 namespace kvibes\SeleyaBundle\Controller;
 
-use kvibes\SeleyaBundle\Entity\Comment;
+use kvibes\SeleyaBundle\Entity\Faculty;
 use kvibes\SeleyaBundle\Entity\Record;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use JMS\SecurityExtraBundle\Annotation\Secure;
@@ -15,7 +15,7 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class FacultyController extends Controller
 {
-    const RECORDS_PER_PAGE = 20;
+    const COURSES_PER_PAGE = 20;
     
     /**
      * @Route("/", name="faculties")
@@ -31,69 +31,56 @@ class FacultyController extends Controller
     }
     
     /**
-     * @Route("/{id}/{page}/{sortOrder}/{sortDirection}", 
+     * @Route("/{facultyId}/{page}", 
      *        name="faculty", 
-     *        requirements={"page"="\d+", "sortOrder"="(title|recordDate)", "sortDirection"="(ASC|DESC)"})
+     *        requirements={"page"="\d+"})
      */
-    public function facultyAction($id, $page = 0, $sortOrder = 'recordDate', $sortDirection = 'DESC')
+    public function facultyAction($facultyId, $page = 0)
     {
         $em = $this->getDoctrine()->getManager();
         $faculty = $em->getRepository('SeleyaBundle:Faculty')
-                        ->findOneById($id);
+                      ->findOneById($facultyId);
                         
         if ($faculty === null) {
             throw $this->createNotFoundException('Fachbereich wurde nicht gefunden.');
         }
-                        
-        $records         = $this->recordsInFacultyAction($id, $page, $sortOrder, $sortDirection);
-        $numberOfRecords = $em->getRepository('SeleyaBundle:Record')
-                              ->getRecordCountForFaculty($id);
-        $hasMoreRecords  = ($page*FacultyController::RECORDS_PER_PAGE+count($records)) < $numberOfRecords;
-        
-        $sortOrders = array(
-            'title'      => 'Titel',
-            'recordDate' => 'Datum'
-        );
+
+        $courses         = $this->coursesInFacultyAction($facultyId, $page);
+        $numberOfCourses = $em->getRepository('SeleyaBundle:Course')
+                              ->getCourseCountForFaculty($facultyId);
+        $hasMoreCourses  = ($page*FacultyController::COURSES_PER_PAGE+count($courses)) < $numberOfCourses;
         
         return $this->render('SeleyaBundle:Faculty:faculty.html.twig', array(
-            'faculty'              => $faculty,
-            'records'              => $records,
-            'sortOrders'           => $sortOrders,
-            'currentPage'          => $page,
-            'currentSortOrder'     => $sortOrder,
-            'currentSortDirection' => $sortDirection,
-            'hasMoreRecords'       => $hasMoreRecords
+            'faculty'        => $faculty,
+            'courses'        => $courses,
+            'currentPage'    => $page,
+            'hasMoreCourses' => $hasMoreCourses
         ));
     }
 
     /**
-     * @Route("/records/{id}/{page}/{sortOrder}/{sortDirection}/{render}", 
-     *        name="faculty_records", 
+     * @Route("/courses/{facultyId}/{page}/{render}", 
+     *        name="faculty_courses", 
      *        options={"expose"=true},
-     *        requirements={"page"="\d+", "sortOrder"="(title|recordDate)", "sortDirection"="(ASC|DESC)"})
+     *        requirements={"page"="\d+"})
      */
-    public function recordsInFacultyAction($id, $page, $sortOrder, $sortDirection, $render = false)
+    public function coursesInFacultyAction($facultyId, $page, $render = false)
     {
-        $em      = $this->getDoctrine()->getManager();
-        $records = $em->getRepository('SeleyaBundle:Record')
-                      ->findBy(
-                          array('faculty' => $id, 'visible' => 1), 
-                          array($sortOrder => $sortDirection),
-                          FacultyController::RECORDS_PER_PAGE,
-                          $page*FacultyController::RECORDS_PER_PAGE
-                      );
-
+        $em = $this->getDoctrine()->getManager();
+        $courses = $em->getRepository('SeleyaBundle:Course')
+                      ->getCoursesWithRecords($facultyId, FacultyController::COURSES_PER_PAGE, $page*FacultyController::COURSES_PER_PAGE);
+                
         if (!$render) {
-            return $records;
+            return $courses;
         }
         
-        $numberOfRecords = $em->getRepository('SeleyaBundle:Record')
-                              ->getRecordCountForFaculty($id);
-        $hasMoreRecords  = ($page*FacultyController::RECORDS_PER_PAGE+count($records)) < $numberOfRecords;
+        $numberOfCourses = $em->getRepository('SeleyaBundle:Course')
+                              ->getCourseCountForFaculty($facultyId);
+        $hasMoreCourses  = ($page*FacultyController::COURSES_PER_PAGE+count($courses)) < $numberOfCourses;
         $htmlContents = array();
-        foreach ($records as $record) {
-            $htmlContents[] = $this->renderView('SeleyaBundle:Faculty:record_entry.html.twig', array(
-                'record' => $record
+        foreach ($courses as $course) {
+            $htmlContents[] = $this->renderView('SeleyaBundle:Faculty:course_entry.html.twig', array(
+                'course' => $course
             ));
         }
         
@@ -101,7 +88,7 @@ class FacultyController extends Controller
             json_encode(
                 array(
                     'html'           => $htmlContents,
-                    'hasMoreRecords' => $hasMoreRecords
+                    'hasMoreCourses' => $hasMoreCourses
                 )
             ), 
             200, 
@@ -109,5 +96,6 @@ class FacultyController extends Controller
                 'Content-Type' => 'application/json'
             )
         );
+        
     }
 }

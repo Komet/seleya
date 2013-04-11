@@ -1,0 +1,10 @@
+<li>
+	<a href="{{ path('course', {'courseId': course.data.id}) }}">
+		<span class="title">{{ course.data.name }}</span>
+		<span class="course-count">
+			{% transchoice course.recordCount with {'%count%': course.recordCount} %}
+				{0}%count% Aufzeichnungen | {1}%count% Aufzeichnung | ]1,Inf]%count% Aufzeichnungen
+			{% endtranschoice %}
+		</span>
+	</a>
+</li>

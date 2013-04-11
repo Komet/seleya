@@ -7,7 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="kvibes\SeleyaBundle\Repository\CourseRepository")
  * @ORM\HasLifecycleCallbacks
  */
 class Course
@@ -29,6 +29,11 @@ class Course
      * @ORM\OneToMany(targetEntity="Record", mappedBy="course", cascade={"all"})
      */
     protected $records;
+    
+    /**
+     * @ORM\ManyToOne(targetEntity="Faculty", inversedBy="courses")
+     */
+    protected $faculty;
     
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -68,6 +73,16 @@ class Course
     public function setName($name)
     {
         $this->name = $name;
+    }
+    
+    public function getFaculty()
+    {
+        return $this->faculty;
+    }
+    
+    public function setFaculty($faculty)
+    {
+        $this->faculty = $faculty;
     }
     
     /**

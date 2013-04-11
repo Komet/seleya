@@ -38,14 +38,14 @@ class RecordRepository extends EntityRepository
     {
         return $this->findAllOrderedByCreated(true, $limit);
     }
-    
-    public function getRecordCountForFaculty($facultyId)
+
+    public function getRecordCountForCourse($courseId)
     {
         return $this->createQueryBuilder('r')
                     ->select('count(r)')
-                    ->where('r.faculty=:faculty_id')
+                    ->where('r.course=:course_id')
                     ->andWhere('r.visible=1')
-                    ->setParameter('faculty_id', $facultyId)
+                    ->setParameter('course_id', $courseId)
                     ->getQuery()
                     ->getSingleScalarResult();
     }

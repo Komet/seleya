@@ -13,7 +13,7 @@
 		<ul class="faculty-list unstyled">
 			{% for faculty in faculties %}
 				<li>
-					<a href="{{ path('faculty', {'id': faculty.data.id}) }}">
+					<a href="{{ path('faculty', {'facultyId': faculty.data.id}) }}">
 						<span class="title">{{ faculty.data.name }}</span>
 						<span class="record-count">
 							{% transchoice faculty.recordCount with {'%count%': faculty.recordCount} %}

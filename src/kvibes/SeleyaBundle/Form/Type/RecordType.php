@@ -35,19 +35,6 @@ class RecordType extends AbstractType
             'label'    => $this->translator->trans('Sichtbar'),
             'required' => false
         ));
-        $builder->add('faculty', 'entity', array(
-            'class'    => 'kvibes\SeleyaBundle\Entity\Faculty',
-            'property' => 'name',
-            'label'    => $this->translator->trans('Fachbereich'),
-            'query_builder' => function(EntityRepository $er) {
-                return $er->createQueryBuilder('f')->orderBy('f.name', 'ASC');
-            },
-            'required' => false,
-            'attr'  => array(
-                'class' => 'chzn-select',
-                'data-placeholder' => $this->translator->trans('Fachbereich auswählen')
-            )
-        ));
         $builder->add('course', 'entity', array(
             'class'    => 'kvibes\SeleyaBundle\Entity\Course',
             'property' => 'name',
@@ -55,10 +42,9 @@ class RecordType extends AbstractType
             'query_builder' => function(EntityRepository $er) {
                 return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
             },
-            'required' => false,
+            'empty_value' => 'Veranstaltung auswählen',
             'attr'  => array(
                 'class' => 'chzn-select',
-                'data-placeholder' => $this->translator->trans('Veranstaltung auswählen')
             )
         ));
         

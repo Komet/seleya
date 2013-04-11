@@ -12,7 +12,8 @@ class FacultyRepository extends EntityRepository
         $qb = $this->getEntityManager()->createQueryBuilder();
         $results = $qb->select('f, count(r)')
                       ->from('SeleyaBundle:Faculty', 'f')
-                      ->join('f.records', 'r')
+                      ->join('f.courses', 'c')
+                      ->join('c.records', 'r')
                       ->where('r.visible=1')
                       ->groupBy('f')
                       ->orderBy('f.name', 'ASC')

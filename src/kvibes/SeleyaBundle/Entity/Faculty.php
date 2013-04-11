@@ -26,9 +26,9 @@ class Faculty
     protected $name;
     
     /**
-     * @ORM\OneToMany(targetEntity="Record", mappedBy="faculty", cascade={"all"})
+     * @ORM\OneToMany(targetEntity="Course", mappedBy="faculty", cascade={"all"})
      */
-    protected $records;
+    protected $courses;
     
     /**
      * @ORM\Column(type="datetime", nullable=true)
@@ -42,7 +42,7 @@ class Faculty
     
     public function __construct()
     {
-        $this->records = new ArrayCollection();
+        $this->courses = new ArrayCollection();
     }
     
     public function getId()
@@ -55,11 +55,6 @@ class Faculty
         $this->id = $id;
     }
     
-    public function getRecords()
-    {
-        return $this->records;
-    }
-    
     public function getName()
     {
         return $this->name;
@@ -68,6 +63,11 @@ class Faculty
     public function setName($name)
     {
         $this->name = $name;
+    }
+    
+    public function getCourses()
+    {
+        return $this->courses;
     }
     
     /**

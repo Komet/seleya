@@ -349,19 +349,19 @@ ul.bookmark-list li a.bookmark-remove {
 
 /*** Faculties ***/
 
-ul.faculty-list a {
+ul.faculty-list a, ul.course-list a {
     text-decoration: none;
 }
 
-ul.faculty-list li {
+ul.faculty-list li, ul.course-list li {
     border-bottom: 1px solid #eeeeee;
 }
 
-ul.faculty-list li:last-child {
+ul.faculty-list li:last-child, ul.course-list li:last-child {
     border-bottom: none;
 }
 
-ul.faculty-list li span.title {
+ul.faculty-list li span.title, ul.course-list li span.title {
     font-size: 14px;
     font-weight: bold;
     display: block;
@@ -369,7 +369,7 @@ ul.faculty-list li span.title {
     line-height: 16px;
 }
 
-ul.faculty-list li span.record-count {
+ul.faculty-list li span.record-count, ul.course-list li span.course-count {
     font-size: 11px;
     color: #999999;
 }

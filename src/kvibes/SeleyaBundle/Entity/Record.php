@@ -57,11 +57,6 @@ class Record
     protected $bookmarks;
     
     /**
-     * @ORM\ManyToOne(targetEntity="Faculty", inversedBy="records")
-     */
-    protected $faculty;
-    
-    /**
      * @ORM\ManyToOne(targetEntity="Course", inversedBy="records")
      */
     protected $course;
@@ -177,16 +172,6 @@ class Record
     public function setCourse($course)
     {
         $this->course = $course;
-    }
-    
-    public function getFaculty()
-    {
-        return $this->faculty;
-    }
-    
-    public function setFaculty($faculty)
-    {
-        $this->faculty = $faculty;
     }
     
     public function getUsers()

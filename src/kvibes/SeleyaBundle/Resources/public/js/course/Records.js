@@ -1,7 +1,7 @@
 $(function() {
 	$('#loadMoreRecords').click(function() {
 		var link = $(this);
-		var facultyId = $(this).data('faculty-id');
+		var courseId = $(this).data('course-id');
 		var sortOrder = $(this).data('sort-order');
 		var sortDirection = $(this).data('sort-direction');
 		var currentPage = $(this).data('current-page');
@@ -9,8 +9,8 @@ $(function() {
 		spinner.spin('tiny-black');
 		spinner.show();
 		link.attr('disabled', 'disabled');
-		$.get(Routing.generate('faculty_records', {
-			id: facultyId, 
+		$.get(Routing.generate('course_records', {
+			courseId: courseId, 
 			page: currentPage+1,
 			sortOrder: sortOrder,
 			sortDirection: sortDirection,
