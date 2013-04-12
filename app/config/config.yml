@@ -40,8 +40,8 @@ assetic:
     use_controller: false
     filters:
         less:
-            node: /usr/bin/node
-            node_paths: [/opt/lessc/lib, /usr/lib/node_modules, /usr/local/lib/node_modules]
+            node: /usr/local/bin/node
+            node_paths: [/usr/local/share/npm/lib/node_modules]
             apply_to: "\.less$"
         cssrewrite: ~
         cssembed:
@@ -92,6 +92,10 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [180, 100], mode: outbound }
+        record_preview_sidebar:
+            quality: 75
+            filters:
+                thumbnail: { size: [150, 84], mode: outbound }
         record_preview_small:
             quality: 75
             filters:

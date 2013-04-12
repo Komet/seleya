@@ -49,6 +49,21 @@ class RecordRepository extends EntityRepository
                     ->getQuery()
                     ->getSingleScalarResult();
     }
+    
+    public function getRecentRecordsInCourse($courseId, $excludeRecord, $limit)
+    {
+        return $this->createQueryBuilder('r')
+                    ->select('r')
+                    ->where('r.course=:course_id')
+                    ->setParameter('course_id', $courseId)
+                    ->andWhere('r.visible=1')
+                    ->andWhere('r.id!=:exclude_record')
+                    ->setParameter('exclude_record', $excludeRecord)
+                    ->orderBy('r.recordDate', 'DESC')
+                    ->setMaxResults($limit)
+                    ->getQuery()
+                    ->getResult();
+    }
 
     private function findAllOrderedByCreated($visible = true, $limit = null)
     {

@@ -13,6 +13,8 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class RecordController extends Controller
 {
+    const RECENT_RECORDS = 5;
+    
     /**
      * Shows a record
      *  
@@ -28,6 +30,8 @@ class RecordController extends Controller
         $bookmark = null;
         $record = $em->getRepository('SeleyaBundle:Record')
                      ->getRecord($id);
+        $recentRecordsInCourse = $em->getRepository('SeleyaBundle:Record')
+                                    ->getRecentRecordsInCourse($record->getCourse()->getId(), $record->getId(), RecordController::RECENT_RECORDS);
         $comments = $em->getRepository('SeleyaBundle:Comment')
                        ->getCommentsForRecord($id, 0, CommentController::COMMENTS_PER_PAGE);
         $numberOfComments = $em->getRepository('SeleyaBundle:Comment')
@@ -49,7 +53,8 @@ class RecordController extends Controller
             'record'          => $record,
             'comments'        => $comments,
             'hasMoreComments' => count($comments) < $numberOfComments,
-            'hasBookmark'     => $bookmark !== null
+            'hasBookmark'     => $bookmark !== null,
+            'recentRecords'   => $recentRecordsInCourse
         ));
     }
 }

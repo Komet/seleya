@@ -98,7 +98,21 @@
 		</div>
 	</div>
 </div>
-<div class="span2">
+<div class="span2 sidebar">
+	<span class="hint">{{ record.course.name }}</span>
+	<ul class="unstyled record-list-sidebar">
+	{% for record in recentRecords %}
+		{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
+		<li>
+			<a href="{{ path('record', { 'id': record.id }) }}">
+				<img src="{{ preview | imagine_filter('record_preview_sidebar') }}" /><br />
+				<span class="title">{{ record.title }}</span>
+				<span class="date">{{ record.recordDate|localizeddate('long', 'none') }}</span>
+			</a>
+		</li>
+	{% endfor %}
+	</ul>
+	<a href="{{ path('course', {'courseId': record.course.id}) }}" class="course-link">Alle Aufzeichnungen dieser Veranstaltung</a>
 </div>
 
 {% endblock %}

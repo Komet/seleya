@@ -22,7 +22,7 @@ class CourseController extends Controller
      *        name="course", 
      *        requirements={"page"="\d+", "sortOrder"="(title|recordDate)", "sortDirection"="(ASC|DESC)"})
      */
-    public function facultyAction($courseId, $page = 0, $sortOrder = 'recordDate', $sortDirection = 'DESC')
+    public function indexAction($courseId, $page = 0, $sortOrder = 'recordDate', $sortDirection = 'DESC')
     {
         $em = $this->getDoctrine()->getManager();
         $course = $em->getRepository('SeleyaBundle:Course')

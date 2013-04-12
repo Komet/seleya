@@ -357,6 +357,40 @@ ul.bookmark-list li a.bookmark-remove {
     float: right;
 }
 
+div.sidebar {
+    padding-top: 40px;
+    padding-left: 10px;
+}
+
+div.sidebar span.hint {
+    margin-bottom: 10px;
+    font-size: 12px;
+    font-weight: bold;
+    display: block;
+    color: #808080;
+}
+
+div.sidebar a.course-link {
+    font-size: 12px;
+}
+
+ul.record-list-sidebar li {
+    margin-bottom: 10px;
+}
+
+ul.record-list-sidebar li a {
+    text-decoration: none;
+}
+
+ul.record-list-sidebar li span.title {
+    font-weight: bold;
+    display: block;
+}
+
+ul.record-list-sidebar li span.date {
+    display: block;
+}
+
 /*** Faculties ***/
 
 ul.faculty-list a, ul.course-list a {
