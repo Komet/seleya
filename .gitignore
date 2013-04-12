@@ -1,6 +1,8 @@
 /web/bundles/
 /web/media/
 /web/previews/
+/web/js/
+/web/css/
 /app/bootstrap.php.cache
 /app/cache/*
 /app/logs/*
