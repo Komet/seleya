@@ -25,6 +25,7 @@ class FacultyController extends Controller
         $faculties = $this->getDoctrine()->getManager()
                           ->getRepository('SeleyaBundle:Faculty')
                           ->getFacultiesWithRecords();
+                          
         return $this->render('SeleyaBundle:Faculty:index.html.twig', array(
             'faculties' => $faculties
         ));
@@ -62,13 +63,13 @@ class FacultyController extends Controller
      * @Route("/courses/{facultyId}/{page}/{render}", 
      *        name="faculty_courses", 
      *        options={"expose"=true},
-     *        requirements={"page"="\d+"})
+     *        requirements={"facultyId"="\d+", "page"="\d+"})
      */
     public function coursesInFacultyAction($facultyId, $page, $render = false)
     {
         $em = $this->getDoctrine()->getManager();
         $courses = $em->getRepository('SeleyaBundle:Course')
-                      ->getCoursesWithRecords($facultyId, FacultyController::COURSES_PER_PAGE, $page*FacultyController::COURSES_PER_PAGE);
+                      ->getCoursesInFaculty($facultyId, FacultyController::COURSES_PER_PAGE, $page*FacultyController::COURSES_PER_PAGE);
                 
         if (!$render) {
             return $courses;
@@ -96,6 +97,36 @@ class FacultyController extends Controller
                 'Content-Type' => 'application/json'
             )
         );
+    }
+
+    /**
+     * @Route("/courses/lastRecord/{facultyId}", 
+     *        name="faculty_courses_lastRecord",
+     *        options={"expose"=true},
+     *        requirements={"page"="\d+"})
+     */
+    public function coursesInFacultyOrderedByRecordDate($facultyId)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $courses = $em->getRepository('SeleyaBundle:Course')
+                      ->getCoursesInFacultyOrderedByRecordDate($facultyId,FacultyController::COURSES_PER_PAGE, 0);
+        $htmlContents = array();
+        foreach ($courses as $course) {
+            $htmlContents[] = $this->renderView('SeleyaBundle:Faculty:course_entry_small.html.twig', array(
+                'course' => $course
+            ));
+        }
         
+        return new Response(
+            json_encode(
+                array(
+                    'html' => $htmlContents
+                )
+            ), 
+            200, 
+            array(
+                'Content-Type' => 'application/json'
+            )
+        );
     }
 }

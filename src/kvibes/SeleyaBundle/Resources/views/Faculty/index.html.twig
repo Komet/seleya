@@ -13,7 +13,7 @@
 		<ul class="faculty-list unstyled">
 			{% for faculty in faculties %}
 				<li>
-					<a href="{{ path('faculty', {'facultyId': faculty.data.id}) }}">
+					<a href="{{ path('faculty', {'facultyId': faculty.data.id}) }}" class="load-courses" data-faculty-id="{{ faculty.data.id }}">
 						<span class="title">{{ faculty.data.name }}</span>
 						<span class="record-count">
 							{% transchoice faculty.recordCount with {'%count%': faculty.recordCount} %}
@@ -21,9 +21,19 @@
 							{% endtranschoice %}
 						</span>
 					</a>
+					<div class="course-list-container hide" data-faculty-id="{{ faculty.data.id }}">
+						<div class="spin-container"><span class="spin"></span></div>
+						<ul class="course-list unstyled inline clearfix block">
+						</ul>
+						<a href="{{ path('faculty', {'facultyId': faculty.data.id}) }}" class="btn btn-small btn-to-course">Alle Veranstaltungen aus diesem Fachbereich</a>
+					</div>
 				</li>
 			{% endfor %}
 		</ul>
 	</div>
 </div>
+{% endblock %}
+
+{% block bottom_script %}
+	<script type="text/javascript" src="{{ asset('bundles/seleya/js/faculty/Faculty.js') }}"></script>
 {% endblock %}

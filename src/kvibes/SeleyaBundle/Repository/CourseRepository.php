@@ -6,7 +6,7 @@ use Doctrine\ORM\EntityRepository;
 
 class CourseRepository extends EntityRepository
 {
-    public function getCoursesWithRecords($facultyId, $limit, $offset)
+    public function getCoursesInFaculty($facultyId, $limit, $offset)
     {
         $courses = array();
         $qb = $this->getEntityManager()->createQueryBuilder();
@@ -33,6 +33,33 @@ class CourseRepository extends EntityRepository
         return $courses;
     }
     
+    public function getCoursesInFacultyOrderedByRecordDate($facultyId, $limit, $offset)
+    {
+        $courses = array();
+        
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $results = $qb->select('c, MAX(r.recordDate) AS latestRecordDate, COUNT(r)')
+                      ->from('SeleyaBundle:Course', 'c')
+                      ->join('c.records', 'r')
+                      ->where('r.visible=1')
+                      ->andWhere('c.faculty=:facultyId')
+                      ->setParameter('facultyId', $facultyId)
+                      ->groupBy('c')
+                      ->orderBy('latestRecordDate', 'DESC')
+                      ->setFirstResult($offset)
+                      ->setMaxResults($limit)
+                      ->getQuery()
+                      ->getResult();
+        foreach ($results as $result) {
+            $courses[] = array(
+                'data'        => $result[0],
+                'recordCount' => $result[1]
+            );
+        }
+
+        return $courses;
+    }
+
     public function getCourseCountForFaculty($facultyId)
     {
         $qb = $this->createQueryBuilder('r');

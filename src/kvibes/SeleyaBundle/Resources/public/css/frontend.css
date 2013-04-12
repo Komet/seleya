@@ -124,8 +124,18 @@ div.center {
     text-align: center;
 }
 
+.block {
+    display: block;
+}
+
 button.hasSpinner {
     position: relative;
+}
+
+div.spin-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .btn-mini span.spin {
@@ -372,4 +382,22 @@ ul.faculty-list li span.title, ul.course-list li span.title {
 ul.faculty-list li span.record-count, ul.course-list li span.course-count {
     font-size: 11px;
     color: #999999;
+}
+
+ul.faculty-list > li > div {
+    margin-left: 20px;
+    background-color: #fafafa;
+    margin-bottom: 10px;
+    padding: 10px;
+}
+
+ul.faculty-list > li > div > ul.course-list li {
+    margin: 0;
+    padding: 0;
+    border-bottom: none;
+}
+
+ul.faculty-list > li > div > .btn-to-course {
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
