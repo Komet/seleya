@@ -74,6 +74,11 @@ class Record
     protected $users;
     
     /**
+     * @ORM\OneToMany(targetEntity="View", mappedBy="record", cascade={"all"})
+     */
+    protected $views;
+    
+    /**
      * @ORM\Column(type="datetime", nullable=true)
      */
     protected $updated;
@@ -90,6 +95,7 @@ class Record
         $this->bookmarks = new ArrayCollection();
         $this->users = new ArrayCollection();
         $this->lecturers = new ArrayCollection();
+        $this->views = new ArrayCollection();
         $this->visible = false;
         $this->recordDate = new \DateTime();
     }
@@ -182,6 +188,11 @@ class Record
     public function setUsers($users)
     {
         $this->users = $users;
+    }
+    
+    public function getViews()
+    {
+        return $this->views;
     }
 
     public function getLecturers()

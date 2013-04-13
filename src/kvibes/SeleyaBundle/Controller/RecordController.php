@@ -3,6 +3,7 @@
 namespace kvibes\SeleyaBundle\Controller;
 
 use kvibes\SeleyaBundle\Entity\Bookmark;
+use kvibes\SeleyaBundle\Entity\View;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -41,6 +42,8 @@ class RecordController extends Controller
             throw $this->createNotFoundException('Aufzeichnung wurde nicht gefunden.');
         }
 
+        $this->countView($record);
+
         if ($securityContext->isGranted('ROLE_USER')) {
             $user = $em->getRepository('SeleyaBundle:User')
                        ->getUser($securityContext->getToken()->getUser()->getUsername());
@@ -48,7 +51,7 @@ class RecordController extends Controller
             $bookmark = $em->getRepository('SeleyaBundle:Bookmark')
                            ->getBookmarkForRecord($record, $user);
         }
-
+        
         return $this->render('SeleyaBundle:Record:index.html.twig', array(
             'record'          => $record,
             'comments'        => $comments,
@@ -56,5 +59,25 @@ class RecordController extends Controller
             'hasBookmark'     => $bookmark !== null,
             'recentRecords'   => $recentRecordsInCourse
         ));
+    }
+
+    private function countView($record)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $view = $em->getRepository('SeleyaBundle:View')->findOneBy(array(
+            'record' => $record,
+            'date'   => new \DateTime()
+        ));
+        
+        if ($view === null) {
+            $view = new View();
+            $view->setRecord($record);
+            $view->setDate(new \DateTime());
+            $view->setViewCount(1);
+            $em->persist($view);
+        } else {
+            $view->setViewCount($view->getViewCount()+1);
+        }
+        $em->flush();
     }
 }

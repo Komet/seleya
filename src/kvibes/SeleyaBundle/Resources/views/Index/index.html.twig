@@ -7,7 +7,7 @@
 			<h4>{% trans %}Beliebte Aufzeichnungen{% endtrans %}</h4>
 		</div>
 		<ul class="record-list-horizontal unstyled">
-			{% for record in records %}
+			{% for record in hotRecords %}
 				{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
 				<li>
 					<a href="{{ path('record', { 'id': record.id }) }}">

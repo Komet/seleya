@@ -16,7 +16,7 @@ services:
     seleya.menu_builder:
         class: kvibes\SeleyaBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory", "@security.context", "@doctrine"]
-
+        
     # Admin Navbar
     seleya.admin_menu:
         class: Knp\Menu\MenuItem

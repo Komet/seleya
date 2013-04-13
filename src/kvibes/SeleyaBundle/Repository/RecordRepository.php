@@ -64,6 +64,30 @@ class RecordRepository extends EntityRepository
                     ->getQuery()
                     ->getResult();
     }
+    
+    public function getRecordStats(\DateInterval $interval)
+    {
+        $from = new \DateTime();
+        $from->sub($interval);
+        $to = new \DateTime();
+        
+        $results = $this->createQueryBuilder('r')
+                        ->select('r, SUM(v.viewCount), COUNT(b.id), COUNT(c.id)')
+                        ->leftJoin('r.views', 'v')
+                        ->leftJoin('r.bookmarks', 'b')
+                        ->leftJoin('r.comments', 'c')
+                        ->where('r.visible=1')
+                        ->andWhere('(v.date>=:from AND v.date<=:to) OR (v.date IS NULL)')
+                        ->andWhere('(b.created>=:from AND b.created<=:to) OR (b.created IS NULL)')
+                        ->andWhere('(c.created>=:from AND c.created<=:to) OR (c.created IS NULL)')
+                        ->setParameter('from', $from)
+                        ->setParameter('to', $to)
+                        ->groupBy('r')
+                        ->getQuery()
+                        ->getResult();
+            
+        return $results;
+    }
 
     private function findAllOrderedByCreated($visible = true, $limit = null)
     {

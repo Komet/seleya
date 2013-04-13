@@ -14,7 +14,7 @@ $(function() {
 			$('#bookmark').spin('tiny-black');
 			var recordId = $(this).data('record-id');
 			var bookmark = $(this);
-	    	$.post(Routing.generate('record_bookmark', {id: recordId}))
+	    	$.post(Routing.generate('bookmark_toggle', {id: recordId}))
 		    .done(function(data) {
 		    	if (data.bookmark) {
 		    		bookmark.addClass('active');
