@@ -1,6 +1,7 @@
 /web/bundles/
-/web/media/
-/web/previews/
+/web/media/*
+!/web/media/README
+/web/previews/*
 !/web/previews/README
 /web/js/
 /web/css/
