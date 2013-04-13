@@ -72,7 +72,7 @@ class RecordRepository extends EntityRepository
                 'visible' => $visible
             ), 
             array(
-                'created' => 'DESC'
+                'recordDate' => 'DESC'
             ), 
             $limit
         );
