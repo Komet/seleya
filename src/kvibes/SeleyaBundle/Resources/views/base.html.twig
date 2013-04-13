@@ -4,11 +4,15 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/bootstrap.min.css') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/bootstrap-responsive.min.css') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/fonts/stylesheet.css') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/layout.css') }}" media="screen" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/frontend.css') }}" media="screen" />
+	{% stylesheets
+    	'bundles/seleya/css/bootstrap.min.css'
+    	'bundles/seleya/css/bootstrap-responsive.min.css'
+    	'bundles/seleya/fonts/stylesheet.css'
+    	'bundles/seleya/css/layout.css'
+    	'bundles/seleya/css/frontend.css'
+	%}
+	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+	{% endstylesheets %}
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block head_script %}

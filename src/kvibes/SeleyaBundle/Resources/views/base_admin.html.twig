@@ -4,14 +4,19 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery-ui.css') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/bmatznerjqueryui/css/smoothness/jquery.ui.theme.css') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/bootstrap.min.css') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/bootstrap-responsive.min.css') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/bootstrap-chosen.min.css') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/fonts/stylesheet.css') }}" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/layout.css') }}" media="screen" />
-	<link rel="stylesheet" type="text/css" href="{{ asset('bundles/seleya/css/admin.css') }}" media="screen" />
+	{% stylesheets
+    	'bundles/bmatznerjqueryui/css/smoothness/jquery-ui.css'
+    	'bundles/bmatznerjqueryui/css/smoothness/jquery.ui.theme.css'
+    	'bundles/seleya/css/bootstrap.min.css'
+    	'bundles/seleya/css/bootstrap-responsive.min.css'
+    	'bundles/seleya/css/bootstrap-chosen.min.css'
+    	'bundles/seleya/fonts/stylesheet.css'
+    	'bundles/seleya/css/layout.css'
+    	'bundles/seleya/css/admin.css'
+	%}
+	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+	{% endstylesheets %}
+
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block head_script %}

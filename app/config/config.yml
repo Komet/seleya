@@ -40,8 +40,8 @@ assetic:
     use_controller: false
     filters:
         less:
-            node: /usr/local/bin/node
-            node_paths: [/usr/local/share/npm/lib/node_modules]
+            node: %node%
+            node_paths: %node_paths%
             apply_to: "\.less$"
         cssrewrite: ~
         cssembed:

@@ -1,5 +1,6 @@
 /web/bundles/
 /web/media/
+!/web/media/README
 /web/previews/
 /web/js/
 /web/css/
@@ -7,7 +8,7 @@
 /app/cache/*
 /app/logs/*
 /build/
-#/vendor/
+/vendor/
 /bin/
 /composer.phar
 
