@@ -345,7 +345,7 @@ class RecordController extends Controller
             return true;
         }
 
-        $user = $em->getRepository('SeleyaBundle:User')
+        $user = $this->getDoctrine()->getManager()->getRepository('SeleyaBundle:User')
                    ->getUser($securityContext->getToken()->getUser()->getUsername());
                    
         foreach ($record->getLecturers() as $lecturer) {
