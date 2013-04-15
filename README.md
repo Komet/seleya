@@ -24,7 +24,7 @@ curl -s https://getcomposer.org/installer | php
 ./composer.phar update --no-dev
 php app/console assetic:dump --env=prod
 php app/console assets:install --symlink
-php app/console doctrine:schema:update --force
+php app/console doctrine:migrations:migrate
 php app/console doctrine:fixtures:load
 ```
 
