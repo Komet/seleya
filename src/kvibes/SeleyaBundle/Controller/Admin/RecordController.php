@@ -27,15 +27,23 @@ class RecordController extends Controller
     /**
      * Lists all invisible (=newly imported) records
      *
-     * @todo check if superadmin, show, otherwise show records of user
-     *
      * @Route("/", name="admin_record")
      */
     public function indexAction()
     {
-        $records = $this->getDoctrine()->getManager()
-                        ->getRepository('SeleyaBundle:Record')
-                        ->findNewOrderedByCreated();
+        $securityContext = $this->get('security.context');
+
+        if ($securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+            $records = $this->getDoctrine()->getManager()
+                            ->getRepository('SeleyaBundle:Record')
+                            ->findAllRecords(false);
+        } else {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('SeleyaBundle:User')
+                       ->getUser($securityContext->getToken()->getUser()->getUsername());
+            $records = $em->getRepository('SeleyaBundle:Record')
+                          ->findByUser($user, false);
+        }
 
         return $this->render('SeleyaBundle:Admin:Record/index.html.twig', array(
             'records' => $records,
@@ -46,15 +54,23 @@ class RecordController extends Controller
     /**
      * Lists all visible records
      *
-     * @todo check if superadmin, show, otherwise show records of user
-     * 
-     * @Route("/visble", name="admin_record_visible")
+     * @Route("/visible", name="admin_record_visible")
      */
     public function listVisibleAction()
     {
-        $records = $this->getDoctrine()->getManager()
-                        ->getRepository('SeleyaBundle:Record')
-                        ->findVisibleOrderedByCreated();
+        $securityContext = $this->get('security.context');
+
+        if ($securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+            $records = $this->getDoctrine()->getManager()
+                            ->getRepository('SeleyaBundle:Record')
+                            ->findAllRecords(true);
+        } else {
+            $em = $this->getDoctrine()->getManager();
+            $user = $em->getRepository('SeleyaBundle:User')
+                       ->getUser($securityContext->getToken()->getUser()->getUsername());
+            $records = $em->getRepository('SeleyaBundle:Record')
+                          ->findByUser($user, true);
+        }
 
         return $this->render('SeleyaBundle:Admin:Record/index.html.twig', array(
             'records' => $records,

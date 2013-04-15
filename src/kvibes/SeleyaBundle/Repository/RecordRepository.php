@@ -24,19 +24,45 @@ class RecordRepository extends EntityRepository
         }
     }
     
-    public function findNewOrderedByCreated()
+    public function findAllRecords($visible)
     {
-        return $this->findAllOrderedByCreated(false);
+        return $this->findBy(
+            array(
+                'visible' => $visible
+            ), 
+            array(
+                'recordDate' => 'DESC'
+            )
+        );
     }
 
-    public function findVisibleOrderedByCreated()
+    public function findByUser($user, $visible)
     {
-        return $this->findAllOrderedByCreated(true);
+        $qb = $this->createQueryBuilder('r');
+        return $qb->select('r')
+                  ->leftJoin('r.users', 'u')
+                  ->leftJoin('r.lecturers', 'l')
+                  ->where('u=:user')
+                  ->orWhere('l=:user')
+                  ->andWhere('r.visible=:visible')
+                  ->setParameter('user', $user)
+                  ->setParameter('visible', $visible)
+                  ->groupBy('r')
+                  ->getQuery()
+                  ->getResult();
     }
-    
+
     public function findLatest($limit = 10)
     {
-        return $this->findAllOrderedByCreated(true, $limit);
+        return $this->findBy(
+            array(
+                'visible' => true
+            ), 
+            array(
+                'recordDate' => 'DESC'
+            ), 
+            $limit
+        );
     }
 
     public function getRecordCountForCourse($courseId)
@@ -87,18 +113,5 @@ class RecordRepository extends EntityRepository
                         ->getResult();
             
         return $results;
-    }
-
-    private function findAllOrderedByCreated($visible = true, $limit = null)
-    {
-        return $this->findBy(
-            array(
-                'visible' => $visible
-            ), 
-            array(
-                'recordDate' => 'DESC'
-            ), 
-            $limit
-        );
     }
 }
