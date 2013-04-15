@@ -1,0 +1,56 @@
+{% from 'MopaBootstrapBundle::flash.html.twig' import session_flash %}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+	{% stylesheets
+    	'bundles/seleya/css/bootstrap.min.css'
+    	'bundles/seleya/css/bootstrap-responsive.min.css'
+    	'bundles/seleya/fonts/stylesheet.css'
+    	'bundles/seleya/css/error.css'
+	%}
+	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+	{% endstylesheets %}
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Seleya</title>
+    <link rel="shortcut icon" href="{{ asset('favicon.ico') }}" />
+</head>
+
+<body>
+    <div class="navbar navbar-inverse navbar-static-top">
+	    <div class="navbar-inner">
+    		<div class="container">
+    			<a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+    				<span class="icon-bar"></span>
+    				<span class="icon-bar"></span>
+    				<span class="icon-bar"></span>
+    			</a>
+    			<a class="brand" href="{{ path('index') }}"><b>Seleya</b></a>
+			    <div class="nav-collapse collapse">
+    				<ul class="nav pull-right">
+    					<li><a href="{{ path('index') }}">Startseite →</a></li>
+    				</ul>
+			    </div>
+    		</div>
+    	</div>
+    </div>
+
+    <div class="container-fluid container-content">
+        <div class="content">
+			{% if status_code == 404 %}
+				{% trans %}Sorry, diese Seite existiert nicht!{% endtrans %}
+			{% elseif status_code == 403 %}
+				{% trans %}Sorry, Sie haben keine Berechtigung diese Seite aufzurufen!{% endtrans %}
+			{% else %}
+				Sorry, ein Fehler ist aufgetreten:<br />Code {{ status_code }}
+			{% endif %}
+        </div>
+    </div> <!-- /container -->
+    {% javascripts
+        '@SeleyaBundle/Resources/public/js/bootstrap.min.js'
+		%}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
+</body>
+</html>

@@ -1,0 +1,24 @@
+html {
+    background: radial-gradient(ellipse farthest-corner at center center , #55ADD7 0%, #0072A9 100%) no-repeat fixed 0 0 transparent;
+}
+
+body {
+    background-color: transparent;
+}
+
+div.content {
+    color: #fafafa;
+    font-size: 40px;
+    font-weight: bold;
+    line-height: 48px;
+    padding-top: 150px;
+    text-align: center;
+    text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.4);
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.navbar-fixed-top .navbar-inner, .navbar-static-top .navbar-inner {
+    box-shadow: 0 1px 10px rgba(0, 0, 0, 0.2);
+}
+
