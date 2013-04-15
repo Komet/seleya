@@ -11,6 +11,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
 
 /**
  * The RecordController
@@ -137,7 +138,6 @@ class RecordController extends Controller
      * 
      * @param Request $request The request object
      * @param int     $id      Id of the record to update
-     * @todo check if superadmin or user owns record
      * 
      * @Route("/update/{id}", name="admin_record_update")
      */
@@ -149,7 +149,11 @@ class RecordController extends Controller
         if (!$record) {
             throw $this->createNotFoundException('Unable to find record.');
         }
-        
+
+        if (!$this->currentUserCanEditRecord($record)) {
+            throw new AccessDeniedHttpException('You are not allowed to edit this record.');
+        }
+
         $metadataConfigs = $this->getDoctrine()
                                 ->getManager()
                                 ->getRepository('SeleyaBundle:MetadataConfig')
@@ -170,6 +174,8 @@ class RecordController extends Controller
             $metadata->setRecord($record);
             $record->getMetadata()->add($metadata);
         }
+        
+        $recordWasVisible = $record->isVisible();
         
         $form = $this->createForm(new RecordType($this->get('translator'), $record->getMetadata()), $record);
         
@@ -202,8 +208,12 @@ class RecordController extends Controller
                 }
 
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Aufzeichnung wurde aktualisiert'));      
-                return $this->redirect($this->generateUrl('admin_record'));
+                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Aufzeichnung wurde aktualisiert'));
+                if ($recordWasVisible) {
+                    return $this->redirect($this->generateUrl('admin_record_visible'));
+                } else {
+                    return $this->redirect($this->generateUrl('admin_record'));
+                }   
             }
         }
                 
@@ -219,7 +229,6 @@ class RecordController extends Controller
      * 
      * @param Request $request The request object
      * @param int     $id      Id of record to delete
-     * @todo check if superadmin or user owns record
      * @todo delete preview image
      * @todo delete record in matterhorn (with optional checkbox in form)
      * 
@@ -232,6 +241,10 @@ class RecordController extends Controller
                      ->findOneById($id);
         if (!$record) {
             throw $this->createNotFoundException('Unable to find record.');
+        }
+        
+        if (!$this->currentUserCanEditRecord($record)) {
+            throw new AccessDeniedHttpException('You are not allowed to edit this record.');
         }
         
         if ($request->isMethod('POST') && $request->request->get('confirmed') == 1) {
@@ -300,5 +313,37 @@ class RecordController extends Controller
         return $this->render('SeleyaBundle:Admin:Record/import.html.twig', array(
             'records' => $newEpisodes
         ));
+    }
+
+    /**
+     * Checks if the current user is allowed to edit/delete a record
+     * 
+     * @param Record $record Record to check
+     * @return boolean
+     */
+    private function currentUserCanEditRecord($record)
+    {
+        $securityContext = $this->get('security.context');
+
+        if ($securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+            return true;
+        }
+
+        $user = $em->getRepository('SeleyaBundle:User')
+                   ->getUser($securityContext->getToken()->getUser()->getUsername());
+                   
+        foreach ($record->getLecturers() as $lecturer) {
+            if ($lecturer->getId() == $user->getId()) {
+                return true;
+            }
+        }
+        
+        foreach ($record->getUsers() as $rUser) {
+            if ($rUser->getId() == $user->getId()) {
+                return true;
+            }
+        }
+
+        return false;        
     }
 }
