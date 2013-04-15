@@ -101,3 +101,15 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [90, 50], mode: outbound }
+
+knp_paginator:
+    page_range: 10
+    default_options:
+        page_name: page
+        sort_field_name: sort
+        sort_direction_name: direction
+        distinct: false
+    template:
+        pagination: MopaBootstrapBundle:Pagination:sliding.html.twig
+        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig
+

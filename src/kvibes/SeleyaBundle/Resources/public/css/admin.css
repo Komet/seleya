@@ -15,6 +15,12 @@ body {
     padding-top: 16px;
 }
 
+@media (max-width: 767px) {
+    .container-content {
+        margin-left: -20px;
+        margin-right: -20px;
+    }
+}
 .content > div.page-header {
     box-shadow: 0 2px 3px 0 rgba(0, 0, 0, 0.4);
     margin: 24px -31px;

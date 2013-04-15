@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Bmatzner\JQueryUIBundle\BmatznerJQueryUIBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
+            new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new IMAG\LdapBundle\IMAGLdapBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
         );

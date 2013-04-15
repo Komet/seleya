@@ -24,34 +24,30 @@ class RecordRepository extends EntityRepository
         }
     }
     
-    public function findAllRecords($visible)
-    {
-        return $this->findBy(
-            array(
-                'visible' => $visible
-            ), 
-            array(
-                'recordDate' => 'DESC'
-            )
-        );
-    }
-
-    public function findByUser($user, $visible)
+    public function getQueryForAllRecords($visible, $user = null)
     {
         $qb = $this->createQueryBuilder('r');
-        return $qb->select('r')
-                  ->leftJoin('r.users', 'u')
-                  ->leftJoin('r.lecturers', 'l')
-                  ->where('u=:user')
-                  ->orWhere('l=:user')
-                  ->andWhere('r.visible=:visible')
-                  ->setParameter('user', $user)
-                  ->setParameter('visible', $visible)
-                  ->groupBy('r')
-                  ->getQuery()
-                  ->getResult();
+        if ($user !== null) {
+            return $qb->select('r')
+                      ->leftJoin('r.users', 'u')
+                      ->leftJoin('r.lecturers', 'l')
+                      ->where('u=:user')
+                      ->orWhere('l=:lecturer')
+                      ->andWhere('r.visible=:visible')
+                      ->setParameter('user', $user->getId())
+                      ->setParameter('lecturer', $user->getId())
+                      ->setParameter('visible', $visible)
+                      ->groupBy('r')
+                      ->getQuery();
+        } else {
+            return $qb->select('r')
+                      ->where('r.visible=:visible')
+                      ->setParameter('visible', $visible)
+                      ->groupBy('r')
+                      ->getQuery();
+        }
     }
-
+    
     public function findLatest($limit = 10)
     {
         return $this->findBy(

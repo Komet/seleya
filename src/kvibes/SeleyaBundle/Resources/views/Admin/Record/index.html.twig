@@ -7,16 +7,27 @@
 {% if records|length == 0 %}
 	{{ flash('info', 'Es sind keine Aufzeichnungen vorhanden.', false, true) }}
 {% else %}
-	<ul class="table">
+	<div class="pull-right sort-order bottom-space-small">
+		Sortieren:
+		<span{% if pagination.isSorted('r.title') %} class="active"{% endif %}>{{ knp_pagination_sortable(pagination, 'Titel', 'r.title') }}</span>
+		<span{% if pagination.isSorted('r.recordDate') %} class="active"{% endif %}>{{ knp_pagination_sortable(pagination, 'Aufzeichnungsdatum', 'r.recordDate') }}</span>
+	</div>
+	<ul class="table table-striped clear">
 	{% for record in records %}
 		<li>
 			<span>{{ record.title }}</span>
+			<span class="hidden-phone">{{ record.recordDate|localizeddate('long', 'none') }}</span>
 			<span class="buttons">
 					<a href="{{ path('admin_record_update', { 'id': record.id }) }}" class="btn btn-primary btn-small"><i class="icon-pencil icon-white"></i> {% trans %}Bearbeiten{% endtrans %}</a>
 			</span>
 		</li>
 	{% endfor %}
 	</ul>
+
+	<div class="navigation text-center">
+    	{{ knp_pagination_render(pagination) }}
+	</div>
 {% endif %}
+
 
 {% endblock %}

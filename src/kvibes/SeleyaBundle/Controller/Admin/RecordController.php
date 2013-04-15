@@ -24,57 +24,51 @@ use Symfony\Component\HttpKernel\Exception\AccessDeniedHttpException;
  */
 class RecordController extends Controller
 {
+    const RECORDS_PER_PAGE = 15;
+    
     /**
      * Lists all invisible (=newly imported) records
      *
-     * @Route("/", name="admin_record")
+     * @Route("/{visible}", 
+     *        name="admin_record", 
+     *        requirements={"visible"="(new|visible)"})
      */
-    public function indexAction()
+    public function indexAction(Request $request, $visible = 'new')
     {
         $securityContext = $this->get('security.context');
-
-        if ($securityContext->isGranted('ROLE_SUPER_ADMIN')) {
-            $records = $this->getDoctrine()->getManager()
-                            ->getRepository('SeleyaBundle:Record')
-                            ->findAllRecords(false);
-        } else {
-            $em = $this->getDoctrine()->getManager();
+        $em = $this->getDoctrine()->getManager();
+        $user = null;
+        if (!$securityContext->isGranted('ROLE_SUPER_ADMIN')) {
             $user = $em->getRepository('SeleyaBundle:User')
                        ->getUser($securityContext->getToken()->getUser()->getUsername());
-            $records = $em->getRepository('SeleyaBundle:Record')
-                          ->findByUser($user, false);
         }
+        
+        $recordQuery = $em->getRepository('SeleyaBundle:Record')
+                          ->getQueryForAllRecords($visible == 'visible', $user);
+                          
+        // @see https://github.com/KnpLabs/KnpPaginatorBundle/issues/124
+        if (!$request->get('sort') && !$request->get('direction')) {
+            $_GET['sort'] = 'r.title';
+            $_GET['direction'] = 'asc';
+        }
+                          
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($recordQuery, $request->get('page', 1), RecordController::RECORDS_PER_PAGE);   
+        
+        // @see https://github.com/KnpLabs/KnpPaginatorBundle/issues/124
+        if (!$request->get('sort') && !$request->get('direction')) {
+            $pagination->setParam('sort', 'r.title');
+            $pagination->setParam('direction', 'asc');
+        }
+        
+        $records = $recordQuery->getResult();
+        
+        $title = ($visible == 'visible') ? $this->get('translator')->trans('Sichtbare Aufzeichnungen') : $this->get('translator')->trans('Neue Aufzeichnungen');
 
         return $this->render('SeleyaBundle:Admin:Record/index.html.twig', array(
             'records' => $records,
-            'title'   => $this->get('translator')->trans('Neue Aufzeichnungen')
-        ));
-    }
-    
-    /**
-     * Lists all visible records
-     *
-     * @Route("/visible", name="admin_record_visible")
-     */
-    public function listVisibleAction()
-    {
-        $securityContext = $this->get('security.context');
-
-        if ($securityContext->isGranted('ROLE_SUPER_ADMIN')) {
-            $records = $this->getDoctrine()->getManager()
-                            ->getRepository('SeleyaBundle:Record')
-                            ->findAllRecords(true);
-        } else {
-            $em = $this->getDoctrine()->getManager();
-            $user = $em->getRepository('SeleyaBundle:User')
-                       ->getUser($securityContext->getToken()->getUser()->getUsername());
-            $records = $em->getRepository('SeleyaBundle:Record')
-                          ->findByUser($user, true);
-        }
-
-        return $this->render('SeleyaBundle:Admin:Record/index.html.twig', array(
-            'records' => $records,
-            'title'   => $this->get('translator')->trans('Sichtbare Aufzeichnungen')
+            'title'   => $title,
+            'pagination' => $pagination
         ));
     }
 
@@ -225,11 +219,7 @@ class RecordController extends Controller
 
                 $em->flush();
                 $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Aufzeichnung wurde aktualisiert'));
-                if ($recordWasVisible) {
-                    return $this->redirect($this->generateUrl('admin_record_visible'));
-                } else {
-                    return $this->redirect($this->generateUrl('admin_record'));
-                }   
+                return $this->redirect($this->generateUrl('admin_record', array('visible' => ($recordWasVisible) ? 'visible' : 'new')));
             }
         }
                 
@@ -264,10 +254,11 @@ class RecordController extends Controller
         }
         
         if ($request->isMethod('POST') && $request->request->get('confirmed') == 1) {
+            $recordWasVisible = $record->isVisible();
             $em->remove($record);
             $em->flush();
             $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Aufzeichnung wurde gelöscht'));                
-            return $this->redirect($this->generateUrl('admin_record'));
+            return $this->redirect($this->generateUrl('admin_record', array('visible' => ($recordWasVisible) ? 'visible' : 'new')));
         }
         
         return $this->render('SeleyaBundle:Admin:Record/delete.html.twig', array(

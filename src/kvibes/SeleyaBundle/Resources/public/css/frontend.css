@@ -159,19 +159,6 @@ div.spin-container {
     background-image: none;
 }
 
-div.sort-order {
-    font-size: 12px;
-    color: #c0c0c0;
-}
-
-div.sort-order a {
-    color: #7797A8;
-}
-
-div.sort-order a.active {
-    font-weight: bold;
-}
-
 /*** Index ***/
 
 ul.record-list-horizontal li {
