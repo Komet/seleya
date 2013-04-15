@@ -21,7 +21,11 @@ class LoginListener
             $this->doctrine
                  ->getEntityManager()
                  ->getRepository('SeleyaBundle:User')
-                 ->insertOrRefreshUser($user->getUsername(), $user->getAttribute('cn'));
+                 ->insertOrRefreshUser(
+                     $user->getUsername(), 
+                     $user->getAttribute('cn'), 
+                     in_array('ROLE_ADMIN', $user->getRoles())
+                 );
         }
     }
 }

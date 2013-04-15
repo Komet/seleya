@@ -50,6 +50,11 @@ class RecordType extends AbstractType
         
         $builder->add('lecturers', 'entity', array(
             'class'    => 'kvibes\SeleyaBundle\Entity\User',
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('u')
+                          ->where('u.admin=true')
+                          ->orderBy('u.commonName', 'ASC');
+            },
             'label'    => $this->translator->trans('Dozenten'),
             'required' => false,
             'multiple' => true,
@@ -61,6 +66,11 @@ class RecordType extends AbstractType
 
         $builder->add('users', 'entity', array(
             'class'    => 'kvibes\SeleyaBundle\Entity\User',
+            'query_builder' => function(EntityRepository $er) {
+                return $er->createQueryBuilder('u')
+                          ->where('u.admin=true')
+                          ->orderBy('u.commonName', 'ASC');
+            },
             'label'    => $this->translator->trans('Weitere Benutzer mit Schreibrechten'),
             'required' => false,
             'multiple' => true,

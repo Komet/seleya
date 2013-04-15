@@ -13,7 +13,10 @@ class LdapSecurityListener implements EventSubscriberInterface
             \IMAG\LdapBundle\Event\LdapEvents::PRE_BIND => 'onPreBind',
         );
     }
-    
+
+    /**
+     * @todo: adjust employeetype to mluPersonType
+     */    
     public function onPreBind(LdapUserEvent $event)
     {
         $user = $event->getUser();

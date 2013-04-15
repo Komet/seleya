@@ -37,11 +37,17 @@ class User
      */
     private $lastLogin;
     
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $admin;
+    
     public function __construct($username)
     {
         $this->username = $username;
         $this->lastLogin = new \DateTime();
         $this->records = new ArrayCollection();
+        $this->admin = false;
     }
     
     public function getId()
@@ -82,6 +88,16 @@ class User
     public function getRecords()
     {
         return $this->records;
+    }
+    
+    public function isAdmin()
+    {
+        return $this->admin;
+    }
+    
+    public function setAdmin($admin)
+    {
+        $this->admin = $admin;
     }
     
     public function __toString()
