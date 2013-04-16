@@ -108,4 +108,34 @@ class RecordRepository extends EntityRepository
             
         return $results;
     }
+    
+    public function getSearchQuery($query, $visible, $user = null)
+    {
+        $qb = $this->createQueryBuilder('r');
+        if ($user !== null) {
+            return $qb->select('r')
+                      ->leftJoin('r.users', 'u')
+                      ->leftJoin('r.lecturers', 'l')
+                      ->where('u=:user')
+                      ->orWhere('l=:lecturer')
+                      ->andWhere('r.visible=:visible')
+                      ->andWhere('r.title LIKE :title')
+                      ->setParameter('user', $user->getId())
+                      ->setParameter('lecturer', $user->getId())
+                      ->setParameter('visible', $visible)
+                      ->setParameter('title', '%' . $query . '%')
+                      ->groupBy('r')
+                      ->orderBy('r.recordDate', 'desc')
+                      ->getQuery();
+        } else {
+            return $qb->select('r')
+                      ->where('r.visible=:visible')
+                      ->andWhere('r.title LIKE :title')
+                      ->setParameter('visible', $visible)
+                      ->setParameter('title', '%' . $query . '%')
+                      ->groupBy('r')
+                      ->orderBy('r.recordDate', 'desc')
+                      ->getQuery();
+        }
+    }
 }

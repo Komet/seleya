@@ -50,6 +50,7 @@ class RecordType extends AbstractType
                 'class'    => 'kvibes\SeleyaBundle\Entity\Course',
                 'property' => 'name',
                 'label'    => $this->translator->trans('Veranstaltung'),
+                'required' => true,
                 'query_builder' => function (EntityRepository $er) {
                     return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
                 },

@@ -37,5 +37,9 @@
 		var $addTagLink = $('<div class="controls"><a href="#" class="add_tag_link btn btn-small"><i class="icon-plus-sign"></i> {% trans %}Weitere Option hinzufügen{% endtrans %}</a></div>');
 		var $newLinkLi = $('<li></li>').append($addTagLink);
 	</script>
-	<script type="text/javascript" src="{{ asset('bundles/seleya/js/admin/MetadataConfig_new.js') }}"></script>
+    {% javascripts
+        '@SeleyaBundle/Resources/public/js/admin/MetadataConfig_new.js'
+		%}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
 {% endblock %}

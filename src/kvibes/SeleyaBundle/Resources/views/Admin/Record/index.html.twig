@@ -7,27 +7,46 @@
 {% if pagination|length == 0 %}
 	{{ flash('info', 'Es sind keine Aufzeichnungen vorhanden.', false, true) }}
 {% else %}
-	<div class="pull-right sort-order bottom-space-small">
-		Sortieren:
-		<span{% if pagination.isSorted('r.title') %} class="active"{% endif %}>{{ knp_pagination_sortable(pagination, 'Titel', 'r.title') }}</span>
-		<span{% if pagination.isSorted('r.recordDate') %} class="active"{% endif %}>{{ knp_pagination_sortable(pagination, 'Aufzeichnungsdatum', 'r.recordDate') }}</span>
-	</div>
-	<ul class="table table-striped clear">
-	{% for record in pagination %}
-		<li>
-			<span>{{ record.title }}</span>
-			<span class="hidden-phone">{{ record.recordDate|localizeddate('long', 'none') }}</span>
-			<span class="buttons">
-					<a href="{{ path('admin_record_update', { 'id': record.id }) }}" class="btn btn-primary btn-small"><i class="icon-pencil icon-white"></i> {% trans %}Bearbeiten{% endtrans %}</a>
-			</span>
-		</li>
-	{% endfor %}
-	</ul>
+	<form class="form-search" action="#" method="post" data-search-visible="{{ visible }}">
+  		<div class="input-append">
+    		<input type="text" class="input-xlarge search-query" />
+    		<button type="submit" class="btn"><i class="icon icon-search"></i></button>
+  		</div>
+	</form>
 
-	<div class="navigation text-center">
-    	{{ knp_pagination_render(pagination) }}
+	<div id="searchResults" class="hide">
+		<div class="spin-container">
+			<span class="spin"></span>
+		</div>
+		<ul class="table table-striped clear">
+		</ul>
+		{{ flash('warning', 'Es sind weitere Ergebnisse vorhanden. Bitte grenzen Sie ihre Suche ein.', false, true) }}
+	</div>
+
+	<div id="record-list">
+		<div class="pull-right sort-order bottom-space-small">
+			Sortieren:
+			<span{% if pagination.isSorted('r.title') %} class="active"{% endif %}>{{ knp_pagination_sortable(pagination, 'Titel', 'r.title') }}</span>
+			<span{% if pagination.isSorted('r.recordDate') %} class="active"{% endif %}>{{ knp_pagination_sortable(pagination, 'Aufzeichnungsdatum', 'r.recordDate') }}</span>
+		</div>
+		<ul class="table table-striped clear">
+		{% for record in pagination %}
+			{% include 'SeleyaBundle:Admin/Record:record_entry.html.twig' with {'record': record} %}
+		{% endfor %}
+		</ul>
+
+		<div class="navigation text-center">
+	    	{{ knp_pagination_render(pagination) }}
+		</div>
 	</div>
 {% endif %}
 
+{% endblock %}
 
+{% block bottom_script %}
+    {% javascripts
+        '@SeleyaBundle/Resources/public/js/admin/Record_search.js'
+		%}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
 {% endblock %}

@@ -29,5 +29,9 @@
 {% endblock %}
 
 {% block bottom_script %}
-<script type="text/javascript" src="{{ asset('bundles/seleya/js/admin/MetadataConfig_index.js') }}"></script>
+    {% javascripts
+        '@SeleyaBundle/Resources/public/js/admin/MetadataConfig_index.js'
+		%}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
 {% endblock %}

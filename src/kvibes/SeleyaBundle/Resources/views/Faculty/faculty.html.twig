@@ -36,5 +36,9 @@
 {% endblock %}
 
 {% block bottom_script %}
-	<script type="text/javascript" src="{{ asset('bundles/seleya/js/faculty/Courses.js') }}"></script>
+    {% javascripts
+        '@SeleyaBundle/Resources/public/js/faculty/Courses.js'
+		%}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
 {% endblock %}

@@ -7,6 +7,7 @@ use kvibes\SeleyaBundle\Entity\Record;
 use kvibes\SeleyaBundle\Form\Type\RecordType;
 use JMS\SecurityExtraBundle\Annotation\Secure;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\HttpFoundation\Request;
@@ -72,8 +73,9 @@ class RecordController extends Controller
         return $this->render(
             'SeleyaBundle:Admin:Record/index.html.twig',
             array(
-                'title'   => $title,
-                'pagination' => $pagination
+                'title'      => $title,
+                'pagination' => $pagination,
+                'visible'    => ($visible == 'visible') ? 1 : 0
             )
         );
     }
@@ -86,7 +88,7 @@ class RecordController extends Controller
      * @param Request $request
      * 
      * @Secure(roles="ROLE_SUPER_ADMIN")
-     * @Route("/new", name="admin_record_new")
+     * @Route("/create", name="admin_record_new")
      */
     public function newAction(Request $request)
     {
@@ -108,7 +110,7 @@ class RecordController extends Controller
         
         if ($request->isMethod('POST')) {
             $form->bind($request);
-            if ($form->isValid()) {
+            if ($form->isValid() && $record->getCourse() !== null) {
                 foreach ($form as $key => $value) {
                     if (substr($key, 0, 9) !== 'metadata_') {
                         continue;
@@ -142,6 +144,11 @@ class RecordController extends Controller
                     $this->get('translator')->trans('Aufzeichnung wurde hinzugefügt')
                 );
                 return $this->redirect($this->generateUrl('admin_record'));
+            } elseif ($record->getCourse() === null) {
+                $this->get('session')->getFlashBag()->add(
+                    'error',
+                    $this->get('translator')->trans('Bitte wählen Sie eine Veranstaltung aus.')
+                );
             }
         }
         
@@ -201,7 +208,7 @@ class RecordController extends Controller
         
         if ($request->isMethod('POST')) {
             $form->bind($request);
-            if ($form->isValid()) {
+            if ($form->isValid() && $record->getCourse() !== null) {
                 foreach ($form as $key => $value) {
                     if (substr($key, 0, 9) !== 'metadata_') {
                         continue;
@@ -234,6 +241,11 @@ class RecordController extends Controller
                 );
                 return $this->redirect(
                     $this->generateUrl('admin_record', array('visible' => ($recordWasVisible) ? 'visible' : 'new'))
+                );
+            } elseif ($record->getCourse() === null) {
+                $this->get('session')->getFlashBag()->add(
+                    'error',
+                    $this->get('translator')->trans('Bitte wählen Sie eine Veranstaltung aus.')
                 );
             }
         }
@@ -344,6 +356,52 @@ class RecordController extends Controller
         return $this->render(
             'SeleyaBundle:Admin:Record/import.html.twig',
             array('records' => $newEpisodes)
+        );
+    }
+
+    /**
+     * @Route("/search", name="admin_record_search", options={"expose"=true})
+     * @Method({"POST"})
+     */
+    public function searchAction(Request $request)
+    {
+        $query = $request->get('query');
+        $visible = $request->get('visible', true);
+        if ($query === null) {
+            return new Response('', 400, array('Content-Type'=>'application/json'));
+        }
+        
+        $securityContext = $this->get('security.context');
+        $em = $this->getDoctrine()->getManager();
+        $user = null;
+        if (!$securityContext->isGranted('ROLE_SUPER_ADMIN')) {
+            $user = $em->getRepository('SeleyaBundle:User')
+                       ->getUser($securityContext->getToken()->getUser()->getUsername());
+        }
+
+        $resultsQuery = $em->getRepository('SeleyaBundle:Record')
+                           ->getSearchQuery($query, $visible, $user);
+        $paginator  = $this->get('knp_paginator');
+        $results = $paginator->paginate($resultsQuery, 1, 25);
+        $paginationData = $results->getPaginationData();
+
+        $htmlResults = array();
+        foreach ($results as $record) {
+            $htmlResults[] = $this->renderView(
+                'SeleyaBundle:Admin/Record:record_entry.html.twig',
+                array('record' => $record)
+            );
+        }
+        
+        return new Response(
+            json_encode(
+                array(
+                    'results'     => $htmlResults,
+                    'moreResults' => $paginationData['last'] > 1
+                )
+            ),
+            200,
+            array('Content-Type'=>'application/json')
         );
     }
 

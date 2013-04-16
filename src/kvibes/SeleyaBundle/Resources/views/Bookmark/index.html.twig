@@ -29,5 +29,9 @@
 {% endblock %}
 
 {% block bottom_script %}
-	<script type="text/javascript" src="{{ asset('bundles/seleya/js/bookmark/Bookmark.js') }}"></script>
+    {% javascripts
+        '@SeleyaBundle/Resources/public/js/bookmark/Bookmark.js'
+		%}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
 {% endblock %}

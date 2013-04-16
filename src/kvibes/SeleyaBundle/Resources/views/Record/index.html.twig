@@ -99,20 +99,22 @@
 	</div>
 </div>
 <div class="span2 sidebar">
-	<span class="hint">{{ record.course.name }}</span>
-	<ul class="unstyled record-list-sidebar">
-	{% for record in recentRecords %}
-		{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
-		<li>
-			<a href="{{ path('record', { 'id': record.id }) }}">
-				<img src="{{ preview | imagine_filter('record_preview_sidebar') }}" /><br />
-				<span class="title">{{ record.title }}</span>
-				<span class="date">{{ record.recordDate|localizeddate('long', 'none') }}</span>
-			</a>
-		</li>
-	{% endfor %}
-	</ul>
-	<a href="{{ path('course', {'courseId': record.course.id}) }}" class="course-link">Alle Aufzeichnungen dieser Veranstaltung</a>
+	{% if recentRecords|length > 0 %}
+		<span class="hint">{{ record.course.name }}</span>
+		<ul class="unstyled record-list-sidebar">
+		{% for record in recentRecords %}
+			{% set preview = 'previews/' ~ record.externalId ~ '.jpg' %}
+			<li>
+				<a href="{{ path('record', { 'id': record.id }) }}">
+					<img src="{{ preview | imagine_filter('record_preview_sidebar') }}" /><br />
+					<span class="title">{{ record.title }}</span>
+					<span class="date">{{ record.recordDate|localizeddate('long', 'none') }}</span>
+				</a>
+			</li>
+		{% endfor %}
+		</ul>
+		<a href="{{ path('course', {'courseId': record.course.id}) }}" class="course-link">Alle Aufzeichnungen dieser Veranstaltung</a>
+	{% endif %}
 </div>
 
 {% endblock %}
@@ -126,6 +128,10 @@
 		var hasBookmark = {% if hasBookmark %}true{% else %}false{% endif %};
 	</script>
 
-	<script type="text/javascript" src="{{ asset('bundles/seleya/js/record/Bookmark.js') }}"></script>
-	<script type="text/javascript" src="{{ asset('bundles/seleya/js/record/Comment.js') }}"></script>
+    {% javascripts
+        '@SeleyaBundle/Resources/public/js/record/Bookmark.js'
+        '@SeleyaBundle/Resources/public/js/record/Comment.js'
+        %}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+	{% endjavascripts %}
 {% endblock %}

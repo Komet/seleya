@@ -48,6 +48,12 @@ a.brand img {
     clear: both;
 }
 
+div.spin-container {
+    text-align: center;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
 /*** Forms ***/
 
 .chzn-container-multi .chzn-choices .search-choice .search-choice-close {

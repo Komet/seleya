@@ -1,0 +1,7 @@
+<li>
+	<span>{{ record.title }}</span>
+	<span class="hidden-phone">{{ record.recordDate|localizeddate('long', 'none') }}</span>
+	<span class="buttons">
+		<a href="{{ path('admin_record_update', { 'id': record.id }) }}" class="btn btn-primary btn-small"><i class="icon-pencil icon-white"></i> {% trans %}Bearbeiten{% endtrans %}</a>
+	</span>
+</li>

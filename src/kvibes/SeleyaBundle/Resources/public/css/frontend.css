@@ -132,12 +132,6 @@ button.hasSpinner {
     position: relative;
 }
 
-div.spin-container {
-    text-align: center;
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
 .btn-mini span.spin {
     position: relative;
     top: -3px;

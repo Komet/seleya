@@ -78,6 +78,9 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
                          ->getRepository('SeleyaBundle:User')
                          ->getUser($username);
             $dropdown = $this->createDropdownMenuItem($menu, $user->getCommonName(), false, array('caret' => true));
+            if ($this->security->isGranted('ROLE_ADMIN')) {
+                $dropdown->addChild('Administration', array('route' => 'admin'));
+            }
             $dropdown->addChild('Lesezeichen', array('route' => 'bookmarks'));
             $this->addDivider($dropdown);
             $dropdown->addChild('Abmelden', array('route' => 'logout'));
