@@ -73,4 +73,10 @@ class CourseRepository extends EntityRepository
                     ->getSingleScalarResult();
     }
     
+    public function getAllCoursesQuery()
+    {
+        $qb = $this->createQueryBuilder('c');
+        return $qb->select('c')
+                  ->getQuery();
+    }
 }

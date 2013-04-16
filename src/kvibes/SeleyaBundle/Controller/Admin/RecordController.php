@@ -61,12 +61,9 @@ class RecordController extends Controller
             $pagination->setParam('direction', 'asc');
         }
         
-        $records = $recordQuery->getResult();
-        
         $title = ($visible == 'visible') ? $this->get('translator')->trans('Sichtbare Aufzeichnungen') : $this->get('translator')->trans('Neue Aufzeichnungen');
 
         return $this->render('SeleyaBundle:Admin:Record/index.html.twig', array(
-            'records' => $records,
             'title'   => $title,
             'pagination' => $pagination
         ));

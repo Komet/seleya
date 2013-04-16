@@ -4,7 +4,7 @@
 
 {% block content_content %}
 
-{% if records|length == 0 %}
+{% if pagination|length == 0 %}
 	{{ flash('info', 'Es sind keine Aufzeichnungen vorhanden.', false, true) }}
 {% else %}
 	<div class="pull-right sort-order bottom-space-small">
@@ -13,7 +13,7 @@
 		<span{% if pagination.isSorted('r.recordDate') %} class="active"{% endif %}>{{ knp_pagination_sortable(pagination, 'Aufzeichnungsdatum', 'r.recordDate') }}</span>
 	</div>
 	<ul class="table table-striped clear">
-	{% for record in records %}
+	{% for record in pagination %}
 		<li>
 			<span>{{ record.title }}</span>
 			<span class="hidden-phone">{{ record.recordDate|localizeddate('long', 'none') }}</span>

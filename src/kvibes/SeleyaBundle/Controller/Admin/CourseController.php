@@ -15,17 +15,36 @@ use Symfony\Component\HttpFoundation\Response;
  */
 class CourseController extends Controller
 {
+    const COURSES_PER_PAGE = 20;
+    
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/", name="admin_course")
      */ 
-    public function indexAction()
+    public function indexAction(Request $request)
     {
-        $courses = $this->getDoctrine()->getManager()
-                        ->getRepository('SeleyaBundle:Course')
-                        ->findBy(array(), array('name' => 'ASC'));
+        $coursesQuery = $this->getDoctrine()
+                             ->getManager()
+                             ->getRepository('SeleyaBundle:Course')
+                             ->getAllCoursesQuery();                        
+
+        // @see https://github.com/KnpLabs/KnpPaginatorBundle/issues/124
+        if (!$request->get('sort') && !$request->get('direction')) {
+            $_GET['sort'] = 'c.name';
+            $_GET['direction'] = 'asc';
+        }
+        
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate($coursesQuery, $request->get('page', 1), CourseController::COURSES_PER_PAGE);   
+        
+        // @see https://github.com/KnpLabs/KnpPaginatorBundle/issues/124
+        if (!$request->get('sort') && !$request->get('direction')) {
+            $pagination->setParam('sort', 'c.name');
+            $pagination->setParam('direction', 'asc');
+        }
+        
         return $this->render('SeleyaBundle:Admin:Course/index.html.twig', array(
-            'courses' => $courses
+            'pagination' => $pagination
         ));
     }
     
