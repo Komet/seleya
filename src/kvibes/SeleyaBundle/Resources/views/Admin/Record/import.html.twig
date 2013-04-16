@@ -1,31 +1,35 @@
 {% extends 'SeleyaBundle:Admin:Record/base.html.twig' %}
+{% from 'MopaBootstrapBundle::flash.html.twig' import flash %}
 {% block headline %}{% trans %}Aufzeichnungen importieren{% endtrans %}{% endblock %}
 
 {% block content_content %}
 
-<form action="{{ path('admin_record_import') }}" method="post" class="form-horizontal">
+{% if records|length == 0 %}
+	{{ flash('info', 'Es wurden bereits alle Aufzeichnungen aus Matterhorn importiert.', false, true) }}
+{% else %}
+	<form action="{{ path('admin_record_import') }}" method="post" class="form-horizontal">
 
-	<ul class="table">
-		<li class="header">
-			<span><input type="checkbox" id="checkAll" data-name-prefix="record_" /></span>
-			<span>Datum</span>
-			<span>Titel</span>
-		</li>
-		{% for record in records %}
-			<li>
-			    <span><input type="checkbox" name="record_{{ record.id }}" value="1" /></span>
-				<span>{{ record.created|date('d.m.Y H:i') }}</span>
-			    <span>{{ record.title }}</span>
+		<ul class="table">
+			<li class="header">
+				<span><input type="checkbox" id="checkAll" data-name-prefix="record_" /></span>
+				<span>Datum</span>
+				<span>Titel</span>
 			</li>
-		{% endfor %}
-	</ul>
+			{% for record in records %}
+				<li>
+				    <span><input type="checkbox" name="record_{{ record.id }}" value="1" /></span>
+					<span>{{ record.created|date('d.m.Y H:i') }}</span>
+				    <span>{{ record.title }}</span>
+				</li>
+			{% endfor %}
+		</ul>
 
-	<div class="form-actions">
-    	<input class="btn btn-primary" type="submit" value="{% trans %}Aufzeichnungen importieren{% endtrans %}" />
-	</div>
+		<div class="form-actions">
+	    	<input class="btn btn-primary" type="submit" value="{% trans %}Aufzeichnungen importieren{% endtrans %}" />
+		</div>
 
-</form>
-
+	</form>
+{% endif %}
 {% endblock %}
 
 {% block bottom_script %}
