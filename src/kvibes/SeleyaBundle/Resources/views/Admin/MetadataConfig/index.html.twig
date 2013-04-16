@@ -6,7 +6,7 @@
 {% if metadataConfigs|length == 0 %}
 	{{ flash('info', 'Es sind keine Metadaten vorhanden.', false, true) }}
 {% else %}
-	<ul id="metadata-sortable" class="sortable table">
+	<ul id="metadata-sortable" class="sortable table table-striped">
 		{% for meta in metadataConfigs %}
 			<li data-id="meta_{{ meta.id }}">
 				<span class="iconsweets sort-handle">}</span>

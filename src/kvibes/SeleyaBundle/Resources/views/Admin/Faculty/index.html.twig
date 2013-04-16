@@ -6,7 +6,7 @@
 {% if faculties|length == 0 %}
 	{{ flash('info', 'Es sind keine Fachbereiche vorhanden.', false, true) }}
 {% else %}
-	<ul class="table">
+	<ul class="table table-striped">
 	{% for faculty in faculties %}
 		<li>
 			<span>{{ faculty.name }}</span>

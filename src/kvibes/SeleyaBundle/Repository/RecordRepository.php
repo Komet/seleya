@@ -38,12 +38,14 @@ class RecordRepository extends EntityRepository
                       ->setParameter('lecturer', $user->getId())
                       ->setParameter('visible', $visible)
                       ->groupBy('r')
+                      ->orderBy('r.recordDate', 'desc')
                       ->getQuery();
         } else {
             return $qb->select('r')
                       ->where('r.visible=:visible')
                       ->setParameter('visible', $visible)
                       ->groupBy('r')
+                      ->orderBy('r.recordDate', 'desc')
                       ->getQuery();
         }
     }
