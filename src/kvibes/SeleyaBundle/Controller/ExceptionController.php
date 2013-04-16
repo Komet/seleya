@@ -12,8 +12,12 @@ use Symfony\Component\HttpFoundation\Response;
 
 class ExceptionController extends Controller
 {
-    public function showAction(Request $request, FlattenException $exception, DebugLoggerInterface $logger = null, $format = 'html')
-    {
+    public function showAction(
+        Request $request,
+        FlattenException $exception,
+        DebugLoggerInterface $logger = null,
+        $format = 'html'
+    ) {
         $kernel = $this->container->get('kernel');
         if ($kernel->getEnvironment() == 'prod') {
             $request = $this->container->get('request');
@@ -28,12 +32,15 @@ class ExceptionController extends Controller
                 $template = new TemplateReference('SeleyaBundle', 'Exception', 'error', $format, 'twig');
             }
             if ($templating->exists($template)) {
-                $response = $templating->renderResponse($template, array(
+                $response = $templating->renderResponse(
+                    $template,
+                    array(
                         'status_code'   => $code,
                         'message_code'  => 'error_' . $code,
                         'status_text'   => Response::$statusTexts[$code],
                         'requested_url' => $request->getUri(),
-                ));
+                    )
+                );
 
                 $response->setStatusCode($code);
                 $response->headers->replace($exception->getHeaders());
@@ -43,6 +50,6 @@ class ExceptionController extends Controller
         }
 
         $base = new BaseExceptionController($this->container->get('twig'), $this->container->get('kernel')->isDebug());
-        return $base->showAction($request, $exception, $logger, $format);        
+        return $base->showAction($request, $exception, $logger, $format);
     }
 }

@@ -20,21 +20,22 @@ class MetadataConfigController extends Controller
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/", name="admin_metadataConfig")
-     */ 
+     */
     public function indexAction()
     {
         $metadataConfigs = $this->getDoctrine()->getManager()
                                 ->getRepository('SeleyaBundle:MetadataConfig')
                                 ->findAllOrdered();
-        return $this->render('SeleyaBundle:Admin:MetadataConfig/index.html.twig', array(
-            'metadataConfigs' => $metadataConfigs
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:MetadataConfig/index.html.twig',
+            array('metadataConfigs' => $metadataConfigs)
+        );
     }
     
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/new", name="admin_metadataConfig_new")
-     */ 
+     */
     public function newAction(Request $request)
     {
         $metadataConfig = new MetadataConfig();
@@ -48,23 +49,28 @@ class MetadataConfigController extends Controller
                     $metadataConfig->setOptions(array());
                 }
                 $em = $this->getDoctrine()->getManager();
-                $metadataConfig->setDisplayOrder($em->getRepository('SeleyaBundle:MetadataConfig')->getNextDisplayOrder());
+                $displayOrder = $em->getRepository('SeleyaBundle:MetadataConfig')->getNextDisplayOrder();
+                $metadataConfig->setDisplayOrder($displayOrder);
                 $em->persist($metadataConfig);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Metadatum wurde hinzugefügt'));                
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $this->get('translator')->trans('Metadatum wurde hinzugefügt')
+                );
                 return $this->redirect($this->generateUrl('admin_metadataConfig'));
             }
         }
         
-        return $this->render('SeleyaBundle:Admin:MetadataConfig/new.html.twig', array(
-            'form' => $form->createView(),
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:MetadataConfig/new.html.twig',
+            array('form' => $form->createView())
+        );
     }
 
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/update/{id}", name="admin_metadataConfig_update")
-     */ 
+     */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -100,21 +106,27 @@ class MetadataConfigController extends Controller
                 }
                 
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Metadatum wurde aktualisiert'));      
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $this->get('translator')->trans('Metadatum wurde aktualisiert')
+                );
                 return $this->redirect($this->generateUrl('admin_metadataConfig'));
             }
         }
         
-        return $this->render('SeleyaBundle:Admin:MetadataConfig/update.html.twig', array(
-            'form' => $form->createView(),
-            'id'   => $metadataConfig->getId()
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:MetadataConfig/update.html.twig',
+            array(
+                'form' => $form->createView(),
+                'id'   => $metadataConfig->getId()
+            )
+        );
     }
 
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/delete/{id}", name="admin_metadataConfig_delete")
-     */ 
+     */
     public function deleteAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -134,24 +146,28 @@ class MetadataConfigController extends Controller
                             ->getResult();
             foreach ($metadatas as $metadata) {
                 $em->remove($metadata);
-            }                                     
+            }
             
             $em->remove($metadataConfig);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Metadatum wurde gelöscht'));                
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('Metadatum wurde gelöscht')
+            );
             return $this->redirect($this->generateUrl('admin_metadataConfig'));
         }
         
-        return $this->render('SeleyaBundle:Admin:MetadataConfig/delete.html.twig', array(
-            'metadata' => $metadataConfig
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:MetadataConfig/delete.html.twig',
+            array('metadata' => $metadataConfig)
+        );
     }
     
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/order", name="admin_metadataConfig_order", options={"expose"=true})
      * @Method({"POST"})
-     */ 
+     */
     public function orderAction(Request $request)
     {
         $order = $request->get('order');

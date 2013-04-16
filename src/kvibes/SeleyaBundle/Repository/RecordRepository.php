@@ -10,12 +10,12 @@ class RecordRepository extends EntityRepository
     {
         $query = $this->getEntityManager()
                       ->createQuery(
-                           'SELECT r, m FROM SeleyaBundle:Record r
-                            LEFT JOIN r.metadata m
-                            LEFT JOIN m.config mc
-                            WHERE r.id = :id
-                            ORDER BY mc.displayOrder'                            
-                        )
+                          'SELECT r, m FROM SeleyaBundle:Record r
+                           LEFT JOIN r.metadata m
+                           LEFT JOIN m.config mc
+                           WHERE r.id = :id
+                           ORDER BY mc.displayOrder'
+                      )
                       ->setParameter('id', $id);
         try {
             return $query->getSingleResult();
@@ -53,12 +53,8 @@ class RecordRepository extends EntityRepository
     public function findLatest($limit = 10)
     {
         return $this->findBy(
-            array(
-                'visible' => true
-            ), 
-            array(
-                'recordDate' => 'DESC'
-            ), 
+            array('visible' => true),
+            array('recordDate' => 'DESC'),
             $limit
         );
     }

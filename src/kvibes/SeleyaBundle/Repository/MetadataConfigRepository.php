@@ -20,6 +20,6 @@ class MetadataConfigRepository extends EntityRepository
             return 0;
         }
         $lastDisplayOrder = end($metadataConfigs)->getDisplayOrder();
-        return $lastDisplayOrder+1;        
+        return $lastDisplayOrder+1;
     }
 }

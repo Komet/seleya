@@ -42,15 +42,18 @@ class CourseController extends Controller
             'recordDate' => 'Datum'
         );
         
-        return $this->render('SeleyaBundle:Course:course.html.twig', array(
-            'course'               => $course,
-            'records'              => $records,
-            'sortOrders'           => $sortOrders,
-            'currentPage'          => $page,
-            'currentSortOrder'     => $sortOrder,
-            'currentSortDirection' => $sortDirection,
-            'hasMoreRecords'       => $hasMoreRecords
-        ));
+        return $this->render(
+            'SeleyaBundle:Course:course.html.twig',
+            array(
+                'course'               => $course,
+                'records'              => $records,
+                'sortOrders'           => $sortOrders,
+                'currentPage'          => $page,
+                'currentSortOrder'     => $sortOrder,
+                'currentSortDirection' => $sortDirection,
+                'hasMoreRecords'       => $hasMoreRecords
+            )
+        );
     }
 
     /**
@@ -64,7 +67,7 @@ class CourseController extends Controller
         $em      = $this->getDoctrine()->getManager();
         $records = $em->getRepository('SeleyaBundle:Record')
                       ->findBy(
-                          array('course' => $courseId, 'visible' => 1), 
+                          array('course' => $courseId, 'visible' => 1),
                           array($sortOrder => $sortDirection),
                           CourseController::RECORDS_PER_PAGE,
                           $page*CourseController::RECORDS_PER_PAGE
@@ -79,9 +82,10 @@ class CourseController extends Controller
         $hasMoreRecords  = ($page*CourseController::RECORDS_PER_PAGE+count($records)) < $numberOfRecords;
         $htmlContents = array();
         foreach ($records as $record) {
-            $htmlContents[] = $this->renderView('SeleyaBundle:Course:record_entry.html.twig', array(
-                'record' => $record
-            ));
+            $htmlContents[] = $this->renderView(
+                'SeleyaBundle:Course:record_entry.html.twig',
+                array('record' => $record)
+            );
         }
         
         return new Response(
@@ -90,11 +94,9 @@ class CourseController extends Controller
                     'html'           => $htmlContents,
                     'hasMoreRecords' => $hasMoreRecords
                 )
-            ), 
-            200, 
-            array(
-                'Content-Type' => 'application/json'
-            )
+            ),
+            200,
+            array('Content-Type' => 'application/json')
         );
     }
 }

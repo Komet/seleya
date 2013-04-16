@@ -83,5 +83,5 @@ class MetadataConfigOption
     public function setCreatedValue()
     {
         $this->created = new \DateTime();
-    }    
+    }
 }

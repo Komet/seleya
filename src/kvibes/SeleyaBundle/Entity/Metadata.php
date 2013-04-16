@@ -86,7 +86,7 @@ class Metadata
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $created;    
+    protected $created;
 
     public function getId()
     {
@@ -130,22 +130,22 @@ class Metadata
                 break;
             case 'date':
                 return $this->getDate()->getValue();
-                break;    
+                break;
             case 'time':
                 return $this->getTime()->getValue();
-                break;    
+                break;
             case 'datetime':
                 return $this->getDateTime()->getValue();
-                break;    
+                break;
             case 'number':
                 return $this->getNumber()->getValue();
-                break;    
+                break;
             case 'checkbox':
                 return $this->getBoolean()->getValue();
-                break;    
+                break;
             case 'select':
                 return $this->getOption();
-                break;    
+                break;
         }
     }
     
@@ -161,16 +161,16 @@ class Metadata
                 break;
             case 'date':
                 $this->getDate()->setValue($value);
-                break;    
+                break;
             case 'time':
                 $this->getTime()->setValue($value);
-                break;    
+                break;
             case 'datetime':
                 $this->getDateTime()->setValue($value);
-                break;    
+                break;
             case 'number':
                 $this->getNumber()->setValue($value);
-                break;    
+                break;
             case 'checkbox':
                 $this->getBoolean()->setValue($value);
                 break;
@@ -255,5 +255,5 @@ class Metadata
     public function setCreatedValue()
     {
         $this->created = new \DateTime();
-    }        
+    }
 }

@@ -15,9 +15,9 @@ class MetadataConfigDefinitionType extends AbstractType
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'kvibes\SeleyaBundle\Entity\MetadataConfigDefinition'
-        ));
+        $resolver->setDefaults(
+            array('data_class' => 'kvibes\SeleyaBundle\Entity\MetadataConfigDefinition')
+        );
     }
     
     public function getName()

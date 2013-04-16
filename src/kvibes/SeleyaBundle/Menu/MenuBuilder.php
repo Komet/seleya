@@ -22,8 +22,14 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
         $menu = $this->createNavbarMenuItem();
 
         $records = $this->createDropdownMenuItem($menu, 'Aufzeichnungen', false, array('caret' => true));
-        $records->addChild('Neue Aufzeichnungen', array('route' => 'admin_record', 'routeParameters' => array('visible' => 'new')));
-        $records->addChild('Sichtbare Aufzeichnungen', array('route' => 'admin_record', 'routeParameters' => array('visible' => 'visible')));
+        $records->addChild(
+            'Neue Aufzeichnungen',
+            array('route' => 'admin_record', 'routeParameters' => array('visible' => 'new'))
+        );
+        $records->addChild(
+            'Sichtbare Aufzeichnungen',
+            array('route' => 'admin_record', 'routeParameters' => array('visible' => 'visible'))
+        );
         
         if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
             $this->addDivider($records);
@@ -78,5 +84,4 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
         }
         return $menu;
     }
-    
 }

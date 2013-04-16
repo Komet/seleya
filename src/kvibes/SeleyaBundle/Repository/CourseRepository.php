@@ -66,7 +66,9 @@ class CourseRepository extends EntityRepository
         return $this->createQueryBuilder('c')
                     ->select('count(c)')
                     ->where('c.faculty=:faculty_id')
-                    ->andWhere($qb->expr()->exists('SELECT r FROM SeleyaBundle:Record r WHERE r.course=c.id AND r.visible=1'))
+                    ->andWhere(
+                        $qb->expr()->exists('SELECT r FROM SeleyaBundle:Record r WHERE r.course=c.id AND r.visible=1')
+                    )
                     ->setParameter('faculty_id', $facultyId)
                     ->groupBy('c.faculty')
                     ->getQuery()

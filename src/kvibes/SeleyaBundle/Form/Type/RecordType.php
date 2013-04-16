@@ -25,60 +25,80 @@ class RecordType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('title', null, array(
-            'label' => $this->translator->trans('Titel')
-        ));
-        $builder->add('recordDate', null, array(
-            'label' => $this->translator->trans('Datum der Aufzeichnung')
-        ));
-        $builder->add('visible', null, array(
-            'label'    => $this->translator->trans('Sichtbar'),
-            'required' => false
-        ));
-        $builder->add('course', 'entity', array(
-            'class'    => 'kvibes\SeleyaBundle\Entity\Course',
-            'property' => 'name',
-            'label'    => $this->translator->trans('Veranstaltung'),
-            'query_builder' => function(EntityRepository $er) {
-                return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
-            },
-            'empty_value' => 'Veranstaltung auswählen',
-            'attr'  => array(
-                'class' => 'chzn-select',
+        $builder->add(
+            'title',
+            null,
+            array('label' => $this->translator->trans('Titel'))
+        );
+        $builder->add(
+            'recordDate',
+            null,
+            array('label' => $this->translator->trans('Datum der Aufzeichnung'))
+        );
+        $builder->add(
+            'visible',
+            null,
+            array(
+                'label'    => $this->translator->trans('Sichtbar'),
+                'required' => false
             )
-        ));
+        );
+        $builder->add(
+            'course',
+            'entity',
+            array(
+                'class'    => 'kvibes\SeleyaBundle\Entity\Course',
+                'property' => 'name',
+                'label'    => $this->translator->trans('Veranstaltung'),
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('c')->orderBy('c.name', 'ASC');
+                },
+                'empty_value' => 'Veranstaltung auswählen',
+                'attr'  => array(
+                    'class' => 'chzn-select',
+                )
+            )
+        );
         
-        $builder->add('lecturers', 'entity', array(
-            'class'    => 'kvibes\SeleyaBundle\Entity\User',
-            'query_builder' => function(EntityRepository $er) {
-                return $er->createQueryBuilder('u')
-                          ->where('u.admin=true')
-                          ->orderBy('u.commonName', 'ASC');
-            },
-            'label'    => $this->translator->trans('Dozenten'),
-            'required' => false,
-            'multiple' => true,
-            'attr'  => array(
-                'class' => 'chzn-select',
-                'data-placeholder' => $this->translator->trans('Benutzer auswählen')
+        $builder->add(
+            'lecturers',
+            'entity',
+            array(
+                'class'    => 'kvibes\SeleyaBundle\Entity\User',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                              ->where('u.admin=true')
+                              ->orderBy('u.commonName', 'ASC');
+                },
+                'label'    => $this->translator->trans('Dozenten'),
+                'required' => false,
+                'multiple' => true,
+                'attr'  => array(
+                    'class' => 'chzn-select',
+                    'data-placeholder' => $this->translator->trans('Benutzer auswählen')
+                )
             )
-        ));
+        );
 
-        $builder->add('users', 'entity', array(
-            'class'    => 'kvibes\SeleyaBundle\Entity\User',
-            'query_builder' => function(EntityRepository $er) {
-                return $er->createQueryBuilder('u')
-                          ->where('u.admin=true')
-                          ->orderBy('u.commonName', 'ASC');
-            },
-            'label'    => $this->translator->trans('Weitere Benutzer mit Schreibrechten'),
-            'required' => false,
-            'multiple' => true,
-            'attr'  => array(
-                'class' => 'chzn-select',
-                'data-placeholder' => $this->translator->trans('Benutzer auswählen')
+        $builder->add(
+            'users',
+            'entity',
+            array(
+                'class'    => 'kvibes\SeleyaBundle\Entity\User',
+                'query_builder' => function (EntityRepository $er) {
+                    return $er->createQueryBuilder('u')
+                              ->where('u.admin=true')
+                              ->orderBy('u.commonName', 'ASC');
+                },
+                'label'    => $this->translator->trans('Weitere Benutzer mit Schreibrechten'),
+                'required' => false,
+                'multiple' => true,
+                'attr'  => array(
+                    'class' => 'chzn-select',
+                    'data-placeholder' => $this->translator->trans('Benutzer auswählen')
+                )
             )
-        ));
+        );
         
         foreach ($this->metadata as $meta) {
             $type = $meta->getConfig()->getDefinition()->getId();
@@ -88,27 +108,35 @@ class RecordType extends AbstractType
                     $options[$value->getId()] = $value->getName();
                 }
                 $data = ($meta->getValue() !== null) ? $meta->getValue()->getId() : 0;
-                $builder->add('metadata_'.$meta->getConfig()->getId(), 'choice', array(
-                    'mapped'  => false,
-                    'label'   => $meta->getConfig()->getName(),
-                    'data'    => $data,
-                    'choices' => $options
-                ));
+                $builder->add(
+                    'metadata_'.$meta->getConfig()->getId(),
+                    'choice',
+                    array(
+                        'mapped'  => false,
+                        'label'   => $meta->getConfig()->getName(),
+                        'data'    => $data,
+                        'choices' => $options
+                    )
+                );
             } else {
-                $builder->add('metadata_'.$meta->getConfig()->getId(), $type, array(
-                    'mapped' => false,
-                    'label'  => $meta->getConfig()->getName(),
-                    'data'   => $meta->getValue()
-                ));
+                $builder->add(
+                    'metadata_'.$meta->getConfig()->getId(),
+                    $type,
+                    array(
+                        'mapped' => false,
+                        'label'  => $meta->getConfig()->getName(),
+                        'data'   => $meta->getValue()
+                    )
+                );
             }
         }
     }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'kvibes\SeleyaBundle\Entity\Record'
-        ));
+        $resolver->setDefaults(
+            array('data_class' => 'kvibes\SeleyaBundle\Entity\Record')
+        );
     }
     
     public function getName()

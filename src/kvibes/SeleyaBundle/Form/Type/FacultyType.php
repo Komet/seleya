@@ -23,9 +23,9 @@ class FacultyType extends AbstractType
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class' => 'kvibes\SeleyaBundle\Entity\Faculty'
-        ));
+        $resolver->setDefaults(
+            array('data_class' => 'kvibes\SeleyaBundle\Entity\Faculty')
+        );
     }
     
     public function getName()

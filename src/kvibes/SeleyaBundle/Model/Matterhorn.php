@@ -41,8 +41,8 @@ class Matterhorn
             foreach ($data->{"search-results"}->result as $key => $value) {
                 $previewImage = null;
                 foreach ($value->mediapackage->attachments->attachment as $aKey => $aValue) {
-                    if (substr($aValue->ref, 0, 10) == 'attachment' && 
-                        $aValue->type == 'presenter/player+preview' && 
+                    if (substr($aValue->ref, 0, 10) == 'attachment' &&
+                        $aValue->type == 'presenter/player+preview' &&
                         $aValue->mimetype == 'image/jpeg') {
                         $previewImage = $aValue->url;
                         break;
@@ -68,7 +68,7 @@ class Matterhorn
         }
         
         $options = array(
-            CURLOPT_URL => $this->url . '/' . $serviceUrl, 
+            CURLOPT_URL => $this->url . '/' . $serviceUrl,
             CURLOPT_FRESH_CONNECT => 1
         );
         switch ($method) {

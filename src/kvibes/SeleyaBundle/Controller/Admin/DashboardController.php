@@ -26,18 +26,21 @@ class DashboardController extends Controller
             $myRecordsQuery = $em->getRepository('SeleyaBundle:Record')
                                  ->getQueryForAllRecords(true, $user);
             $paginator = $this->get('knp_paginator');
-            $myRecordsPagination = $paginator->paginate($myRecordsQuery, 1, 5);   
+            $myRecordsPagination = $paginator->paginate($myRecordsQuery, 1, 5);
         }
         
         $newRecordsQuery = $em->getRepository('SeleyaBundle:Record')
                               ->getQueryForAllRecords(false, $user);
         $newRecords = $newRecordsQuery->getResult();
         
-        return $this->render('SeleyaBundle:Admin:index.html.twig', array(
-            'newRecords' => $newRecords,
-            'username'   => $username,
-            'isLecturer' => $isLecturer,
-            'myRecords'  => $myRecordsPagination
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:index.html.twig',
+            array(
+                'newRecords' => $newRecords,
+                'username'   => $username,
+                'isLecturer' => $isLecturer,
+                'myRecords'  => $myRecordsPagination
+            )
+        );
     }
 }

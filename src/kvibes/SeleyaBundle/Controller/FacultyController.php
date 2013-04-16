@@ -26,9 +26,10 @@ class FacultyController extends Controller
                           ->getRepository('SeleyaBundle:Faculty')
                           ->getFacultiesWithRecords();
                           
-        return $this->render('SeleyaBundle:Faculty:index.html.twig', array(
-            'faculties' => $faculties
-        ));
+        return $this->render(
+            'SeleyaBundle:Faculty:index.html.twig',
+            array('faculties' => $faculties)
+        );
     }
     
     /**
@@ -51,12 +52,15 @@ class FacultyController extends Controller
                               ->getCourseCountForFaculty($facultyId);
         $hasMoreCourses  = ($page*FacultyController::COURSES_PER_PAGE+count($courses)) < $numberOfCourses;
         
-        return $this->render('SeleyaBundle:Faculty:faculty.html.twig', array(
-            'faculty'        => $faculty,
-            'courses'        => $courses,
-            'currentPage'    => $page,
-            'hasMoreCourses' => $hasMoreCourses
-        ));
+        return $this->render(
+            'SeleyaBundle:Faculty:faculty.html.twig',
+            array(
+                'faculty'        => $faculty,
+                'courses'        => $courses,
+                'currentPage'    => $page,
+                'hasMoreCourses' => $hasMoreCourses
+            )
+        );
     }
 
     /**
@@ -69,7 +73,11 @@ class FacultyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $courses = $em->getRepository('SeleyaBundle:Course')
-                      ->getCoursesInFaculty($facultyId, FacultyController::COURSES_PER_PAGE, $page*FacultyController::COURSES_PER_PAGE);
+                      ->getCoursesInFaculty(
+                          $facultyId,
+                          FacultyController::COURSES_PER_PAGE,
+                          $page*FacultyController::COURSES_PER_PAGE
+                      );
                 
         if (!$render) {
             return $courses;
@@ -80,9 +88,10 @@ class FacultyController extends Controller
         $hasMoreCourses  = ($page*FacultyController::COURSES_PER_PAGE+count($courses)) < $numberOfCourses;
         $htmlContents = array();
         foreach ($courses as $course) {
-            $htmlContents[] = $this->renderView('SeleyaBundle:Faculty:course_entry.html.twig', array(
-                'course' => $course
-            ));
+            $htmlContents[] = $this->renderView(
+                'SeleyaBundle:Faculty:course_entry.html.twig',
+                array('course' => $course)
+            );
         }
         
         return new Response(
@@ -91,11 +100,9 @@ class FacultyController extends Controller
                     'html'           => $htmlContents,
                     'hasMoreCourses' => $hasMoreCourses
                 )
-            ), 
-            200, 
-            array(
-                'Content-Type' => 'application/json'
-            )
+            ),
+            200,
+            array('Content-Type' => 'application/json')
         );
     }
 
@@ -109,12 +116,13 @@ class FacultyController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $courses = $em->getRepository('SeleyaBundle:Course')
-                      ->getCoursesInFacultyOrderedByRecordDate($facultyId,FacultyController::COURSES_PER_PAGE, 0);
+                      ->getCoursesInFacultyOrderedByRecordDate($facultyId, FacultyController::COURSES_PER_PAGE, 0);
         $htmlContents = array();
         foreach ($courses as $course) {
-            $htmlContents[] = $this->renderView('SeleyaBundle:Faculty:course_entry_small.html.twig', array(
-                'course' => $course
-            ));
+            $htmlContents[] = $this->renderView(
+                'SeleyaBundle:Faculty:course_entry_small.html.twig',
+                array('course' => $course)
+            );
         }
         
         return new Response(
@@ -122,11 +130,9 @@ class FacultyController extends Controller
                 array(
                     'html' => $htmlContents
                 )
-            ), 
-            200, 
-            array(
-                'Content-Type' => 'application/json'
-            )
+            ),
+            200,
+            array('Content-Type' => 'application/json')
         );
     }
 }

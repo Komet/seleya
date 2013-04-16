@@ -73,5 +73,5 @@ class MetadataNumber
     public function setCreatedValue()
     {
         $this->created = new \DateTime();
-    }    
+    }
 }

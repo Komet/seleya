@@ -31,9 +31,10 @@ class BookmarkController extends Controller
         $bookmarks = $em->getRepository('SeleyaBundle:Bookmark')
                         ->getBookmarksForUser($user);
         
-        return $this->render('SeleyaBundle:Bookmark:index.html.twig', array(
-            'bookmarks' => $bookmarks
-        ));
+        return $this->render(
+            'SeleyaBundle:Bookmark:index.html.twig',
+            array('bookmarks' => $bookmarks)
+        );
     }
     
     /**
@@ -59,15 +60,9 @@ class BookmarkController extends Controller
 
         if ($bookmark->getUser()->getId() != $user->getId()) {
             return new Response(
-                json_encode(
-                    array(
-                        'success'  => false
-                    )
-                ), 
-                200, 
-                array(
-                    'Content-Type' => 'application/json'
-                )
+                json_encode(array('success'  => false)),
+                200,
+                array('Content-Type' => 'application/json')
             );
         }
         
@@ -75,15 +70,9 @@ class BookmarkController extends Controller
         $em->flush();
         
         return new Response(
-            json_encode(
-                array(
-                    'success'  => true
-                )
-            ), 
-            200, 
-            array(
-                'Content-Type' => 'application/json'
-            )
+            json_encode(array('success'  => true)),
+            200,
+            array('Content-Type' => 'application/json')
         );
     }
     
@@ -132,11 +121,9 @@ class BookmarkController extends Controller
                     'success'  => true,
                     'bookmark' => $hasBookmark
                 )
-            ), 
-            200, 
-            array(
-                'Content-Type' => 'application/json'
-            )
+            ),
+            200,
+            array('Content-Type' => 'application/json')
         );
     }
 }

@@ -17,7 +17,7 @@ class RecordStats
         $this->applyWeighting($records);
         usort($records, 'kvibes\SeleyaBundle\Model\RecordStats::compareWeightedRecords');
         $hotRecords = array();
-        for ($i=0, $n=count($records) ; $i<$n && $i<$limit ; ++$i) {
+        for ($i=0, $n=count($records); $i<$n && $i<$limit; ++$i) {
             $hotRecords[] = $records[$i][0];
         }
         
@@ -32,7 +32,7 @@ class RecordStats
         $recordsWithStats = array();
         $sumViews = 0;
         $sumComments = 0;
-        $sumBookmarks = 0;        
+        $sumBookmarks = 0;
         foreach ($records as $record) {
             $sumViews     += $record[1];
             $sumComments  += $record[2];
@@ -51,7 +51,9 @@ class RecordStats
     private function applyWeighting(&$records)
     {
         foreach ($records as &$record) {
-            $record['weighted'] = $record['percentViews']*0.5 + $record['percentComments']*0.25 + $record['percentBookmarks']*0.25;
+            $record['weighted'] = $record['percentViews']*0.5 +
+                                  $record['percentComments']*0.25 +
+                                  $record['percentBookmarks']*0.25;
         }
     }
     

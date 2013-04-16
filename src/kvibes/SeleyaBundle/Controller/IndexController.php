@@ -26,11 +26,17 @@ class IndexController extends Controller
                       ->findLatest(IndexController::NUMBER_OF_NEW_RECORDS);
                       
         $recordStats = new RecordStats($this->getDoctrine());
-        $hotRecords  = $recordStats->getHotRecords(new \DateInterval(IndexController::INTERVAL_OF_HOT_RECORDS), IndexController::NUMBER_OF_HOT_RECORDS);
+        $hotRecords  = $recordStats->getHotRecords(
+            new \DateInterval(IndexController::INTERVAL_OF_HOT_RECORDS),
+            IndexController::NUMBER_OF_HOT_RECORDS
+        );
                         
-        return $this->render('SeleyaBundle:Index:index.html.twig', array(
-            'records'    => $records,
-            'hotRecords' => $hotRecords
-        ));
+        return $this->render(
+            'SeleyaBundle:Index:index.html.twig',
+            array(
+                'records'    => $records,
+                'hotRecords' => $hotRecords
+            )
+        );
     }
 }

@@ -32,7 +32,11 @@ class RecordController extends Controller
         $record = $em->getRepository('SeleyaBundle:Record')
                      ->getRecord($id);
         $recentRecordsInCourse = $em->getRepository('SeleyaBundle:Record')
-                                    ->getRecentRecordsInCourse($record->getCourse()->getId(), $record->getId(), RecordController::RECENT_RECORDS);
+                                    ->getRecentRecordsInCourse(
+                                        $record->getCourse()->getId(),
+                                        $record->getId(),
+                                        RecordController::RECENT_RECORDS
+                                    );
         $comments = $em->getRepository('SeleyaBundle:Comment')
                        ->getCommentsForRecord($id, 0, CommentController::COMMENTS_PER_PAGE);
         $numberOfComments = $em->getRepository('SeleyaBundle:Comment')
@@ -52,22 +56,27 @@ class RecordController extends Controller
                            ->getBookmarkForRecord($record, $user);
         }
         
-        return $this->render('SeleyaBundle:Record:index.html.twig', array(
-            'record'          => $record,
-            'comments'        => $comments,
-            'hasMoreComments' => count($comments) < $numberOfComments,
-            'hasBookmark'     => $bookmark !== null,
-            'recentRecords'   => $recentRecordsInCourse
-        ));
+        return $this->render(
+            'SeleyaBundle:Record:index.html.twig',
+            array(
+                'record'          => $record,
+                'comments'        => $comments,
+                'hasMoreComments' => count($comments) < $numberOfComments,
+                'hasBookmark'     => $bookmark !== null,
+                'recentRecords'   => $recentRecordsInCourse
+            )
+        );
     }
 
     private function countView($record)
     {
         $em = $this->getDoctrine()->getManager();
-        $view = $em->getRepository('SeleyaBundle:View')->findOneBy(array(
-            'record' => $record,
-            'date'   => new \DateTime()
-        ));
+        $view = $em->getRepository('SeleyaBundle:View')->findOneBy(
+            array(
+                'record' => $record,
+                'date'   => new \DateTime()
+            )
+        );
         
         if ($view === null) {
             $view = new View();

@@ -50,7 +50,7 @@ class MetadataConfig
     /**
      * @ORM\Column(type="datetime")
      */
-    protected $created;    
+    protected $created;
     
     public function __construct()
     {
@@ -125,5 +125,5 @@ class MetadataConfig
     public function setCreatedValue()
     {
         $this->created = new \DateTime();
-    }            
+    }
 }

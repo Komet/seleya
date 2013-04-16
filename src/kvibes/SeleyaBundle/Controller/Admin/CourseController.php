@@ -20,13 +20,13 @@ class CourseController extends Controller
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/", name="admin_course")
-     */ 
+     */
     public function indexAction(Request $request)
     {
         $coursesQuery = $this->getDoctrine()
                              ->getManager()
                              ->getRepository('SeleyaBundle:Course')
-                             ->getAllCoursesQuery();                        
+                             ->getAllCoursesQuery();
 
         // @see https://github.com/KnpLabs/KnpPaginatorBundle/issues/124
         if (!$request->get('sort') && !$request->get('direction')) {
@@ -35,7 +35,11 @@ class CourseController extends Controller
         }
         
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($coursesQuery, $request->get('page', 1), CourseController::COURSES_PER_PAGE);   
+        $pagination = $paginator->paginate(
+            $coursesQuery,
+            $request->get('page', 1),
+            CourseController::COURSES_PER_PAGE
+        );
         
         // @see https://github.com/KnpLabs/KnpPaginatorBundle/issues/124
         if (!$request->get('sort') && !$request->get('direction')) {
@@ -43,15 +47,16 @@ class CourseController extends Controller
             $pagination->setParam('direction', 'asc');
         }
         
-        return $this->render('SeleyaBundle:Admin:Course/index.html.twig', array(
-            'pagination' => $pagination
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:Course/index.html.twig',
+            array('pagination' => $pagination)
+        );
     }
     
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/new", name="admin_course_new")
-     */ 
+     */
     public function newAction(Request $request)
     {
         $course = new Course();
@@ -64,20 +69,24 @@ class CourseController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($course);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Veranstaltung wurde hinzugefügt'));                
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $this->get('translator')->trans('Veranstaltung wurde hinzugefügt')
+                );
                 return $this->redirect($this->generateUrl('admin_course'));
             }
         }
         
-        return $this->render('SeleyaBundle:Admin:Course/new.html.twig', array(
-            'form' => $form->createView()
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:Course/new.html.twig',
+            array('form' => $form->createView())
+        );
     }
 
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/update/{id}", name="admin_course_update")
-     */ 
+     */
     public function updateAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -93,21 +102,27 @@ class CourseController extends Controller
             $form->bind($request);
             if ($form->isValid()) {
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Veranstaltung wurde aktualisiert'));      
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $this->get('translator')->trans('Veranstaltung wurde aktualisiert')
+                );
                 return $this->redirect($this->generateUrl('admin_course'));
             }
         }
         
-        return $this->render('SeleyaBundle:Admin:Course/update.html.twig', array(
-            'form' => $form->createView(),
-            'id'   => $course->getId()
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:Course/update.html.twig',
+            array(
+                'form' => $form->createView(),
+                'id'   => $course->getId()
+            )
+        );
     }
 
     /**
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/delete/{id}", name="admin_course_delete")
-     */ 
+     */
     public function deleteAction(Request $request, $id)
     {
         $em = $this->getDoctrine()->getManager();
@@ -120,12 +135,16 @@ class CourseController extends Controller
         if ($request->isMethod('POST') && $request->request->get('confirmed') == 1) {
             $em->remove($course);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Veranstaltung wurde gelöscht'));                
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('Veranstaltung wurde gelöscht')
+            );
             return $this->redirect($this->generateUrl('admin_course'));
         }
         
-        return $this->render('SeleyaBundle:Admin:Course/delete.html.twig', array(
-            'course' => $course
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:Course/delete.html.twig',
+            array('course' => $course)
+        );
     }
 }

@@ -53,7 +53,11 @@ class RecordController extends Controller
         }
                           
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate($recordQuery, $request->get('page', 1), RecordController::RECORDS_PER_PAGE);   
+        $pagination = $paginator->paginate(
+            $recordQuery,
+            $request->get('page', 1),
+            RecordController::RECORDS_PER_PAGE
+        );
         
         // @see https://github.com/KnpLabs/KnpPaginatorBundle/issues/124
         if (!$request->get('sort') && !$request->get('direction')) {
@@ -61,12 +65,17 @@ class RecordController extends Controller
             $pagination->setParam('direction', 'asc');
         }
         
-        $title = ($visible == 'visible') ? $this->get('translator')->trans('Sichtbare Aufzeichnungen') : $this->get('translator')->trans('Neue Aufzeichnungen');
+        $title = ($visible == 'visible') ?
+            $this->get('translator')->trans('Sichtbare Aufzeichnungen') :
+            $this->get('translator')->trans('Neue Aufzeichnungen');
 
-        return $this->render('SeleyaBundle:Admin:Record/index.html.twig', array(
-            'title'   => $title,
-            'pagination' => $pagination
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:Record/index.html.twig',
+            array(
+                'title'   => $title,
+                'pagination' => $pagination
+            )
+        );
     }
 
     /**
@@ -78,7 +87,7 @@ class RecordController extends Controller
      * 
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/new", name="admin_record_new")
-     */ 
+     */
     public function newAction(Request $request)
     {
         $record = new Record();
@@ -128,14 +137,18 @@ class RecordController extends Controller
                 $em = $this->getDoctrine()->getManager();
                 $em->persist($record);
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Aufzeichnung wurde hinzugefügt'));                
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $this->get('translator')->trans('Aufzeichnung wurde hinzugefügt')
+                );
                 return $this->redirect($this->generateUrl('admin_record'));
             }
         }
         
-        return $this->render('SeleyaBundle:Admin:Record/new.html.twig', array(
-            'form' => $form->createView(),
-        ));        
+        return $this->render(
+            'SeleyaBundle:Admin:Record/new.html.twig',
+            array('form' => $form->createView())
+        );
     }
 
     /**
@@ -215,15 +228,23 @@ class RecordController extends Controller
                 }
 
                 $em->flush();
-                $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Aufzeichnung wurde aktualisiert'));
-                return $this->redirect($this->generateUrl('admin_record', array('visible' => ($recordWasVisible) ? 'visible' : 'new')));
+                $this->get('session')->getFlashBag()->add(
+                    'success',
+                    $this->get('translator')->trans('Aufzeichnung wurde aktualisiert')
+                );
+                return $this->redirect(
+                    $this->generateUrl('admin_record', array('visible' => ($recordWasVisible) ? 'visible' : 'new'))
+                );
             }
         }
                 
-        return $this->render('SeleyaBundle:Admin:Record/update.html.twig', array(
-            'form' => $form->createView(),
-            'id'   => $record->getId()
-        ));        
+        return $this->render(
+            'SeleyaBundle:Admin:Record/update.html.twig',
+            array(
+                'form' => $form->createView(),
+                'id'   => $record->getId()
+            )
+        );
     }
 
     /**
@@ -254,13 +275,19 @@ class RecordController extends Controller
             $recordWasVisible = $record->isVisible();
             $em->remove($record);
             $em->flush();
-            $this->get('session')->getFlashBag()->add('success', $this->get('translator')->trans('Aufzeichnung wurde gelöscht'));                
-            return $this->redirect($this->generateUrl('admin_record', array('visible' => ($recordWasVisible) ? 'visible' : 'new')));
+            $this->get('session')->getFlashBag()->add(
+                'success',
+                $this->get('translator')->trans('Aufzeichnung wurde gelöscht')
+            );
+            return $this->redirect(
+                $this->generateUrl('admin_record', array('visible' => ($recordWasVisible) ? 'visible' : 'new'))
+            );
         }
         
-        return $this->render('SeleyaBundle:Admin:Record/delete.html.twig', array(
-            'record' => $record
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:Record/delete.html.twig',
+            array('record' => $record)
+        );
     }
 
     /**
@@ -271,7 +298,7 @@ class RecordController extends Controller
      * 
      * @Secure(roles="ROLE_SUPER_ADMIN")
      * @Route("/import", name="admin_record_import")
-     */ 
+     */
     public function importAction(Request $request)
     {
         $matterhorn = $this->get('seleya.matterhorn');
@@ -305,18 +332,19 @@ class RecordController extends Controller
             }
             $em->flush();
             $this->get('session')->getFlashBag()->add(
-                'success', 
+                'success',
                 $this->get('translator')->trans(
-                    '%number% Aufzeichnung(en) wurden importiert', 
+                    '%number% Aufzeichnung(en) wurden importiert',
                     array('%number%' => $numImported)
                 )
-            );                
+            );
             return $this->redirect($this->generateUrl('admin_record'));
         }
         
-        return $this->render('SeleyaBundle:Admin:Record/import.html.twig', array(
-            'records' => $newEpisodes
-        ));
+        return $this->render(
+            'SeleyaBundle:Admin:Record/import.html.twig',
+            array('records' => $newEpisodes)
+        );
     }
 
     /**
@@ -348,6 +376,6 @@ class RecordController extends Controller
             }
         }
 
-        return false;        
+        return false;
     }
 }

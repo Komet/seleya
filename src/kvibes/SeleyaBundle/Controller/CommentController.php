@@ -45,9 +45,10 @@ class CommentController extends Controller
         $record->getComments()->add($comment);
         $em->flush();
         
-        $htmlContent = $this->renderView('SeleyaBundle:Record:comment_entry.html.twig', array(
-            'comment' => $comment
-        ));
+        $htmlContent = $this->renderView(
+            'SeleyaBundle:Record:comment_entry.html.twig',
+            array('comment' => $comment)
+        );
         
         return new Response(
             json_encode(
@@ -56,11 +57,9 @@ class CommentController extends Controller
                     'html'      => $htmlContent,
                     'commentId' => $comment->getId()
                 )
-            ), 
-            200, 
-            array(
-                'Content-Type' => 'application/json'
-            )
+            ),
+            200,
+            array('Content-Type' => 'application/json')
         );
     }
 
@@ -80,15 +79,21 @@ class CommentController extends Controller
         $commentsToExclude = $request->get('commentsToExclude');
         $em = $this->getDoctrine()->getManager();
         $comments = $em->getRepository('SeleyaBundle:Comment')
-                       ->getCommentsForRecord($recordId, $page, CommentController::COMMENTS_PER_PAGE, $commentsToExclude);
+                       ->getCommentsForRecord(
+                           $recordId,
+                           $page,
+                           CommentController::COMMENTS_PER_PAGE,
+                           $commentsToExclude
+                       );
         $numberOfComments = $em->getRepository('SeleyaBundle:Comment')
                                ->getCommentsCountForRecord($recordId);
         $hasMoreComments = ($page*CommentController::COMMENTS_PER_PAGE+count($comments)) < $numberOfComments;
         $htmlContents = array();
         foreach ($comments as $comment) {
-            $htmlContents[] = $this->renderView('SeleyaBundle:Record:comment_entry.html.twig', array(
-                'comment' => $comment
-            ));
+            $htmlContents[] = $this->renderView(
+                'SeleyaBundle:Record:comment_entry.html.twig',
+                array('comment' => $comment)
+            );
         }
         
         return new Response(
@@ -97,11 +102,9 @@ class CommentController extends Controller
                     'html'            => $htmlContents,
                     'hasMoreComments' => $hasMoreComments
                 )
-            ), 
-            200, 
-            array(
-                'Content-Type' => 'application/json'
-            )
+            ),
+            200,
+            array('Content-Type' => 'application/json')
         );
     }
 }

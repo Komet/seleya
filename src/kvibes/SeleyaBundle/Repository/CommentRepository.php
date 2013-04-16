@@ -33,5 +33,5 @@ class CommentRepository extends EntityRepository
                     ->setParameter('record_id', $recordId)
                     ->getQuery()
                     ->getSingleScalarResult();
-    }    
+    }
 }

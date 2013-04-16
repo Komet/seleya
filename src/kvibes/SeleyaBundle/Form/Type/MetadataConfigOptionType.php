@@ -19,16 +19,18 @@ class MetadataConfigOptionType extends AbstractType
     
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder->add('name', null, array(
-            'label' => $this->translator->trans('Name')
-        ));
+        $builder->add(
+            'name',
+            null,
+            array('label' => $this->translator->trans('Name'))
+        );
     }
     
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
-        $resolver->setDefaults(array(
-            'data_class'         => 'kvibes\SeleyaBundle\Entity\MetadataConfigOption'
-        ));
+        $resolver->setDefaults(
+            array('data_class' => 'kvibes\SeleyaBundle\Entity\MetadataConfigOption')
+        );
     }
     
     public function getName()
