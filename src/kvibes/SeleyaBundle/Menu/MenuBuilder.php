@@ -34,7 +34,7 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
         if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
             $this->addDivider($records);
             $records->addChild('Aufzeichnungen importieren', array('route' => 'admin_record_import'));
-            $records->addChild('Aufzeichnung hinzufügen', array('route' => 'admin_record_new'));
+            // $records->addChild('Aufzeichnung hinzufügen', array('route' => 'admin_record_new'));
 
             $faculty = $this->createDropdownMenuItem($menu, 'Fachbereiche', false, array('caret' => true));
             $faculty->addChild('Übersicht', array('route' => 'admin_faculty'));
