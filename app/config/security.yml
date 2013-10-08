@@ -42,6 +42,7 @@ security:
             provider: multiple
             imag_ldap:
                 login_path:   /admin/login
+                check_path: admin_login_check
             form_login:
                 login_path: admin_login
                 check_path: admin_login_check
@@ -60,7 +61,8 @@ security:
             anonymous: true
             provider: ldap
             imag_ldap:
-                login_path:   index
+                login_path: index
+                check_path: login_check
             form_login:
                 login_path: index
                 check_path: login_check
