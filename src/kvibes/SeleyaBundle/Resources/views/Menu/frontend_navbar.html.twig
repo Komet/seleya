@@ -10,6 +10,7 @@
             {% if navbar.hasOption('title') %}<a class="brand" href="{{ path(navbar.getOption('titleRoute')) }}"><img src="{{ asset('bundles/seleya/images/seleya_green.png') }}" /> {{ options.title|default(navbar.getOption('title')) }}</a>{% endif %}
             <div class="nav-collapse">
                 {{ navbar.hasMenu('leftmenu') ? knp_menu_render(navbar.getMenu('leftmenu'), {'currentClass': 'active', 'ancestorClass': 'active', 'allow_safe_labels': 'true'}) : '' }}
+                {#
                 {% if navbar.hasFormView('searchform') %}
                     {%- set form_view = navbar.getFormView('searchform') -%}
                     {%- set form_type = navbar.getFormType('searchform') -%}
@@ -22,6 +23,7 @@
                     </div>
                     </form>
                 {% endif %}
+                #}
 				{% if is_granted('ROLE_USER') %}
                 	{{ knp_menu_render(navbar.getMenu('rightmenu'), {'currentClass': 'active', 'ancestorClass': 'active', 'allow_safe_labels': 'true'}) }}
 				{% else %}
