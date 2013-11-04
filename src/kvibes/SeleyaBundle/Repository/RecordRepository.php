@@ -23,7 +23,7 @@ class RecordRepository extends EntityRepository
             return null;
         }
     }
-    
+
     public function getQueryForAllRecords($visible, $user = null)
     {
         $qb = $this->createQueryBuilder('r');
@@ -49,7 +49,7 @@ class RecordRepository extends EntityRepository
                       ->getQuery();
         }
     }
-    
+
     public function findLatest($limit = 10)
     {
         return $this->findBy(
@@ -69,7 +69,7 @@ class RecordRepository extends EntityRepository
                     ->getQuery()
                     ->getSingleScalarResult();
     }
-    
+
     public function getRecentRecordsInCourse($courseId, $excludeRecord, $limit)
     {
         return $this->createQueryBuilder('r')
@@ -84,13 +84,13 @@ class RecordRepository extends EntityRepository
                     ->getQuery()
                     ->getResult();
     }
-    
+
     public function getRecordStats(\DateInterval $interval)
     {
         $from = new \DateTime();
         $from->sub($interval);
         $to = new \DateTime();
-        
+
         $results = $this->createQueryBuilder('r')
                         ->select('r, SUM(v.viewCount), COUNT(b.id), COUNT(c.id)')
                         ->leftJoin('r.views', 'v')
@@ -105,10 +105,10 @@ class RecordRepository extends EntityRepository
                         ->groupBy('r')
                         ->getQuery()
                         ->getResult();
-            
+
         return $results;
     }
-    
+
     public function getSearchQuery($query, $visible, $user = null)
     {
         $qb = $this->createQueryBuilder('r');
@@ -137,5 +137,29 @@ class RecordRepository extends EntityRepository
                       ->orderBy('r.recordDate', 'desc')
                       ->getQuery();
         }
+    }
+
+    public function search($query)
+    {
+        $query = $this->getEntityManager()
+                      ->createQuery(
+                          'SELECT r FROM SeleyaBundle:Record r
+                           LEFT JOIN r.metadata m
+                           LEFT JOIN m.number mNumber
+                           LEFT JOIN m.string mString
+                           LEFT JOIN m.text mText
+                           LEFT JOIN r.lecturers l
+                           WHERE r.visible=1 AND (
+                             (r.title IS NOT NULL AND r.title LIKE :query) OR
+                             (mString.value IS NOT NULL AND mString.value LIKE :query) OR
+                             (mNumber.value IS NOT NULL AND mNumber.value LIKE :query) OR
+                             (mText.value IS NOT NULL AND mText.value LIKE :query) OR
+                             (l.commonName IS NOT NULL AND l.commonName LIKE :query)
+                           )
+                           GROUP BY r
+                           ORDER BY r.recordDate DESC'
+                      )
+                      ->setParameter('query', '%'.$query.'%');
+        return $query->getResult();
     }
 }

@@ -8,18 +8,18 @@ use Symfony\Component\Security\Http\Event\InteractiveLoginEvent;
 class LoginListener
 {
     private $doctrine;
-    
+
     public function __construct(Doctrine $doctrine)
     {
         $this->doctrine = $doctrine;
     }
-    
+
     public function onLogin(InteractiveLoginEvent $event)
     {
         $user = $event->getAuthenticationToken()->getUser();
         if ($user && get_class($user) == 'IMAG\LdapBundle\User\LdapUser') {
             $this->doctrine
-                 ->getEntityManager()
+                 ->getManager()
                  ->getRepository('SeleyaBundle:User')
                  ->insertOrRefreshUser(
                      $user->getUsername(),
