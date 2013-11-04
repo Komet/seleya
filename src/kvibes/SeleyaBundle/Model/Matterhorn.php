@@ -41,7 +41,7 @@ class Matterhorn
             foreach ($data->{"search-results"}->result as $key => $value) {
                 $previewImage = null;
                 foreach ($value->mediapackage->attachments->attachment as $aKey => $aValue) {
-                    if (substr($aValue->ref, 0, 10) == 'attachment' &&
+                    if (isset($aValue->ref) && substr($aValue->ref, 0, 10) == 'attachment' &&
                         $aValue->type == 'presenter/player+preview' &&
                         $aValue->mimetype == 'image/jpeg') {
                         $previewImage = $aValue->url;

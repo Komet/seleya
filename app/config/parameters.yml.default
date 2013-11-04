@@ -26,6 +26,7 @@ parameters:
     matterhorn_url: http://example.com:8080
     matterhorn_user: admin
     matterhorn_password: opencast
+    engage_url: http://example.com:8080
     
     node: /usr/bin/node
     node_paths: [/usr/local/lib/node_modules]

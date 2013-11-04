@@ -27,6 +27,7 @@ twig:
             - 'MopaBootstrapBundle:Form:fields.html.twig'
     globals:
         matterhorn_url: %matterhorn_url%
+        engage_url: %engage_url%
     exception_controller: kvibes\SeleyaBundle\Controller\ExceptionController::showAction
 
 services:
