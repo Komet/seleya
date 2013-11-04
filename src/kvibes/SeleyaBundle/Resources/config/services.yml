@@ -16,7 +16,7 @@ services:
     seleya.menu_builder:
         class: kvibes\SeleyaBundle\Menu\MenuBuilder
         arguments: ["@knp_menu.factory", "@security.context", "@doctrine"]
-        
+
     # Admin Navbar
     seleya.admin_menu:
         class: Knp\Menu\MenuItem
@@ -55,7 +55,7 @@ services:
         scope: request
         tags:
             - { name: knp_menu.menu, alias: menu }
-            
+
     seleya.user_right_menu:
         class: Knp\Menu\MenuItem
         factory_service: seleya.menu_builder
@@ -64,7 +64,7 @@ services:
         scope: request
         tags:
             - { name: knp_menu.menu, alias: userRightMenu }
-            
+
     seleya.navbar:
         class: %mopa_bootstrap.navbar.generic%
         arguments:
@@ -73,9 +73,9 @@ services:
             - { title: "Seleya", titleRoute: "index", fixedTop: false, staticTop: true, isFluid: true, template:SeleyaBundle:Menu:frontend_navbar.html.twig }
         tags:
             - { name: mopa_bootstrap.navbar, alias: navbar }
-            
 
-    # Matterhorn Service            
+
+    # Matterhorn Service
     seleya.matterhorn:
         class: kvibes\SeleyaBundle\Model\Matterhorn
         arguments:

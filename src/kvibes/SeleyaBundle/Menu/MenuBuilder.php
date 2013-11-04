@@ -9,14 +9,14 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
 {
     private $security;
     private $doctrine;
-    
+
     public function __construct(FactoryInterface $factory, $security, $doctrine)
     {
         $this->security = $security;
         $this->doctrine = $doctrine;
         parent::__construct($factory);
     }
-    
+
     public function createAdminMenu(Request $request)
     {
         $menu = $this->createNavbarMenuItem();
@@ -30,7 +30,7 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
             'Sichtbare Aufzeichnungen',
             array('route' => 'admin_record', 'routeParameters' => array('visible' => 'visible'))
         );
-        
+
         if ($this->security->isGranted('ROLE_SUPER_ADMIN')) {
             $this->addDivider($records);
             $records->addChild('Aufzeichnungen importieren', array('route' => 'admin_record_import'));
@@ -43,7 +43,7 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
             $course = $this->createDropdownMenuItem($menu, 'Veranstaltungen', false, array('caret' => true));
             $course->addChild('Übersicht', array('route' => 'admin_course'));
             $course->addChild('Hinzufügen', array('route' => 'admin_course_new'));
-            
+
             $metadata = $this->createDropdownMenuItem($menu, 'Metadaten', false, array('caret' => true));
             $metadata->addChild('Übersicht', array('route' => 'admin_metadataConfig'));
             $metadata->addChild('Hinzufügen', array('route' => 'admin_metadataConfig_new'));
@@ -51,7 +51,7 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
 
         return $menu;
     }
-    
+
     public function createAdminRightMenu(Request $request)
     {
         $menu = $this->createNavbarMenuItem();
@@ -66,7 +66,7 @@ class MenuBuilder extends AbstractNavbarMenuBuilder
         $menu->addChild('Fachbereiche', array('route' => 'faculties'));
         return $menu;
     }
-    
+
     public function createUserRightMenu(Request $request)
     {
         $menu = $this->createNavbarMenuItem();

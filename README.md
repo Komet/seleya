@@ -18,7 +18,7 @@ Installation von Seleya:
 ```
 git clone https://github.com/Komet/seleya.git
 cd seleya
-cp app/config/parameters.yml.default app/config/parameters.yml
+cp app/config/parameters.yml.dist app/config/parameters.yml
 vi app/config/parameters.yml
 curl -s https://getcomposer.org/installer | php
 ./composer.phar update --no-dev
