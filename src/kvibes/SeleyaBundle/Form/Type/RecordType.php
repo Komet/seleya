@@ -16,13 +16,13 @@ class RecordType extends AbstractType
 {
     private $translator;
     private $metadata;
-    
+
     public function __construct($translator, $metadata = null)
     {
         $this->translator = $translator;
         $this->metadata = $metadata;
     }
-    
+
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder->add(
@@ -60,7 +60,7 @@ class RecordType extends AbstractType
                 )
             )
         );
-        
+
         $builder->add(
             'lecturers',
             'entity',
@@ -100,7 +100,7 @@ class RecordType extends AbstractType
                 )
             )
         );
-        
+
         foreach ($this->metadata as $meta) {
             $type = $meta->getConfig()->getDefinition()->getId();
             if ($type == 'select') {
@@ -113,10 +113,11 @@ class RecordType extends AbstractType
                     'metadata_'.$meta->getConfig()->getId(),
                     'choice',
                     array(
-                        'mapped'  => false,
-                        'label'   => $meta->getConfig()->getName(),
-                        'data'    => $data,
-                        'choices' => $options
+                        'mapped'   => false,
+                        'label'    => $meta->getConfig()->getName(),
+                        'data'     => $data,
+                        'choices'  => $options,
+                        'required' => false
                     )
                 );
             } else {
@@ -124,22 +125,23 @@ class RecordType extends AbstractType
                     'metadata_'.$meta->getConfig()->getId(),
                     $type,
                     array(
-                        'mapped' => false,
-                        'label'  => $meta->getConfig()->getName(),
-                        'data'   => $meta->getValue()
+                        'mapped'   => false,
+                        'label'    => $meta->getConfig()->getName(),
+                        'data'     => $meta->getValue(),
+                        'required' => false
                     )
                 );
             }
         }
     }
-    
+
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(
             array('data_class' => 'kvibes\SeleyaBundle\Entity\Record')
         );
     }
-    
+
     public function getName()
     {
         return 'record';
