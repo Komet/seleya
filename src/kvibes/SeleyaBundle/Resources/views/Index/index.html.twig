@@ -14,7 +14,13 @@
 						<img src="{{ preview | imagine_filter('record_preview') }}" /><br />
 						<span class="title">{{ record.title }}</span><br />
 					</a>
-					<span class="date">{{ record.recordDate|localizeddate('long', 'none') }}</span>
+                                        <span class="date">
+                                        {% for meta in record.metadata %}
+                                            {% if meta.config.name == "Urheber" %}
+                                                {{ meta.value }}<br />
+                                            {% endif %}
+                                        {% endfor %}
+					{{ record.recordDate|localizeddate('long', 'none') }}</span>
 				</li>
 			{% endfor %}
 		</ul>
@@ -32,7 +38,13 @@
 						<img src="{{ preview | imagine_filter('record_preview') }}" /><br />
 						<span class="title">{{ record.title }}</span><br />
 					</a>
-					<span class="date">{{ record.recordDate|localizeddate('long', 'none') }}</span>
+                                        <span class="date">
+                                        {% for meta in record.metadata %}
+                                            {% if meta.config.name == "Urheber" %}
+                                                {{ meta.value }}<br />
+                                            {% endif %}
+                                        {% endfor %}
+					{{ record.recordDate|localizeddate('long', 'none') }}</span>
 				</li>
 			{% endfor %}
 		</ul>

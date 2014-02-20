@@ -35,13 +35,13 @@ class Matterhorn
         $offset = 0;
         $total = 0;
         do {
-            $data = $this->getJson('episode/episode.json?limit=' . $itemsPerRequest . '&offset=' . $offset);
+            $data = $this->getJson('search/episode.json?limit=' . $itemsPerRequest . '&offset=' . $offset);
             $total = $data->{"search-results"}->total;
             $offset += $itemsPerRequest;
             foreach ($data->{"search-results"}->result as $key => $value) {
                 $previewImage = null;
                 foreach ($value->mediapackage->attachments->attachment as $aKey => $aValue) {
-                    if (substr($aValue->ref, 0, 10) == 'attachment' &&
+                    if (isset($aValue->ref) &&
                         $aValue->type == 'presenter/player+preview' &&
                         $aValue->mimetype == 'image/jpeg') {
                         $previewImage = $aValue->url;

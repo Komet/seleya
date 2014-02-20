@@ -79,6 +79,6 @@ services:
     seleya.matterhorn:
         class: kvibes\SeleyaBundle\Model\Matterhorn
         arguments:
-            - %matterhorn_url%
+            - %engage_url%
             - %matterhorn_user%
             - %matterhorn_password%
