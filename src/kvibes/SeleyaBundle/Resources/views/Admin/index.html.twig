@@ -2,53 +2,48 @@
 {% from 'MopaBootstrapBundle::flash.html.twig' import flash %}
 
 {% block content_content %}
-	<p class="lead">Hallo, {{ username }}.</p>
-	{% if newRecords|length == 1 %}
-		{{ flash('warning', 'Eine Aufzeichnung wurd noch nicht freigeschaltet.'|trans, false, true) }}
-	{% elseif newRecords|length > 0 %}
-		{{ flash('warning', '%num% Aufzeichnungen wurden noch nicht freigeschaltet.'|trans({'%num%': newRecords|length}), false, true) }}
-	{% else %}
-		{{ flash('success', 'Alle Aufzeichnungen sind freigeschaltet.'|trans, false, true) }}
-	{% endif %}
+    <p class="lead">Hallo, {{ username }}.</p>
+    {% if newRecords|length == 1 %}
+        {{ flash('warning', 'Eine Aufzeichnung wurd noch nicht freigeschaltet.'|trans, false, true) }}
+    {% elseif newRecords|length > 0 %}
+        {{ flash('warning', '%num% Aufzeichnungen wurden noch nicht freigeschaltet.'|trans({'%num%': newRecords|length}), false, true) }}
+    {% else %}
+        {{ flash('success', 'Alle Aufzeichnungen sind freigeschaltet.'|trans, false, true) }}
+    {% endif %}
 
-	{% if isLecturer and newRecords|length > 0 %}
-		<h4>Ihre noch nicht freigeschalteten Aufzeichnungen</h4>
-		<ul class="unstyled table table-striped">
-			{% for record in newRecords %}
-				<li>
-					<span class="title">{{ record.title }}</span>
-					<span class="hidden-phone">{{ record.recordDate|localizeddate('long', 'none') }}</span>
-					<span class="buttons">
-						<a href="{{ path('admin_record_update', { 'id': record.id }) }}" class="btn btn-primary btn-small"><i class="icon-pencil icon-white"></i> {% trans %}Bearbeiten{% endtrans %}</a>
-					</span>
-				</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
+    {% if isLecturer and newRecords|length > 0 %}
+        <h4>Ihre noch nicht freigeschalteten Aufzeichnungen</h4>
+        <ul class="unstyled table table-striped">
+            {% for record in newRecords %}
+                <li>
+                    <span class="title">{{ record.title }}</span>
+                    <span class="hidden-phone">{{ record.recordDate|localizeddate('long', 'none') }}</span>
+                    <span class="buttons">
+                        <a href="{{ path('admin_record_update', { 'id': record.id }) }}" class="btn btn-primary btn-small"><i class="icon-pencil icon-white"></i> {% trans %}Bearbeiten{% endtrans %}</a>
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
-	{% if isLecturer and myRecords|length > 0 %}
-		<h4>Ihre aktuellen Aufzeichnungen</h4>
-		<ul class="unstyled table table-striped">
-			{% for record in myRecords %}
-				<li>
-					<span class="title">{{ record.title }}</span>
-					<span class="hidden-phone">{{ record.recordDate|localizeddate('long', 'none') }}</span>
-					<span class="buttons">
-						<a href="{{ path('admin_record_update', { 'id': record.id }) }}" class="btn btn-primary btn-small"><i class="icon-pencil icon-white"></i> {% trans %}Bearbeiten{% endtrans %}</a>
-					</span>
-				</li>
-			{% endfor %}
-		</ul>
-	{% endif %}
+    {% if isLecturer and myRecords|length > 0 %}
+        <h4>Ihre aktuellen Aufzeichnungen</h4>
+        <ul class="unstyled table table-striped">
+            {% for record in myRecords %}
+                <li>
+                    <span class="title">{{ record.title }}</span>
+                    <span class="hidden-phone">{{ record.recordDate|localizeddate('long', 'none') }}</span>
+                    <span class="buttons">
+                        <a href="{{ path('admin_record_update', { 'id': record.id }) }}" class="btn btn-primary btn-small"><i class="icon-pencil icon-white"></i> {% trans %}Bearbeiten{% endtrans %}</a>
+                    </span>
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
 
 {% endblock %}
 
 {% block content_sidebar %}
-	<p>
-		Hier steht ein <span class="text-error">wichtiger Text</span> mit wichtigen Information
-		zu Seleya.
-	</p>
-	<p>
-		Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et
-	</p>
+    <p>
+    </p>
 {% endblock %}

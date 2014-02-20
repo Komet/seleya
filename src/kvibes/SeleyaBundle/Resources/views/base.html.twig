@@ -4,16 +4,16 @@
 <html>
 <head>
     <meta charset="UTF-8" />
-	{% stylesheets
-    	'bundles/seleya/css/bootstrap.min.css'
-    	'bundles/seleya/css/bootstrap-responsive.min.css'
-    	'bundles/seleya/fonts/stylesheet.css'
-    	'bundles/seleya/css/layout.css'
-    	'bundles/seleya/css/frontend.css'
-	%}
-	<link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
-	{% endstylesheets %}
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% stylesheets
+        'bundles/seleya/css/bootstrap.min.css'
+        'bundles/seleya/css/bootstrap-responsive.min.css'
+        'bundles/seleya/fonts/stylesheet.css'
+        'bundles/seleya/css/layout.css'
+        'bundles/seleya/css/frontend.css'
+    %}
+    <link href="{{ asset_url }}" type="text/css" rel="stylesheet" media="screen" />
+    {% endstylesheets %}
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     {% block head_script %}
     {% endblock head_script %}
@@ -31,11 +31,11 @@
 
         <div class="content">
             {% block content_row %}
-          	{% if app.session.flashbag.peekAll|length > 0 %}
-        	    <div class="row-fluid">
-					{{ session_flash() }}
-    	        </div>
-			{% endif %}
+              {% if app.session.flashbag.peekAll|length > 0 %}
+                <div class="row-fluid">
+                    {{ session_flash() }}
+                </div>
+            {% endif %}
             <div class="row-fluid">
                 {% block content %}
                 {% endblock content %}
@@ -52,11 +52,11 @@
         '@SeleyaBundle/Resources/public/js/chosen.jquery.min.js'
         '@SeleyaBundle/Resources/public/js/spin.min.js'
         '@SeleyaBundle/Resources/public/js/ui.js'
-		%}
+        %}
         <script type="text/javascript" src="{{ asset_url }}"></script>
-	{% endjavascripts %}
+    {% endjavascripts %}
 
-	<script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+    <script type="text/javascript" src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
 
     {% block bottom_script %}
     {% endblock bottom_script %}
